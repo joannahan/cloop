@@ -12,23 +12,13 @@ router.get('/', function(req, res, next) {
 });
 
 //get class page
-router.get('/group', function(req, res, next) {
-	  res.render('class_page');
-	});
+router.get('/:name', function(req, res, next) {
+	  res.render('class_page', { title: 'This is the blah blah class page'});
+});
 
 //Search class by name
 router.get('/search/:name', function(req, res, next) {
 	
-});
-
-//Create posts
-router.post('/', function(req,res){
-	res.render('posts');
-});
-
-//Create comments
-router.post('/', function(req,res){
-	res.render('comments');
 });
 
 module.exports = router;
