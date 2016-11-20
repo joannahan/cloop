@@ -16,6 +16,11 @@ router.get('/group', function(req, res, next) {
 	  res.render('class_page');
 	});
 
+//Search class by name
+router.get('/search/:name', function(req, res, next) {
+	
+});
+
 //Create posts
 router.post('/', function(req,res){
 	res.render('posts');
