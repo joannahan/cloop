@@ -65,7 +65,7 @@ ClassSchema.statics.returnSortedByUpvotes = function(classId, callback) {
 
 ClassSchema.statics.addPost = function(classId, postId, callback) {
     var that = this;
-    that.update({
+    that.update(
         {"_id": classId},
         {"$push": {"posts": postId}},
         function(err) {
@@ -74,13 +74,12 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
             } else {
                 callback;
             }
-        }
-    });
+        });
 }
 
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
     var that = this;
-    that.update({
+    that.update(
         {"_id": classId},
         {"$push": {"students": userId}},
         function(err) {
@@ -89,13 +88,12 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
             } else {
                 callback;
             }
-        }
-    });
+        });
 }
 
 ClassSchema.statics.removeStudent = function(classId, userId, callback) {
     var that = this;
-    that.update({
+    that.update(
         {"_id": classId},
         {"$pull": {"students": userId}},
         function(err) {
@@ -104,8 +102,7 @@ ClassSchema.statics.removeStudent = function(classId, userId, callback) {
             } else {
                 callback;
             }
-        }
-    });
+        });
 }
 
 ClassSchema.statics.removeStudent = function(classId, callback) {
