@@ -19,9 +19,9 @@
 
 	<div class="post_footer">
 		<!-- minimize if there are more comments? -->
-		{{#each}}
+		{{#each comment}}
 			<!-- render the comment handlebar template -->
-			{{this}}
+			{{> comment}}
 		{{/each}}
 		<!-- add a text input for adding a comment -->
 	</div>
