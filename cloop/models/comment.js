@@ -1,49 +1,114 @@
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
+var Post = require("./post");
 
 var CommentSchema = mongoose.Schema({
     author: {type: ObjectId, ref:"User"},
     text: String,
     timeCreated: {type: Date, default: Date.now},
     timeEdited: {type: Date, default: null},
-    removed: {type: Boolean, default: false},
     numUpvotes: {type: Number, default: 0},
     numFlags: {type: Number, default: 0}
 });
 
-CommentSchema.statics.getPost = function(postId, callback) {
+/**
+ * Gets a specific comment
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.getComment = function(commentId, callback) {
     var that = this;
-    that.findOne({"_id": postId}, callback);
+    that.findOne({"_id": commentId}, callback);
 }
 
-CommentSchema.statics.editPost = function(postId, text, callback) {
+/**
+ * Edits a comment with new text, and updates time edited
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param text {string} - The new text for the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.editComment = function(commentId, text, callback) {
     var that = this;
-    that.update({"_id": postId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
+    that.update({"_id": commentId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
 }
 
-CommentSchema.statics.removePost = function(postId, callback) {
+/**
+ * Removes a comment
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.removeComment = function(commentId, callback) {
     var that = this;
-    that.update({"_id": postId}, {"$set": {"removed": true}}, callback);
+    that.findOne({"_id": commentId}, function(err, result) {
+        if (err) {
+            callback(err);
+        } else {
+            that.remove({"_id": commentId}, callback);
+        }
+    });
 }
 
-CommentSchema.statics.addUpvote = function(postId, callback) {
+/**
+ * Add an upvote to a comment
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.addUpvote = function(commentId, callback) {
     var that = this;
-    that.update({"_id": postId}, {"$inc": {"numUpvotes": 1}}, callback)
+    that.update({"_id": commentId}, {"$inc": {"numUpvotes": 1}}, callback)
 }
 
-CommentSchema.statics.unUpvote = function(postId, callback) {
+/**
+ * Remove an upvote from a comment
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.unUpvote = function(commentId, callback) {
     var that = this;
-    that.update({"_id": postId}, {"$dec": {"numUpvotes": 1}}, callback)
+    that.update({"_id": commentId}, {"$dec": {"numUpvotes": 1}}, callback)
 }
 
-CommentSchema.statics.addFlag = function(postId, callback) {
+/**
+ * Add a flag to a comment
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.addFlag = function(commentId, callback) {
     var that = this;
-    that.update({"_id": postId}, {"$inc": {"numFlags": 1}}, callback)
+    that.update({"_id": commentId}, {"$inc": {"numFlags": 1}}, callback)
 }
 
-CommentSchema.statics.createPost = function(authorId, text, callback) {
+/**
+ * Remove a flag from a comment
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.unFlag = function(commentId, callback) {
     var that = this;
-    that.create({"author": authorId, "text": text}, callback);
+    that.update({"_id": commentId}, {"$dec": {"numFlags": 1}}, callback)
+}
+
+/**
+ * Creates a new comment for a post
+ * 
+ * @param authorId {int} - The author of the comment
+ * @param postId {int} - The id of the post
+ * @param text {string} - The text of the comment
+ * @param callback {function} - callback function
+ */
+CommentSchema.statics.createComment = function(authorId, postId, text, callback) {
+    var that = this;
+    that.create({"author": authorId, "text": text}, function(err, result) {
+        var commentId = result._id;
+        Post.addComment(postId, commentId, callback);
+    });
 }
 
 var CommentModel = mongoose.model("Comment", CommentSchema);
