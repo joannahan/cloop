@@ -7,8 +7,8 @@ var Comment = require('../models/comment');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.send('Class Page');
-	res.render('index', { title: 'Cloop' });
+	//res.send('Class Page');
+	res.render('class_page');
 });
 
 //get class page

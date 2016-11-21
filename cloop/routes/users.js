@@ -5,7 +5,8 @@ var User = require('../models/user');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('This is the user page lmao');
+  //res.send('This is the user page lmao');
+  res.render('user_listing', { title: 'list of users in class' });
 });
 
 //Search users by name

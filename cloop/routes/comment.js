@@ -6,8 +6,8 @@ var Comment = require('../models/comment');
 
 //Get all comments
 router.get('/', function(req,res){
-	res.send('commentcommentcommentcomment');
-	res.render('comments', { title: 'Comments' });
+	//res.send('commentcommentcommentcomment');
+	res.render('comments');
 });
 
 

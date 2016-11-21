@@ -6,8 +6,8 @@ var Post = require('../models/post');
 
 //Get all posts
 router.get('/', function(req,res){
-	res.send('postpostpostpost');
-	res.render('posts', { title: 'Posts' });
+	//res.send('postpostpostpost');
+	res.render('posts');
 });
 
 //get all posts - json stringified
