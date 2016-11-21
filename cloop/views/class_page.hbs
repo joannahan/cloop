@@ -2,16 +2,17 @@
 <div class="class">
 
 	<div class="class_header">
-		<h1>{{title}}</h1>
+		<span class="class_information">
+			<h1>Welcome to {{title}}</h1>
+			<h3>{{description}}</h3>
+		</span>
+		<span><button class="class_options">options</button></span>
 	<div class="class_header">
 
 	<div class="class_body">
-		{{#each}}
-			{{post}}
+		{{#each post}}
+			{{>post}}
 		{{/each}}
 	<div class="class_body">
-
-	<div class="class_footer">
-	<div class="class_footer">
 
 </div>
