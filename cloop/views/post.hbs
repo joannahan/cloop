@@ -1,0 +1,29 @@
+<!-- helper to only display if removed is false, and checks the number of flags-->
+<!-- register a helper function to evaluate the number of flags and change removed? -->
+
+{{#unless removed}}
+<div id="post">
+
+	<div id="post_header">
+		<span id="upvotes>{{numUpvotes}}</span>
+		<span id="comment_title">{{author}}</span>
+		<!--relevantTime: displays timeCreated if not edited, and "edited" + timeEdited if edited --> 
+		<span id="comment_time">{{relevantTime}}</span>
+	</div>
+
+	<div id="post_body">
+		<p>{{text}}</p>
+		<!-- icon to represent resource? -->
+		<p> Attached resource: {{resource}} </p>
+	</div>
+
+	<div id="post_footer">
+		<!-- minimize if there are more comments? -->
+		{{#each}}
+			<!-- render the comment handlebar template -->
+			{{this}}
+		{{/each}}
+		<!-- add a text input for adding a comment -->
+	</div>
+</div>
+{{/unless}}

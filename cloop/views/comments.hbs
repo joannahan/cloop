@@ -1,1 +1,16 @@
-<h1>{{title}}</h1>
+{{#unless removed}}
+<div id="comment">
+
+<!--relevantTime: displays timeCreated if not edited, and "edited" + timeEdited if edited --> 
+	<div id="comment_header">
+		<span id="upvotes>{{numUpvotes}}</span>
+		<span id="comment_author">{{author}}</span>
+		<span id="comment_time">{{relevantTime}}</span>
+	</div>
+
+	<div id="comment_body">
+		<p>{{text}}</p>
+	</div>
+
+</div>
+{{/unless}}
