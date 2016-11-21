@@ -1,10 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
-</html>
+	<head>
+		<title>Cloop</title>
+		<link href="/stylesheets/bootstrap.css" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="/javascript/index.js"></script>		
+	    <!-- Handlebars Runtime -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>        
+	    <!-- Handlebars templates -->
+	    <script src="/javascript/templates.js"></script>	    
+	</head>
+	<body>	
+		<div class="container">
+			<div class="header clearfix">
+				<nav>
+					<ul class="nav nav-pills pull-right">
+						{{#if user}}
+							<li role="presentation"><a href="/">Cloop</a></li>						
+							<li role="presentation"><a href="/users/logout">Logout</a></li>					
+						{{else}}
+							<li role="presentation"><a href="/users/login">Login</a></li>
+							<li role="presentation"><a href="/users/register">Register</a></li>
+						{{/if}}
+					</ul>	
+				</nav>
+				<h3 class="text-muted">Cloop</h3>	
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-12">
+					{{#if success_msg}}
+						<div class="alert alert-success">{{success_msg}}</div>
+					{{/if}}
+					
+					{{#if error_msg}}
+						<div class="alert alert-danger">{{error_msg}}</div>
+					{{/if}}
+					
+					{{#if error}}
+						<div class="alert alert-danger">{{error}}</div>
+					{{/if}}											
+          			{{{body}}}
+				</div>
+			</div>
+
+			<footer class="footer">
+				<p>&copy; 2016 Squad.js</p>
+			</footer>
+		</div><!--/container -->
+	</body>
+</html>	

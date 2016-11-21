@@ -2,8 +2,22 @@ var mongoose = require("mongoose");
 var Class = require("./class.js");
 var Post = require("./post.js");
 var Comment = require("./comment.js");
+var bcrypt=require('bcryptjs');
 
 var UserSchema = mongoose.Schema({
+// for MVP - username, password, and email b/c implementing login and register
+  username: {
+	  type:String,
+	  index:true,
+	  required:true
+  },
+  password:{
+	  type:String,
+	  required:true
+  },
+  email:{
+	  type:String
+  },
   student: {
 	  type: mongoose.Schema.Types.ObjectId, 
 	  ref: 'User', 
@@ -51,6 +65,22 @@ var UserSchema = mongoose.Schema({
 var User = module.exports = mongoose.model("User", UserSchema);
 
 //TODO: implement upvote and flag methods after finding a better schema
+
+/**
+ * Create a user object
+ * 
+ * @param newUser {Object} - new User object
+ * @param callback {function} - callback function
+ * @return new user
+ */
+module.exports.createUser=function(newUser, callback){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newUser.password, salt, function(err, hash) {
+	        newUser.password=hash;
+	        newUser.save(callback);
+	    });
+	});	
+}
 
 /**
  * Get user by user's name
