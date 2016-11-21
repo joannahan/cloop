@@ -1,12 +1,12 @@
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
+var Post = require("./post");
 
 var CommentSchema = mongoose.Schema({
     author: {type: ObjectId, ref:"User"},
     text: String,
     timeCreated: {type: Date, default: Date.now},
     timeEdited: {type: Date, default: null},
-    removed: {type: Boolean, default: false},
     numUpvotes: {type: Number, default: 0},
     numFlags: {type: Number, default: 0}
 });
@@ -35,14 +35,20 @@ CommentSchema.statics.editComment = function(commentId, text, callback) {
 }
 
 /**
- * Sets the status of a comment to "removed"
+ * Removes a comment
  * 
  * @param commentId {int} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.removeComment = function(commentId, callback) {
     var that = this;
-    that.update({"_id": commentId}, {"$set": {"removed": true}}, callback);
+    that.findOne({"_id": commentId}, function(err, result) {
+        if (err) {
+            callback(err);
+        } else {
+            that.remove({"_id": commentId}, callback);
+        }
+    });
 }
 
 /**
@@ -90,14 +96,19 @@ CommentSchema.statics.unFlag = function(commentId, callback) {
 }
 
 /**
- * Remove a flag from a comment
+ * Creates a new comment for a post
  * 
- * @param commentId {int} - The id of the comment
+ * @param authorId {int} - The author of the comment
+ * @param postId {int} - The id of the post
+ * @param text {string} - The text of the comment
  * @param callback {function} - callback function
  */
-CommentSchema.statics.createComment = function(authorId, text, callback) {
+CommentSchema.statics.createComment = function(authorId, postId, text, callback) {
     var that = this;
-    that.create({"author": authorId, "text": text}, callback);
+    that.create({"author": authorId, "text": text}, function(err, result) {
+        var commentId = result._id;
+        Post.addComment(postId, commentId, callback);
+    });
 }
 
 var CommentModel = mongoose.model("Comment", CommentSchema);
