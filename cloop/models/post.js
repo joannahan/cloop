@@ -15,6 +15,31 @@ var PostSchema = mongoose.Schema({
 
 //TODO: Methods
 
+// PostSchema.statics.returnPosts = function() {
+//     var that = this;
+//     that.find({"removed": false}, function(err, results) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             return results;
+//         }
+//     });
+// }
+
+// PostSchema.statics.sortedByUpvotes = function() {
+//     var that = this;
+//     that.find({"removed": false}, function(err, results) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             results.sort(function(a, b) {
+//                 return b.numUpvotes - a.numUpvotes;
+//             });
+
+//             return results;
+//         }
+//     });
+// }
 
 
 
