@@ -13,11 +13,23 @@ var PostSchema = mongoose.Schema({
     numFlags: {type: Number, default: 0}
 });
 
+/**
+ * Gets a specific post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.getPost = function(postId, callback) {
     var that = this;
     that.findOne({"_id": postId}, callback);
 }
 
+/**
+ * Gets all comments of a post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.getComments = function(postId, callback) {
     var that = this;
     that
@@ -32,31 +44,79 @@ PostSchema.statics.getComments = function(postId, callback) {
         });
 }
 
+/**
+ * Edits a post with new text, and updates time edited
+ * 
+ * @param postId {int} - The id of the post
+ * @param text {string} - The new text for the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.editPost = function(postId, text, callback) {
     var that = this;
     that.update({"_id": postId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
 }
 
+/**
+ * Sets the status of a post to "removed"
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.removePost = function(postId, callback) {
     var that = this;
     that.update({"_id": postId}, {"$set": {"removed": true}}, callback);
 }
 
+/**
+ * Add an upvote to a post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.addUpvote = function(postId, callback) {
     var that = this;
     that.update({"_id": postId}, {"$inc": {"numUpvotes": 1}}, callback)
 }
 
+/**
+ * Remove an upvote from a post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.unUpvote = function(postId, callback) {
     var that = this;
     that.update({"_id": postId}, {"$dec": {"numUpvotes": 1}}, callback)
 }
 
+/**
+ * Add a flag to a post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.addFlag = function(postId, callback) {
     var that = this;
     that.update({"_id": postId}, {"$inc": {"numFlags": 1}}, callback)
 }
 
+/**
+ * Remove a flag from a post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
+PostSchema.statics.unFlag = function(postId, callback) {
+    var that = this;
+    that.update({"_id": postId}, {"$dec": {"numFlags": 1}}, callback)
+}
+
+/**
+ * Remove a flag from a post
+ * 
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.createPost = function(authorId, text, callback) {
     var that = this;
     that.create({"author": authorId, "text": text}, callback);

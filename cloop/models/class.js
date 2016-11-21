@@ -17,7 +17,13 @@ var ClassSchema = mongoose.Schema({
 	  }]
 	});
 
-ClassSchema.statics.returnStudents = function(classId, callback) {
+/**
+ * Get all students of a class
+ * 
+ * @param classId {int} - The id of the class
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.getStudents = function(classId, callback) {
     var that = this;
     that
         .findOne({"_id": classId})
@@ -31,7 +37,13 @@ ClassSchema.statics.returnStudents = function(classId, callback) {
         });
 }
 
-ClassSchema.statics.returnPosts = function(classId, callback) {
+/**
+ * Get all posts of a class
+ * 
+ * @param classId {int} - The id of the class
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.getPosts = function(classId, callback) {
     var that = this;
     that
         .findOne({"_id": classId})
@@ -45,7 +57,13 @@ ClassSchema.statics.returnPosts = function(classId, callback) {
         });
 }
 
-ClassSchema.statics.returnSortedByUpvotes = function(classId, callback) {
+/**
+ * Get all posts of a class, sorted by upvotes
+ * 
+ * @param classId {int} - The id of the class
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.getPostsSortedByUpvotes = function(classId, callback) {
     var that = this;
     that
         .findOne({"_id": classId})
@@ -63,6 +81,13 @@ ClassSchema.statics.returnSortedByUpvotes = function(classId, callback) {
         });
 }
 
+/**
+ * Add a post to a class
+ * 
+ * @param classId {int} - The id of the class
+ * @param postId {int} - The id of the post
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.addPost = function(classId, postId, callback) {
     var that = this;
     that.update(
@@ -77,6 +102,13 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
         });
 }
 
+/**
+ * Add a student to a class
+ * 
+ * @param classId {int} - The id of the class
+ * @param userId {int} - The id of the user
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
     var that = this;
     that.update(
@@ -91,6 +123,13 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
         });
 }
 
+/**
+ * Remove a student from a class
+ * 
+ * @param classId {int} - The id of the class
+ * @param userId {int} - The id of the user
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.removeStudent = function(classId, userId, callback) {
     var that = this;
     that.update(
@@ -105,23 +144,15 @@ ClassSchema.statics.removeStudent = function(classId, userId, callback) {
         });
 }
 
-ClassSchema.statics.removeStudent = function(classId, callback) {
-    var that = this;
-    that.findOne({"_id": classId}, function(err, result) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(result);
-        }
-    });
-}
-
+/**
+ * Creates a class
+ * 
+ * @param name {string} - The name of the class
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.createClass = function(name, callback) {
     var that = this;
     that.create({"name": name}, callback);
 }
 
 var Class = module.exports = mongoose.model("Class", ClassSchema);
-
-//TODO: methods
-
