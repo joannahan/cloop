@@ -11,6 +11,8 @@ router.get('/', function(req, res, next) {
 	res.render('class_page');
 });
 
+
+
 //get class page
 router.get('/:name', function(req, res, next) {
 	  res.render('class_page', { title: 'This is the blah blah class page'});

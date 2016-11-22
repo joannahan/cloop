@@ -84,7 +84,7 @@ PostSchema.statics.removePost = function(postId, callback) {
                 if (err) {
                     callback(err);
                 } else {
-                    that.remove("_id": postId, callback);
+                    that.remove({"_id": postId}, callback);
                 }
             });    
         }
