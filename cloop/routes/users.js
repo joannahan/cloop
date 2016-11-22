@@ -44,18 +44,23 @@ router.post('/register', function(req,res){
 	req.checkBody('password2','Password do not match').equals(req.body.password);
 	var errors=req.validationErrors();
 	if(errors){
+//		console.log("error:" + errors);
 		res.render('register',{
 			errors:errors
 		});		
 	}else{
-		User.getUserByUsername(username, function(err,user){			
+//		console.log("name:" + name);
+		User.getUserByUsername(username, function(err,user){	
+//			console.log("error:" + err);
+//			console.log("user:" + user);
 			if(err) {
 				//return done(res, err, false, null);
 				req.flash('error_msg',err.message);
 			}else if (user!=null){
 				req.flash('error_msg','Same user name is already used by someone. Please select a new user name.');
 				res.redirect('/users/register');
-			}else{				
+			}else{	
+//				console.log("user:" + user);
 				var newUser=new User({
 					name:name,
 					email:email,

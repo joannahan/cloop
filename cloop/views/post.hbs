@@ -1,12 +1,11 @@
 <!-- helper to only display if removed is false, and checks the number of flags-->
 <!-- register a helper function to evaluate the number of flags and change removed? -->
 
-{{#unless removed}}
 <div class="post">
 
 	<div class="post_header">
-		<span class="upvotes>{{numUpvotes}}</span>
-		<span class="comment_title">{{author}}</span>
+		<span class="upvotes">{{numUpvotes}}</span>
+		<span class="comment_author">{{author}}</span>
 		<!--relevantTime: displays timeCreated if not edited, and "edited" + timeEdited if edited --> 
 		<span class="comment_time">{{relevantTime}}</span>
 	</div>
@@ -18,12 +17,13 @@
 	</div>
 
 	<div class="post_footer">
-		<!-- minimize if there are more comments? -->
 		{{#each comment}}
 			<!-- render the comment handlebar template -->
-			{{> comment}}
+			{{> render_comment this}}
 		{{/each}}
-		<!-- add a text input for adding a comment -->
+		<!-- add a text input for adding a comment, action tag -->
+		<form id="new_comment">
+			Reply to this thread: <input type="text"><input type="submit" value = "Post">
+		</form>
 	</div>
 </div>
-{{/unless}}

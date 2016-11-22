@@ -20,13 +20,11 @@ var UserSchema = mongoose.Schema({
   },
   student: {
 	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'User', 
-	  required: true 
+	  ref: 'User'
   },
   kerberos:{
 	  type:String,
-	  index:true,
-	  required:true
+	  index:true
   },
   name:{
 	  type:String
@@ -83,6 +81,21 @@ module.exports.createUser=function(newUser, callback){
 }
 
 /**
+ * Compare user password to hashed password
+ * 
+ * @param candidatePassword {String} - user's password
+ * @param hash {String} - hash string
+ * @param callback {function} - callback function
+ * @return success or error
+ */
+module.exports.comparePassword=function(candidatePassword,hash,callback){
+	bcrypt.compare(candidatePassword,hash,function(err,isMatch){
+		if(err) throw err;
+		callback(null,isMatch);
+	});
+}
+
+/**
  * Get user by user's name
  * 
  * @param name {String} - name of the user
@@ -96,14 +109,14 @@ module.exports.getUserByName=function(name,callback){
 
 
 /**
- * Get user by kerberos
+ * Get user by username
  * 
- * @param kerberos {String} - kerberos of the user
+ * @param kerberos {String} - username of the user
  * @param callback {function} - callback function
- * @return user object with specific kerberos
+ * @return user object with specific username
  */
-module.exports.getUserByUsername=function(kerberos,callback){
-	var query={kerberos:kerberos};
+module.exports.getUserByUsername=function(username,callback){
+	var query={username:username};
 	User.findOne(query,callback);	
 }
 
