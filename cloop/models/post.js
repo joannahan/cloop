@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var Comment = require("./comment");
+var Class = require("./class");
 
 var PostSchema = mongoose.Schema({
     author: {type: ObjectId, ref:"User"},
@@ -136,15 +137,19 @@ PostSchema.statics.unFlag = function(postId, callback) {
 }
 
 /**
- * Creates a new post
+ * Creates a new post for a class
  * 
  * @param authorId {int} - The id of the author
+ * @param classId {int} - The id of the class
  * @param text {string} - The text of the post
  * @param callback {function} - callback function
  */
-PostSchema.statics.createPost = function(authorId, text, callback) {
+PostSchema.statics.createPost = function(authorId, classId, text, callback) {
     var that = this;
-    that.create({"author": authorId, "text": text}, callback);
+    that.create({"author": authorId, "text": text}, function(err, result) {
+        var postId = result._id;
+        Class.addPost(classId, postId, callback);
+    });
 }
 
 var PostModel = mongoose.model("Post", PostSchema);
