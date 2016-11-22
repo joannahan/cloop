@@ -61,7 +61,7 @@ router.post('/register', function(req,res){
 					email:email,
 					username:username,
 					password:password
-				})
+				});
 				User.createUser(newUser, function(err,user){
 					if(err) throw err;
 				});
@@ -79,7 +79,7 @@ router.get('/login',function(req,res){
 
 //create new user login session
 router.post('/login',
-	passport.authenticate('local',{successRedirect:'/layouts/layout',failureRedirect:'/users/login',failureFlash:true}),
+	passport.authenticate('local',{successRedirect:'/group',failureRedirect:'/users/login',failureFlash:true}),
 	function(req, res) {
 		res.redirect('/');
 });

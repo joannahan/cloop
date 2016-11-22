@@ -12,6 +12,7 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 
 
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var group = require('./routes/group');
