@@ -37,7 +37,7 @@ templates['post.hbs'] = template({"1":function(container,depth0,helpers,partials
     + alias4(((helper = (helper = helpers.text || (depth0 != null ? depth0.text : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"text","hash":{},"data":data}) : helper)))
     + "</p>\n		<!-- icon to represent resource? -->\n		<p> Attached resource: "
     + alias4(((helper = (helper = helpers.resource || (depth0 != null ? depth0.resource : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"resource","hash":{},"data":data}) : helper)))
-    + " </p>\n	</div>\n\n	<div class=\"post_footer\">\n		<p>Comments:</p>\n"
+    + " </p>\n	</div>\n\n	<div class=\"post_footer\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.comment : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "		<!-- add a text input for adding a comment, action tag -->\n		<form id=\"new_comment\">\n			Reply to this thread: <input type=\"text\"><input type=\"submit\" value = \"Post\">\n		</form>\n	</div>\n</div>\n";
 },"usePartial":true,"useData":true});
