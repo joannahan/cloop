@@ -71,32 +71,32 @@ router.put('/edit/:_id', function(req, res, next) {
 });
 
 //upvote post
-router.post('/upvote/:_id', function(req, res, next) {
-	var postId = req.body._id;
+router.post('/upvote', function(req, res, next) {
+	var postId = req.body.postId;
 	var userId = req.session.userId;
 	
 	Post.addUpvotePost(userId, postId, requestCallback(res));
 });
 
 //unupvote post
-router.post('/unupvote/:_id', function(req, res, next) {
-	var postId = req.body._id;
+router.post('/unupvote', function(req, res, next) {
+	var postId = req.body.postId;
 	var userId = req.session.userId;
 	
 	Post.unUpvotePost(userId, postId, requestCallback(res));
 });
 
 //flag post
-router.post('/flag/:_id', function(req, res, next) {
-	var postId = req.body._id;
+router.post('/flag', function(req, res, next) {
+	var postId = req.body.postId;
 	var userId = req.session.userId;
 	
 	Post.addFlagPost(userId, postId, requestCallback(res));
 });
 
 //unflag post
-router.post('/unflag/:_id', function(req, res, next) {
-	var postId = req.body._id;
+router.post('/unflag', function(req, res, next) {
+	var postId = req.body.postId;
 	var userId = req.session.userId;
 	
 	Post.unFlagPost(userId, postId, requestCallback(res));
