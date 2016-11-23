@@ -206,6 +206,141 @@ module.exports.updateClassesEnrolledList = function (classId, userId, action, ca
     });
 }
 
+/**
+ * Adds a post to the user's upvoted posts
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param postId {ObjectId} - the post's id
+ */
+UserSchema.statics.addUpvotePost = function(userId, postId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$push: {"upvotePost": postId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Post.addUpvote(postId, callback);
+    }
+  })
+}
+
+/**
+ * Removes a post from the user's upvoted posts
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param postId {ObjectId} - the post's id
+ */
+UserSchema.statics.unUpvotePost = function(userId, postId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$pull: {"upvotePost": postId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Post.unUpvote(postId, callback);
+    }
+  })
+}
+
+/**
+ * Adds a post to the user's flagged posts
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param postId {ObjectId} - the post's id
+ */
+UserSchema.statics.addFlagPost = function(userId, postId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$push: {"flagPost": postId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Post.addFlag(postId, callback);
+    }
+  })
+}
+
+/**
+ * Removes a post from the user's flagged posts
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param postId {ObjectId} - the post's id
+ */
+UserSchema.statics.unFlagPost = function(userId, postId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$pull: {"flagPost": postId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Post.unFlag(postId, callback);
+    }
+  })
+}
+
+/**
+ * Adds a comment to the user's upvoted comments
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param commentId {ObjectId} - the comment's id
+ */
+UserSchema.statics.addUpvoteComment = function(userId, commentId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$push: {"upvoteComment": commentId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Comment.addUpvote(commentId, callback);
+    }
+  })
+}
+
+/**
+ * Removes a comment from the user's upvoted comments
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param commentId {ObjectId} - the comment's id
+ */
+UserSchema.statics.unUpvoteComment = function(userId, commentId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$pull: {"upvoteComment": commentId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Comment.unUpvote(commentId, callback);
+    }
+  })
+}
+
+/**
+ * Adds a comment to the user's flagged comments
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param commentId {ObjectId} - the comment's id
+ */
+UserSchema.statics.addFlagComment = function(userId, commentId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$push: {"flagComment": commentId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Comment.addFlag(commentId, callback);
+    }
+  })
+}
+
+/**
+ * Removes a comment from the user's flagged comments
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param commentId {ObjectId} - the comment's id
+ */
+UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$pull: {"flagComment": commentId}}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      Comment.unFlag(commentId, callback);
+    }
+  })
+}
 
 /**
  * Checks if user has taken a class
