@@ -140,11 +140,10 @@ PostSchema.statics.unFlag = function(postId, callback) {
  * Creates a new post for a class
  * 
  * @param authorId {ObjectId} - The id of the author
- * @param classId {ObjectId} - The id of the class
  * @param text {string} - The text of the post
  * @param callback {function} - callback function
  */
-PostSchema.statics.createPost = function(authorId, classId, text, callback) {
+PostSchema.statics.createPost = function(authorId, text, callback) {
     var that = this;
     that.create({"author": authorId, "text": text}, callback);
 }
