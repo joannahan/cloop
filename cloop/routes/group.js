@@ -43,7 +43,7 @@ router.get('/:name', function(req, res, next) {
 
 //Search class by name
 router.get('/search/:_name', function(req, res, next) {
-	var className = req.body._name;
+	var className = req.params._name;
 	Class.getClass(className, function() {});
 });
 

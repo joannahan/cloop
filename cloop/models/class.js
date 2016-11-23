@@ -104,13 +104,7 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
     that.update(
         {"_id": classId},
         {"$push": {"posts": postId}},
-        function(err) {
-            if (err) {
-                callback(err);
-            } else {
-                callback;
-            }
-        });
+        callback);
 }
 
 /**

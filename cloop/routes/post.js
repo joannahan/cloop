@@ -16,7 +16,6 @@ var requestCallback = function(res) {
 
 //Get all posts
 router.get('/', function(req,res){
-	//res.send('postpostpostpost');
 	res.render('posts');
 });
 
@@ -29,13 +28,14 @@ router.get('/getall', function(req, res, next) {
 router.post('/post/:classId', function(req, res, next) {
 	var postText = req.body.postText;
 	var authorId = req.user.id;
-	var classId = req.body.classId;
+	var classId = req.params.classId;
+
 	Post.createPost(authorId, classId, postText, requestCallback(res));
 });
 
 //delete post
 router.delete('/:_id', function(req, res, next) {
-	var postId = req.body._id;
+	var postId = req.params._id;
 	var userId = req.user.id;
 
 	Post.getPost(postId, function(err, result) {
@@ -53,7 +53,7 @@ router.delete('/:_id', function(req, res, next) {
 
 //edit post
 router.put('/edit/:_id', function(req, res, next) {
-	var postId = req.body._id;
+	var postId = req.params._id;
 	var newText = req.body.newText;
 	var userId = req.user.id;
 	

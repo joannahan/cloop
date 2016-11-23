@@ -147,8 +147,12 @@ PostSchema.statics.unFlag = function(postId, callback) {
 PostSchema.statics.createPost = function(authorId, classId, text, callback) {
     var that = this;
     that.create({"author": authorId, "text": text}, function(err, result) {
-        var postId = result._id;
-        Class.addPost(classId, postId, callback);
+        if (err) {
+            callback(err);
+        } else {
+            var postId = result._id;
+            Class.addPost(classId, postId, callback);
+        }
     });
 }
 

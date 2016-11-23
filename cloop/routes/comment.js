@@ -29,13 +29,13 @@ router.get('/getall', function(req, res, next) {
 router.post('/comment/:postId', function(req, res, next) {
 	var commentText = req.body.commentText;
 	var authorId = req.user.id;
-	var postId = req.body.postId;
+	var postId = req.params.postId;
 	Comment.createComment(authorId, postId, commentText, requestCallback(res));
 });
 
 //delete comment
 router.delete('/:_id', function(req, res, next) {
-	var commentId = req.body._id;
+	var commentId = req.params._id;
 	var userId = req.user.id;
 
 	Comment.getComment(commentId, function(err, result) {
@@ -53,7 +53,7 @@ router.delete('/:_id', function(req, res, next) {
 
 //edit comment
 router.put('/edit/:_id', function(req, res, next) {
-	var commentId = req.body._id;
+	var commentId = req.params._id;
 	var newText = req.body.newText;
 	var userId = req.user.id;
 	
