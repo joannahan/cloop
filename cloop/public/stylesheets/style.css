@@ -1,11 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
 body {
   padding: 10px;
   /*font-family: 'Roboto Condensed', sans-serif;*/
 
-
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+button {
+	background-image: url(../resources/upvote.png);
+	width: 25px;
+	height: 25px;
+	border-radius:25px;
+	border:none;
 }
 
 .upvotes {

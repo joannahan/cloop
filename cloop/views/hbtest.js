@@ -7,13 +7,13 @@ Handlebars.registerPartial("render_post", post_template);
 
 //comments data
 var comm_data_1 = {
-	numUpvotes: "^ 5",
+	numUpvotes: "5",
 	author: "Ming Wang",
 	relevantTime: "posted 10 hours ago",
 	text: "A basic comment"
 };
 var comm_data_2 = {
-	numUpvotes: "^ 1",
+	numUpvotes: "1",
 	author: "Ming Wang",
 	relevantTime: "posted 8 hours ago",
 	text: "jk i fixed it"
@@ -22,7 +22,7 @@ var comm_data_2 = {
 //post data
 var post_data_1 = {
 
-	numUpvotes: "^ 3",
+	numUpvotes: "3",
 	author: "Ming Wang",
 	relevantTime: "posted 10 hours ago",
 	text: "What constitutes a RESTful route?",
@@ -35,7 +35,7 @@ var post_data_1 = {
 
 var post_data_2 = {
 
-	numUpvotes: "^ 7",
+	numUpvotes: "7",
 	author: "Jalapeno",
 	relevantTime: "posted 2d ago",
 	text: "taco",

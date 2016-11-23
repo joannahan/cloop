@@ -3,7 +3,7 @@
 templates['comment.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<!--relevantTime: displays timeCreated if not edited, and \"edited\" + timeEdited if edited --> \n	<div class=\"comment_header\">\n		<span class=\"upvotes\">"
+  return "<!--relevantTime: displays timeCreated if not edited, and \"edited\" + timeEdited if edited --> \n	<div class=\"comment_header\">\n		<span class=\"upvotes\"> <button type=\"submit\"></button> "
     + alias4(((helper = (helper = helpers.numUpvotes || (depth0 != null ? depth0.numUpvotes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"numUpvotes","hash":{},"data":data}) : helper)))
     + "</span>\n		<span class=\"comment_author\">"
     + alias4(((helper = (helper = helpers.author || (depth0 != null ? depth0.author : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"author","hash":{},"data":data}) : helper)))
@@ -27,9 +27,9 @@ templates['post.hbs'] = template({"1":function(container,depth0,helpers,partials
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<!-- helper to only display if removed is false, and checks the number of flags-->\n<!-- register a helper function to evaluate the number of flags and change removed? -->\n\n<div class=\"post\">\n\n	<div class=\"post_header\">\n		<span class=\"upvotes\">"
+  return "<!-- helper to only display if removed is false, and checks the number of flags-->\n<!-- register a helper function to evaluate the number of flags and change removed? -->\n\n<div class=\"post\">\n\n	<div class=\"post_header\">\n		<span class=\"upvotes\"> <button type=\"submit\"></button> "
     + alias4(((helper = (helper = helpers.numUpvotes || (depth0 != null ? depth0.numUpvotes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"numUpvotes","hash":{},"data":data}) : helper)))
-    + "</span>\n		<span class=\"post_author\">"
+    + " </span>\n		<span class=\"post_author\">"
     + alias4(((helper = (helper = helpers.author || (depth0 != null ? depth0.author : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"author","hash":{},"data":data}) : helper)))
     + "</span>\n		<!--relevantTime: displays timeCreated if not edited, and \"edited\" + timeEdited if edited --> \n		<span class=\"post_time\">"
     + alias4(((helper = (helper = helpers.relevantTime || (depth0 != null ? depth0.relevantTime : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"relevantTime","hash":{},"data":data}) : helper)))
