@@ -1,3 +1,4 @@
+// Lead author: Joanna
 $(document).ready(function() { 
 	console.log(Handlebars.templates);
 	// var comm_template = Handlebars.templates['comment.hbs'];
