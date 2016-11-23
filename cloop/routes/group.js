@@ -31,13 +31,31 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+//get all posts
+router.get('/getall', function(req, res, next) {
+	//TODO get all posts from each specific class
+	//var className = req.params.name;
+	Class.getAllPosts(function(err, posts){
+		if (err) {
+			return done(res, err, false, null);				
+		}				
+		if(!posts || posts.length===0){
+			return done(res, null, true, 'there are no posts.');
+		}
+  		res.json({
+			success: true, 
+			posts: posts
+		});				
+	});			
+});
+
 //get class page
 router.get('/:name', function(req, res, next) {
 	var className = req.params.name;
 	var handlebarsObject = {};
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Filler description";
-	handlebarsObject.post = [];
+	handlebarsObject.post = [{author: "asdfa", comment: []}];
 
 	Class.getClass(className, function(err, result) {
 		if (err) {
@@ -84,4 +102,26 @@ router.post('/user/remove', function(req, res, next) {
 	Class.removeStudent(classId, userId, requestCallback(res));
 });
 
+//common helper function for callback
+var done=function(res, err, success, customMessage){
+	if (err) {
+		console.log(err);
+			res.json({
+			success: false, 
+			message: err.message
+		});
+	}else if (err===null && success===false){
+		console.log(customMessage);
+		res.json({
+			success: false, 
+			message: customMessage	
+		});	
+	}else{
+		res.json({
+			success: true, 
+			message: customMessage	
+		});			
+	}
+	return done;
+}
 module.exports = router;
