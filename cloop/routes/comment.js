@@ -4,11 +4,13 @@ var router = express.Router();
 var User = require('../models/user');
 var Comment = require('../models/comment');
 
-var requestCallback = function(err, result) {
-	if (err) {
-		res.send(err);
-	} else {
-		res.send("Success!");
+var requestCallback = function(res) {
+	return function(err, result) {
+		if (err) {
+			res.send(err);
+		} else {
+			res.send("Success!");
+		}
 	}
 }
 
@@ -28,7 +30,7 @@ router.post('/comment/:postId', function(req, res, next) {
 	var commentText = req.body.commentText;
 	var authorId = req.session.userId;
 	var postId = req.body.postId;
-	Comment.createComment(authorId, postId, commentText, requestCallback);
+	Comment.createComment(authorId, postId, commentText, requestCallback(res));
 });
 
 //delete comment
@@ -41,7 +43,7 @@ router.delete('/:_id', function(req, res, next) {
 			res.send(err);
 		} else {
 			if (result.author === userId) {
-				Comment.removeComment(commentId, requestCallback);
+				Comment.removeComment(commentId, requestCallback(res));
 			} else {
 				res.send("Wrong user!");
 			}
@@ -60,7 +62,7 @@ router.put('/edit/:_id', function(req, res, next) {
 			res.send(err);
 		} else {
 			if (result.author === userId) {
-				Comment.editComment(commentId, newText, requestCallback);
+				Comment.editComment(commentId, newText, requestCallback(res));
 			} else {
 				res.send("Wrong user!");
 			}
@@ -73,7 +75,7 @@ router.post('/upvote/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	Comment.addUpvoteComment(userId, commentId, requestCallback);
+	Comment.addUpvoteComment(userId, commentId, requestCallback(res));
 });
 
 //unupvote comment
@@ -81,7 +83,7 @@ router.post('/unupvote/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	Comment.unUpvoteComment(userId, commentId, requestCallback);
+	Comment.unUpvoteComment(userId, commentId, requestCallback(res));
 });
 
 //flag comment
@@ -89,7 +91,7 @@ router.post('/flag/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	Comment.addFlagComment(userId, commentId, requestCallback);
+	Comment.addFlagComment(userId, commentId, requestCallback(res));
 });
 
 //unflag comment
@@ -97,7 +99,7 @@ router.post('/unflag/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	Comment.unFlagComment(userId, commentId, requestCallback);
+	Comment.unFlagComment(userId, commentId, requestCallback(res));
 });
 
 module.exports = router;
