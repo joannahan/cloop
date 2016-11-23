@@ -27,23 +27,17 @@ PostSchema.statics.getPost = function(postId, callback) {
 }
 
 /**
- * Gets all comments of a post
+ * Gets all comments of an array of posts
  * 
- * @param postId {ObjectId} - The id of the post
+ * @param postIds {Array[ObjectId]} - The ids of the posts
  * @param callback {function} - callback function
  */
-PostSchema.statics.getComments = function(postId, callback) {
+PostSchema.statics.getComments = function(postIds, callback) {
     var that = this;
     that
-        .findOne({"_id": postId})
+        .find({"_id": {$in: postIds}})
         .populate("comments")
-        .exec(function(err, results) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(results);
-            }
-        });
+        .exec(callback);
 }
 
 /**

@@ -71,13 +71,21 @@ router.get('/:name', function(req, res, next) {
 			var classId = result._id;
 			handlebarsObject.classId = classId;
 
-			Class.getPosts(classId, function(err, results) {
+			Class.getPosts(classId, function(err, result) {
 				if (err) {
 					console.log(err);
 				} else {
-					console.log(results);
-					handlebarsObject.post = results;
-					res.render('class_page', handlebarsObject);
+					var classPosts = result.posts.reverse();
+					var postIds = classPosts.map(function(a) {return a._id});
+
+					Post.getComments(postIds, function(err, results) {
+						if (err) {
+							console.log(err);
+						} else {
+							handlebarsObject.post = results;
+							res.render('class_page', handlebarsObject);
+						}
+					});
 				}
 			});
 		}
@@ -127,7 +135,7 @@ var done=function(res, err, success, customMessage){
 			message: err.message
 		});
 	}else if (err===null && success===false){
-		console.log(customMessage);
+		// console.log(customMessage);
 		res.json({
 			success: false, 
 			message: customMessage	
