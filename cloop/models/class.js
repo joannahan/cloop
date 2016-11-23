@@ -69,6 +69,19 @@ ClassSchema.statics.getPosts = function(classId, callback) {
 }
 
 /**
+ * Get all posts
+ * 
+ * @param callback {function} - callback function
+ * @return all posts collections
+ */
+ClassSchema.statics.getAllPosts=function(callback){
+	Class
+		.find(callback)
+		.sort({dateCreated: 'desc' })
+		.populate('posts');
+}
+
+/**
  * Get all posts of a class, sorted by upvotes
  * 
  * @param classId {ObjectId} - The id of the class
