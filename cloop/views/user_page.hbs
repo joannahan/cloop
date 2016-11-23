@@ -1,0 +1,13 @@
+<div class = "user_page" id={{_id}}>
+	<h1>{{username}}</div>
+	<p> Email: {{email}} </p>
+	<p> Classes: </p>
+	<ul>
+	{{#each class}}
+	<li>{{this}}<button type="submit">x</button></li>
+	{{/each}}
+	</ul>
+	<form>
+		<input type="text"><input type="submit" value="Search classes">
+	</form>
+</div>

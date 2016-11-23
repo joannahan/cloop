@@ -16,7 +16,7 @@ var requestCallback = function(err, result) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	//res.send('Class Page');
-	res.render('class_page');
+	res.render('user_page');
 });
 
 //get class page

@@ -1,5 +1,4 @@
-<div class="comment">
-{{#unless removed}}
+<div class="comment" id={{_id}}>
 <!--relevantTime: displays timeCreated if not edited, and "edited" + timeEdited if edited --> 
 	<div class="comment_header">
 		<span class="upvotes"> <button type="submit" class="upvote"></button> {{numUpvotes}}</span>
@@ -10,5 +9,4 @@
 	<div class="comment_body">
 		<p>{{text}}</p>
 	</div>
-{{/unless}}
 </div>
