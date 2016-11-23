@@ -106,8 +106,12 @@ CommentSchema.statics.unFlag = function(commentId, callback) {
 CommentSchema.statics.createComment = function(authorId, postId, text, callback) {
     var that = this;
     that.create({"author": authorId, "text": text}, function(err, result) {
-        var commentId = result._id;
-        Post.addComment(postId, commentId, callback);
+        if (err) {
+            callback(err);
+        } else {
+            var commentId = result._id;
+            Post.addComment(postId, commentId, callback);
+        }
     });
 }
 

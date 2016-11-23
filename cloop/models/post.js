@@ -54,7 +54,7 @@ PostSchema.statics.getComments = function(postId, callback) {
  */
 PostSchema.statics.addComment = function(postId, commentId, callback) {
     var that = this;
-    that.update({"_id": postId}, {$push: {"comments": commentId}}, callback);
+    that.update({"_id": postId}, {"$push": {"comments": commentId}}, callback);
 }
 
 /**
@@ -81,7 +81,7 @@ PostSchema.statics.removePost = function(postId, callback) {
         if (err) {
             callback(err);
         } else {
-            Comment.remove({"_id": {$in: result.comments}}, function(err, result) {
+            Comment.remove({"_id": {"$in": result.comments}}, function(err, result) {
                 if (err) {
                     callback(err);
                 } else {

@@ -30,6 +30,7 @@ router.post('/comment/:postId', function(req, res, next) {
 	var commentText = req.body.commentText;
 	var authorId = req.user.id;
 	var postId = req.params.postId;
+	
 	Comment.createComment(authorId, postId, commentText, requestCallback(res));
 });
 

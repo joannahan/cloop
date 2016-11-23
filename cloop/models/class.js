@@ -20,7 +20,7 @@ var ClassSchema = mongoose.Schema({
 /**
  * Gets a specific class by name
  * 
- * @param commentId {int} - The id of the comment
+ * @param name {string} - The name of the class
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClass = function(name, callback) {
