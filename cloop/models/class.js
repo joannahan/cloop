@@ -136,6 +136,7 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
             if (err) {
                 callback(err);
             } else {
+                console.log(User);
                 User.addClass(userId, classId, callback);
             }
         });

@@ -63,7 +63,7 @@ router.get('/:name', function(req, res, next) {
 		} else {
 			var classId = result._id;
 			handlebarsObject.classId = classId;
-			res.render('class_page.hbs', handlebarsObject);
+			res.render('class_page', handlebarsObject);
 		}
 	});
 });

@@ -400,8 +400,8 @@ UserSchema.methods.isEnrolledIn = function (user, classId) {
     return index > -1;
 }
 
-var User = mongoose.model("User", UserSchema);
-module.exports = User;
+var UserModel = mongoose.model("User", UserSchema);
+module.exports = UserModel;
 
 /**
  * Generic Helper Function
