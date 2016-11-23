@@ -138,10 +138,14 @@ UserSchema.statics.getUserById=function(id,callback){
  * @return classes collections with specific student id
  */
 UserSchema.statics.getClassesTakenByStudent=function(student,callback){
-	var query={student:student};
-	User
-		.find(query,callback)
-		.populate('classesTaken');
+	User.findOne({_id: student.id}, function(err, studentFound){
+    studentFound.populate('classesTaken');
+    var classNames = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++)
+      classNames.append(studentFound.classesEnrolled[i].name);
+    
+    callback(classNames);
+  });
 }
 
 /**
