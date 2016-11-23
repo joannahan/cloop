@@ -1,5 +1,6 @@
 // Lead author: Joanna
 $(document).ready(function() { 
+
 	var $login=$('#login');
 	
 	// On document load, fetch class page.
