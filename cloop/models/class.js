@@ -25,7 +25,7 @@ var ClassSchema = mongoose.Schema({
  */
 ClassSchema.statics.getClass = function(name, callback) {
     var that = this;
-    that.findOne({"_id": name}, callback);
+    that.findOne({"name": name}, callback);
 }
 
 /**

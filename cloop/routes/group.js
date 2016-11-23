@@ -24,8 +24,21 @@ router.get('/', function(req, res, next) {
 
 //get class page
 router.get('/:name', function(req, res, next) {
-	var name=req.params.name;
-	res.render('class_page', { title: name});
+	var className = req.params.name;
+	var handlebarsObject = {};
+	handlebarsObject.title = className;
+	handlebarsObject.description = "Filler description";
+	handlebarsObject.post = [];
+
+	Class.getClass(className, function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			var classId = result._id;
+			handlebarsObject.classId = classId;
+			res.render('class_page.hbs', handlebarsObject);
+		}
+	});
 });
 
 //Search class by name
