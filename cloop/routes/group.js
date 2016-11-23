@@ -56,8 +56,16 @@ router.post('/class', function(req, res, next) {
 //add student to a class
 router.post('/user/add', function(req, res, next) {
 	var userId = req.user.id;
-	var classId = req.body.classId;
-	Class.addStudent(classId, userId, requestCallback(res));
+	var className = req.body.className;
+
+	Class.getClass(className, function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			var classId = result._id;
+			Class.addStudent(classId, userId, requestCallback(res));
+		}
+	})
 });
 
 //remove student from a class
