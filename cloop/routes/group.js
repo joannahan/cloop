@@ -41,11 +41,8 @@ router.post('/class', function(req, res, next) {
 
 //add student to a class
 router.post('/user/add', function(req, res, next) {
-	console.log("called");
-	console.log(req.user.id);
-	console.log(mongoose.Types.ObjectId(req.body.classId));
 	var userId = req.user.id;
-	var classId = mongoose.Types.ObjectId(req.body.classId);
+	var classId = req.body.classId;
 	Class.addStudent(classId, userId, requestCallback(res));
 });
 
