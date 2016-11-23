@@ -11,8 +11,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 
-
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 var group = require('./routes/group');
@@ -52,6 +50,7 @@ app.use(session({
 	resave:true
 }));
 
+//Passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -87,6 +86,7 @@ app.use(function(req,res,next){
 	next();
 });
 
+//routes
 app.use('/', index);
 app.use('/users', users);
 app.use('/group', group);

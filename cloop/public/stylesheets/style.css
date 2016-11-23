@@ -5,7 +5,8 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-button {
+/*The button*/
+.upvote {
 	background-image: url(../resources/upvote.png);
 	width: 25px;
 	height: 25px;
@@ -13,8 +14,10 @@ button {
 	border:none;
 }
 
+/*The number count*/
 .upvotes {
 	font-size: 15px;
+	padding-right: 4px;
 }
 
 /*Class styling*/
