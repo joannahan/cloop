@@ -4,6 +4,7 @@ var router = express.Router();
 
 var User = require('../models/user');
 var Post = require('../models/post');
+var Class = require('../models/class');
 
 var requestCallback = function(res) {
 	return function(err, result) {
@@ -32,7 +33,14 @@ router.post('/:classId/post', function(req, res, next) {
 	var authorId = req.user.id;
 	var classId = req.params.classId;
 
-	Post.createPost(authorId, classId, postText, requestCallback(res));
+	Post.createPost(authorId, postText, function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			var postId = result._id;
+			Class.addPost(classId, postId, requestCallback(res));
+		}
+	});
 });
 
 //delete post
