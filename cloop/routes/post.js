@@ -43,6 +43,7 @@ router.post('/:classId/post', function(req, res, next) {
 	});
 });
 
+
 //delete post
 router.delete('/:_id', function(req, res, next) {
 	var postId = req.params._id;

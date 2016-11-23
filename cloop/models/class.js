@@ -61,13 +61,7 @@ ClassSchema.statics.getPosts = function(classId, callback) {
     that
         .findOne({"_id": classId})
         .populate("posts")
-        .exec(function(err, results) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(results);
-            }
-        });
+        .exec(callback);
 }
 
 /**

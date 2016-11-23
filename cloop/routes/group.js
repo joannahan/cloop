@@ -63,7 +63,6 @@ router.get('/:name', function(req, res, next) {
 	var handlebarsObject = {};
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Filler description";
-	handlebarsObject.post = [{author: "asdfa", comment: []}];
 
 	Class.getClass(className, function(err, result) {
 		if (err) {
@@ -71,7 +70,15 @@ router.get('/:name', function(req, res, next) {
 		} else {
 			var classId = result._id;
 			handlebarsObject.classId = classId;
-			res.render('class_page', handlebarsObject);
+
+			Class.getPosts(classId, function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					handlebarsObject.post = results;
+					res.render('class_page', handlebarsObject);
+				}
+			});
 		}
 	});
 });

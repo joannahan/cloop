@@ -180,6 +180,7 @@ UserSchema.statics.getClassesEnrolledByStudent=function(studentToFind,callback){
     var classIds = [];
     for (var i = 0; i < studentFound.classesEnrolled.length; i++){
       classIds.push(studentFound.classesEnrolled[i]);
+
     }
     callback(classIds);
   });
