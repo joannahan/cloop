@@ -2,7 +2,7 @@
 $(document).ready(function() { 
 
 	$(".upvote.post").click(function() {
-		var postId = $(this).parent().eq(3).attr("id");
+		var postId = $(this).parent().parent().parent().attr("id");
 		var upvoteSpan = $(this).parent();
 		var numCurrentUpvotes = upvoteSpan.text();
 		numCurrentUpvotes = parseInt(numCurrentUpvotes) + 1;
@@ -15,7 +15,7 @@ $(document).ready(function() {
 			type: 'POST',
 			success: function(data){
 				if (data === "Success!") {
-					upvoteSpan.text() = numCurrentUpvotes;
+					upvoteSpan.text(numCurrentUpvotes.toString());
 				} else {
 					console.log(data);
 				}
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	});
 
 	$(".upvote.comment").click(function() {
-		var commentId = $(this).parent().eq(3).attr("id");
+		var commentId = $(this).parent().parent().parent().attr("id");
 		var upvoteSpan = $(this).parent();
 		var numCurrentUpvotes = upvoteSpan.text();
 		numCurrentUpvotes = parseInt(numCurrentUpvotes) + 1;
@@ -40,7 +40,7 @@ $(document).ready(function() {
 			type: 'POST',
 			success: function(data){
 				if (data === "Success!") {
-					upvoteSpan.text() = numCurrentUpvotes;
+					upvoteSpan.text(numCurrentUpvotes.toString());
 				} else {
 					console.log(data);
 				}
@@ -51,4 +51,4 @@ $(document).ready(function() {
 		});
 	});
 
-}
+});

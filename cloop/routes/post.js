@@ -86,7 +86,7 @@ router.post('/upvote', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.addUpvotePost(userId, postId, requestCallback(res));
+	User.addUpvotePost(userId, postId, requestCallback(res));
 });
 
 //unupvote post
@@ -94,7 +94,7 @@ router.post('/unupvote', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.unUpvotePost(userId, postId, requestCallback(res));
+	User.unUpvotePost(userId, postId, requestCallback(res));
 });
 
 //flag post
@@ -102,7 +102,7 @@ router.post('/flag', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.addFlagPost(userId, postId, requestCallback(res));
+	User.addFlagPost(userId, postId, requestCallback(res));
 });
 
 //unflag post
@@ -110,7 +110,7 @@ router.post('/unflag', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.unFlagPost(userId, postId, requestCallback(res));
+	User.unFlagPost(userId, postId, requestCallback(res));
 });
 
 module.exports = router;
