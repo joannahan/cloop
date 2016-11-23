@@ -137,12 +137,11 @@ UserSchema.statics.getUserById=function(id,callback){
  */
 UserSchema.statics.getClassesTakenByStudent=function(student,callback){
 	User.findOne({_id: student.id}, function(err, studentFound){
-    studentFound.populate('classesTaken');
-    var classNames = [];
-    for (var i = 0; i < studentFound.classesEnrolled.length; i++)
-      classNames.append(studentFound.classesEnrolled[i].name);
-    
-    callback(classNames);
+    var classIds = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
+      classIds.push(studentFound.classesEnrolled[i]);
+    }
+    callback(classIds);
   });
 }
 
@@ -178,12 +177,11 @@ UserSchema.statics.updateClassesTakenList = function (classId, userId, action, c
  */
 UserSchema.statics.getClassesEnrolledByStudent=function(studentToFind,callback){
   User.findOne({_id: studentToFind.id}, function(err, studentFound){
-    studentFound.populate('classesEnrolled');
-    var classNames = [];
+    var classIds = [];
     for (var i = 0; i < studentFound.classesEnrolled.length; i++){
-      classNames.append(studentFound.classesEnrolled[i].name);
+      classIds.push(studentFound.classesEnrolled[i]);
     }
-    callback(classNames);
+    callback(classIds);
   });
 }
 

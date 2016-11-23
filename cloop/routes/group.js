@@ -21,11 +21,18 @@ var requestCallback = function(res) {
 router.get('/', function(req, res, next) {
 	//res.send('Class Page');
 	//get user's classes:
-	User.getClassesEnrolledByStudent(req.user, function(classNames){
+	User.getClassesEnrolledByStudent(req.user, function(classIds){
+		var classlist = [];
+		for (var i = 0; i < classIds.length; i++){
+			Class.findOne({_id:classIds[i]}, function(err, resclass){
+				classlist.push(resclass.name);
+			});
+		}
+
 		var data = {
 		username: req.user.username,
 		email: req.user.email,
-		class: classNames
+		class: classlist
 		};
 
 		res.render('user_page', data);	
