@@ -16,10 +16,19 @@ var requestCallback = function(res) {
 	}
 }
 
-/* GET home page. */
+/* GET user page. */
 router.get('/', function(req, res, next) {
 	//res.send('Class Page');
-	res.render('user_page');
+	//get user's classes:
+	User.getClassesEnrolledByStudent(req.user, function(classNames){
+		var data = {
+		username: req.user.username,
+		email: req.user.email,
+		class: classNames
+		};
+
+		res.render('user_page', data);	
+	});
 });
 
 //get all posts
