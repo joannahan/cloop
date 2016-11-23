@@ -176,11 +176,15 @@ module.exports.updateClassesTakenList = function (classId, userId, action, callb
  * @param callback {function} - callback function
  * @return classes collections with specific student id
  */
-module.exports.getClassesEnrolledByStudent=function(student,callback){
-	var query={student:student};
-	User
-		.find(query,callback)
-		.populate('classesEnrolled');
+module.exports.getClassesEnrolledByStudent=function(studentToFind,callback){
+  User.findOne({_id: studentToFind.id}, function(err, studentFound){
+    studentFound.populate('classesEnrolled');
+    var classNames = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
+      classNames.append(studentFound.classesEnrolled[i].name);
+    }
+    callback(classNames);
+  });
 }
 
 /**
