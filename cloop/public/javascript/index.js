@@ -5,7 +5,7 @@ $(document).ready(function() {
 	
 	// On document load, fetch class page.
     $.get('/group/getall', function(posts) {
-
+ 
 	});
     
 	/*
