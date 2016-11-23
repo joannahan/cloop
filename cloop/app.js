@@ -124,5 +124,4 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-console.log(handlebars.templates);
 module.exports = app;
