@@ -1,10 +1,12 @@
 $(document).ready(function() { 
-	var comm_template = Handlebars.templates['comment.hbs'];
-	var post_template = Handlebars.templates['post.hbs'];
-	var class_template = Handlebars.templates['class_page.hbs'];
-	//register partials
-	Handlebars.registerPartial("render_comment", comm_template);
-	Handlebars.registerPartial("render_post", post_template);
+	console.log(Handlebars.templates);
+	// var comm_template = Handlebars.templates['comment.hbs'];
+	// var post_template = Handlebars.templates['post.hbs'];
+	// var class_template = Handlebars.templates['class_page.hbs'];
+
+	// //register partials
+	// Handlebars.registerPartial("render_comment", comm_template);
+	// Handlebars.registerPartial("render_post", post_template);
 	// Allow Handlebars templates and partials
 	//Handlebars.partials = Handlebars.templates;
 	var $login=$('#login');

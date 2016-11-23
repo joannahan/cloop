@@ -7,10 +7,10 @@ var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 var session = require('express-session');
 var passport = require('passport');
+var handlebars = require('handlebars');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 var group = require('./routes/group');
@@ -124,4 +124,5 @@ app.use(function(err, req, res, next) {
 	});
 });
 
+console.log(handlebars.templates);
 module.exports = app;
