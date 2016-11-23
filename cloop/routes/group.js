@@ -12,7 +12,7 @@ var requestCallback = function(res) {
 		if (err) {
 			res.send(err);
 		} else {
-			res.send("Success!");
+			res.redirect('/group');
 		}
 	}
 }
@@ -62,7 +62,7 @@ router.get('/:name', function(req, res, next) {
 	var className = req.params.name;
 	var handlebarsObject = {};
 	handlebarsObject.title = className;
-	handlebarsObject.description = "Filler description";
+	handlebarsObject.description = "Class Page";
 
 	Class.getClass(className, function(err, result) {
 		if (err) {
@@ -75,14 +75,15 @@ router.get('/:name', function(req, res, next) {
 				if (err) {
 					console.log(err);
 				} else {
-					var classPosts = result.posts.reverse();
+					var classPosts = result.posts;
 					var postIds = classPosts.map(function(a) {return a._id});
 
 					Post.getComments(postIds, function(err, results) {
 						if (err) {
 							console.log(err);
 						} else {
-							handlebarsObject.post = results;
+							handlebarsObject.post = results.reverse();
+							//for each author in results, replace it with name
 							res.render('class_page', handlebarsObject);
 						}
 					});

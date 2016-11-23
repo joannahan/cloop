@@ -11,8 +11,7 @@ var requestCallback = function(res) {
 		if (err) {
 			res.send(err);
 		} else {
-			res.send("Success!");
-			// console.log("success");
+			res.redirect('/group');
 		}
 	}
 }
