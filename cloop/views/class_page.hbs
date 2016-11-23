@@ -5,7 +5,7 @@
 		<span class="class_information">
 			<span class="class_title">Welcome to {{title}}</span>
 			<span class="class_description">{{description}}</span>
-			<span><button class="class_options">options</button></span>
+			<span><form action='/group' method='get'><input type="submit" value="Back to user page"></form></span>
 		</span
 	<div class="class_header">
 
@@ -24,7 +24,6 @@
 			<div class="post_header">
 				<span class="upvotes"> <button class="upvote post" type="submit"></button> {{numUpvotes}} </span>
 				<span class="post_author">{{author}}</span>
-				<!--relevantTime: displays timeCreated if not edited, and "edited" + timeEdited if edited --> 
 				<span class="post_time">{{timeCreated}}</span>
 			</div>
 		
@@ -38,7 +37,6 @@
 				{{#each comments}}
 					<!-- render the comment handlebar template -->
 					<div class="comment" id={{_id}}>
-					<!--relevantTime: displays timeCreated if not edited, and "edited" + timeEdited if edited --> 
 						<div class="comment_header">
 							<span class="upvotes"> <button type="submit" class="upvote comment"></button> {{numUpvotes}}</span>
 							<span class="comment_author">{{author}}</span>

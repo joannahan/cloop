@@ -7,6 +7,9 @@ $(document).ready(function() {
     $.get('/group/getall', function(posts) {
  
 	});
+
+	//
+	$()
     
 	/*
 	 * security protection:

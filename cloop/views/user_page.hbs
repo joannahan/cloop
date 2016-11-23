@@ -5,13 +5,16 @@
 	<p> Classes: </p>
 	<ul>
 	{{#each class}}
-	<li>{{this}}<input type='button' class='remove' data-post-id={{_id}} data-author={{author._id}} value='x'></li>
+	<li>
+	<form action='group/{{this}}' method='get'>{{this}}<input type="submit" value="Go to class page"></form>
+<!--	<input type='button' class='remove' data-post-id={{_id}} data-author={{author._id}} value='x'> -->
+	</li>
 	{{/each}}
 	</ul>
 	<form action="group/class" method="post">
-		<input type="text" name="className"><input type="submit" value="Add class">
+		<input type="text" name="className"><input type="submit" value="Create class">
 	</form>
 	<form action='group/user/add' method="post">
-		<input type="text" name="className"><input type="submit" value="join class">
+		<input type="text" name="className"><input type="submit" value="Join class">
 	</form>
 </div>
