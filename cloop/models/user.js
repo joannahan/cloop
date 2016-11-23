@@ -181,7 +181,7 @@ UserSchema.statics.getClassesEnrolledByStudent=function(studentToFind,callback){
     studentFound.populate('classesEnrolled');
     var classNames = [];
     for (var i = 0; i < studentFound.classesEnrolled.length; i++){
-      classNames.append(studentFound.classesEnrolled[i].name);
+      classNames.push(studentFound.classesEnrolled[i].name);
     }
     callback(classNames);
   });
