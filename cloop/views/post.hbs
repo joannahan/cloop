@@ -22,7 +22,7 @@
 			{{> render_comment this}}
 		{{/each}}
 		<!-- add a text input for adding a comment, action tag -->
-		<form action='/comment/comment/{{postId}}' method='post' id="new_comment">
+		<form action='/comment/{{postId}}/comment' method='post' id="new_comment">
 			Reply to this thread: <input type="text" name='commentText'><input type="submit" value = "Post">
 		</form>
 	</div>

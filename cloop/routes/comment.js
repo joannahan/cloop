@@ -26,11 +26,11 @@ router.get('/getall', function(req, res, next) {
 });
 
 //create new comment
-router.post('/comment/:postId', function(req, res, next) {
+router.post('/:postId/comment', function(req, res, next) {
 	var commentText = req.body.commentText;
 	var authorId = req.user.id;
 	var postId = req.params.postId;
-	
+
 	Comment.createComment(authorId, postId, commentText, requestCallback(res));
 });
 
