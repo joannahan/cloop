@@ -1,3 +1,4 @@
+// Lead author: Danny
 var mongoose = require("mongoose");
 var User = require("./user.js");
 

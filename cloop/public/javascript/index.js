@@ -1,3 +1,4 @@
+// Lead author: Joanna
 $(document).ready(function() { 
 	// Allow Handlebars templates and partials
 	Handlebars.partials = Handlebars.templates;

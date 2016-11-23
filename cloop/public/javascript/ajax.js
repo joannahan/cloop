@@ -1,3 +1,4 @@
+// Lead author: Danny
 $(document).ready(function() { 
 
 	$(".upvote.post").click(function() {

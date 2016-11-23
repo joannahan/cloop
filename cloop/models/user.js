@@ -1,3 +1,4 @@
+// Lead author: Joanna
 var mongoose = require("mongoose");
 var Class = require("./class.js");
 var Post = require("./post.js");
@@ -359,7 +360,7 @@ UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
  */
 UserSchema.statics.addClass = function(userId, classId, callback) {
   var that = this;
-  that.update({"_id": userId}, {$push: {"classesEnrolled": classId}}, callback);
+  that.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
 }
 
 /**
