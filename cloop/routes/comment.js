@@ -77,7 +77,7 @@ router.post('/upvote', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.addUpvoteComment(userId, commentId, requestCallback(res));
+	User.addUpvoteComment(userId, commentId, requestCallback(res));
 });
 
 //unupvote comment
@@ -85,7 +85,7 @@ router.post('/unupvote', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.unUpvoteComment(userId, commentId, requestCallback(res));
+	User.unUpvoteComment(userId, commentId, requestCallback(res));
 });
 
 //flag comment
@@ -93,7 +93,7 @@ router.post('/flag', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.addFlagComment(userId, commentId, requestCallback(res));
+	User.addFlagComment(userId, commentId, requestCallback(res));
 });
 
 //unflag comment
@@ -101,7 +101,7 @@ router.post('/unflag', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.unFlagComment(userId, commentId, requestCallback(res));
+	User.unFlagComment(userId, commentId, requestCallback(res));
 });
 
 module.exports = router;
