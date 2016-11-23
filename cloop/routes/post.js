@@ -10,7 +10,8 @@ var requestCallback = function(res) {
 		if (err) {
 			res.send(err);
 		} else {
-			res.send("Success!");
+			//res.send("Success!");
+			console.log("success");
 		}
 	}
 }
@@ -20,10 +21,10 @@ router.get('/', function(req,res){
 	res.render('posts');
 });
 
-//get all posts - json stringified
-router.get('/getall', function(req, res, next) {
-	
-});
+////get all posts - json stringified
+//router.get('/getall', function(req, res, next) {
+//	
+//});
 
 //create new post
 router.post('/:classId/post', function(req, res, next) {

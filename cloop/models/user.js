@@ -61,8 +61,6 @@ var UserSchema = mongoose.Schema({
   }
 });
 
-var User = module.exports = mongoose.model("User", UserSchema);
-
 //TODO: implement upvote and flag methods after finding a better schema
 
 /**
@@ -72,7 +70,7 @@ var User = module.exports = mongoose.model("User", UserSchema);
  * @param callback {function} - callback function
  * @return new user
  */
-module.exports.createUser=function(newUser, callback){
+UserSchema.statics.createUser=function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {
 	    bcrypt.hash(newUser.password, salt, function(err, hash) {
 	        newUser.password=hash;
@@ -89,7 +87,7 @@ module.exports.createUser=function(newUser, callback){
  * @param callback {function} - callback function
  * @return success or error
  */
-module.exports.comparePassword=function(candidatePassword,hash,callback){
+UserSchema.statics.comparePassword=function(candidatePassword,hash,callback){
 	bcrypt.compare(candidatePassword,hash,function(err,isMatch){
 		if(err) throw err;
 		callback(null,isMatch);
@@ -103,7 +101,7 @@ module.exports.comparePassword=function(candidatePassword,hash,callback){
  * @param callback {function} - callback function
  * @return user object with specific name
  */
-module.exports.getUserByName=function(name,callback){
+UserSchema.statics.getUserByName=function(name,callback){
 	var query={name:name};
 	User.findOne(query,callback);
 }
@@ -116,7 +114,7 @@ module.exports.getUserByName=function(name,callback){
  * @param callback {function} - callback function
  * @return user object with specific username
  */
-module.exports.getUserByUsername=function(username,callback){
+UserSchema.statics.getUserByUsername=function(username,callback){
 	var query={username:username};
 	User.findOne(query,callback);	
 }
@@ -128,7 +126,7 @@ module.exports.getUserByUsername=function(username,callback){
  * @param callback {function} - callback function
  * @return user object with specific user id
  */
-module.exports.getUserById=function(id,callback){
+UserSchema.statics.getUserById=function(id,callback){
 	User.findById(id,callback);
 }
 
@@ -140,11 +138,15 @@ module.exports.getUserById=function(id,callback){
  * @param callback {function} - callback function
  * @return classes collections with specific student id
  */
-module.exports.getClassesTakenByStudent=function(student,callback){
-	var query={student:student};
-	User
-		.find(query,callback)
-		.populate('classesTaken');
+UserSchema.statics.getClassesTakenByStudent=function(student,callback){
+	User.findOne({_id: student.id}, function(err, studentFound){
+    studentFound.populate('classesTaken');
+    var classNames = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++)
+      classNames.append(studentFound.classesEnrolled[i].name);
+    
+    callback(classNames);
+  });
 }
 
 /**
@@ -156,7 +158,7 @@ module.exports.getClassesTakenByStudent=function(student,callback){
  * @param callback {function} - callback function
  * @return success or error
  */
-module.exports.updateClassesTakenList = function (classId, userId, action, callback) {
+UserSchema.statics.updateClassesTakenList = function (classId, userId, action, callback) {
 	var query={_id:userId};
     User.findOne(query, function (err, user) {
         if (err || user == null){
@@ -177,11 +179,15 @@ module.exports.updateClassesTakenList = function (classId, userId, action, callb
  * @param callback {function} - callback function
  * @return classes collections with specific student id
  */
-module.exports.getClassesEnrolledByStudent=function(student,callback){
-	var query={student:student};
-	User
-		.find(query,callback)
-		.populate('classesEnrolled');
+UserSchema.statics.getClassesEnrolledByStudent=function(studentToFind,callback){
+  User.findOne({_id: studentToFind.id}, function(err, studentFound){
+    studentFound.populate('classesEnrolled');
+    var classNames = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
+      classNames.append(studentFound.classesEnrolled[i].name);
+    }
+    callback(classNames);
+  });
 }
 
 /**
@@ -193,7 +199,7 @@ module.exports.getClassesEnrolledByStudent=function(student,callback){
  * @param callback {function} - callback function
  * @return success or error
  */
-module.exports.updateClassesEnrolledList = function (classId, userId, action, callback) {
+UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action, callback) {
 	var query={_id:userId};
     User.findOne(query, function (err, user) {
         if (err || user == null){
@@ -399,7 +405,8 @@ UserSchema.methods.isEnrolledIn = function (user, classId) {
     return index > -1;
 }
 
-
+var UserModel = mongoose.model("User", UserSchema);
+module.exports = UserModel;
 
 /**
  * Generic Helper Function

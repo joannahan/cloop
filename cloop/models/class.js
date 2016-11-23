@@ -1,6 +1,6 @@
 // Lead author: Danny
 var mongoose = require("mongoose");
-var User = require("./user.js");
+var User = require("./user");
 
 var ClassSchema = mongoose.Schema({
 	  name:{
@@ -70,6 +70,19 @@ ClassSchema.statics.getPosts = function(classId, callback) {
 }
 
 /**
+ * Get all posts
+ * 
+ * @param callback {function} - callback function
+ * @return all posts collections
+ */
+ClassSchema.statics.getAllPosts=function(callback){
+	Class
+		.find(callback)
+		.sort({dateCreated: 'desc' })
+		.populate('posts');
+}
+
+/**
  * Get all posts of a class, sorted by upvotes
  * 
  * @param classId {ObjectId} - The id of the class
@@ -124,6 +137,7 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
             if (err) {
                 callback(err);
             } else {
+                console.log(User);
                 User.addClass(userId, classId, callback);
             }
         });
