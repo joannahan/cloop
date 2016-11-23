@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var User = require("./user");
+var Post = require("./post");
 
 var ClassSchema = mongoose.Schema({
 	  name:{
