@@ -68,6 +68,7 @@ router.get('/:name', function(req, res, next) {
 				if (err) {
 					console.log(err);
 				} else {
+					console.log(results);
 					handlebarsObject.post = results;
 					res.render('class_page', handlebarsObject);
 				}
