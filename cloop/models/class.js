@@ -1,6 +1,7 @@
 // Lead author: Danny
 var mongoose = require("mongoose");
-var User = require("./user.js");
+var User = require("./user");
+var Post = require("./post");
 
 var ClassSchema = mongoose.Schema({
       name:{
