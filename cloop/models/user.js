@@ -211,6 +211,7 @@ module.exports.updateClassesEnrolledList = function (classId, userId, action, ca
  * 
  * @param userId {ObjectId} - the user's id
  * @param postId {ObjectId} - the post's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.addUpvotePost = function(userId, postId, callback) {
   var that = this;
@@ -228,6 +229,7 @@ UserSchema.statics.addUpvotePost = function(userId, postId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param postId {ObjectId} - the post's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.unUpvotePost = function(userId, postId, callback) {
   var that = this;
@@ -245,6 +247,7 @@ UserSchema.statics.unUpvotePost = function(userId, postId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param postId {ObjectId} - the post's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.addFlagPost = function(userId, postId, callback) {
   var that = this;
@@ -262,6 +265,7 @@ UserSchema.statics.addFlagPost = function(userId, postId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param postId {ObjectId} - the post's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.unFlagPost = function(userId, postId, callback) {
   var that = this;
@@ -279,6 +283,7 @@ UserSchema.statics.unFlagPost = function(userId, postId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param commentId {ObjectId} - the comment's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.addUpvoteComment = function(userId, commentId, callback) {
   var that = this;
@@ -296,6 +301,7 @@ UserSchema.statics.addUpvoteComment = function(userId, commentId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param commentId {ObjectId} - the comment's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.unUpvoteComment = function(userId, commentId, callback) {
   var that = this;
@@ -313,6 +319,7 @@ UserSchema.statics.unUpvoteComment = function(userId, commentId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param commentId {ObjectId} - the comment's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.addFlagComment = function(userId, commentId, callback) {
   var that = this;
@@ -330,6 +337,7 @@ UserSchema.statics.addFlagComment = function(userId, commentId, callback) {
  * 
  * @param userId {ObjectId} - the user's id
  * @param commentId {ObjectId} - the comment's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
   var that = this;
@@ -347,6 +355,7 @@ UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
  *
  * @param userId {ObjectId} - the user's id
  * @param classId {ObjectId} - the class's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.addClass = function(userId, classId, callback) {
   var that = this;
@@ -358,6 +367,7 @@ UserSchema.statics.addClass = function(userId, classId, callback) {
  *
  * @param userId {ObjectId} - the user's id
  * @param classId {ObjectId} - the class's id
+ * @param callback {function} - callback function
  */
 UserSchema.statics.removeClass = function(userId, classId, callback) {
   var that = this;
