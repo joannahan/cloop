@@ -24,7 +24,7 @@ router.get('/getall', function(req, res, next) {
 });
 
 //create new comment
-router.post('/comment', function(req, res, next) {
+router.post('/comment/:postId', function(req, res, next) {
 	var commentText = req.body.commentText;
 	var authorId = req.session.userId;
 	var postId = req.body.postId;

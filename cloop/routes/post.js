@@ -24,7 +24,7 @@ router.get('/getall', function(req, res, next) {
 });
 
 //create new post
-router.post('/post', function(req, res, next) {
+router.post('/post/:classId', function(req, res, next) {
 	var postText = req.body.postText;
 	var authorId = req.session.userId;
 	var classId = req.body.classId;
