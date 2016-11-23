@@ -1,3 +1,4 @@
+// Lead author: Danny
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var Post = require("./post");

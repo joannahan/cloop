@@ -1,22 +1,23 @@
+// Lead author: Danny
 var mongoose = require("mongoose");
 var User = require("./user");
 var Post = require("./post");
 
 var ClassSchema = mongoose.Schema({
-	  name:{
-		  type:String,
-		  index:true,
-		  required:true
-	  },
-	  students:[{
-		  type: mongoose.Schema.Types.ObjectId, 
-		  ref: 'User'
-	  }],
-	  posts:[{
+      name:{
+    	  type:String,
+    	  index:true,
+    	  required:true
+      },
+      students:[{
+    	  type: mongoose.Schema.Types.ObjectId, 
+    	  ref: 'User'
+      }],
+      posts:[{
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Post'
-	  }]
-	});
+      }]
+    });
 
 /**
  * Gets a specific class by name
@@ -137,6 +138,7 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
             if (err) {
                 callback(err);
             } else {
+                console.log(User);
                 User.addClass(userId, classId, callback);
             }
         });
@@ -174,4 +176,5 @@ ClassSchema.statics.createClass = function(name, callback) {
     that.create({"name": name}, callback);
 }
 
-var Class = module.exports = mongoose.model("Class", ClassSchema);
+var Class = mongoose.model("Class", ClassSchema);
+module.exports = Class;

@@ -1,3 +1,4 @@
+// Lead author: Joanna
 $(document).ready(function() { 
 	var $login=$('#login');
 	

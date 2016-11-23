@@ -1,3 +1,4 @@
+// Lead author: Joanna
 var express = require('express');
 var router = express.Router();
 
@@ -20,6 +21,5 @@ function ensureAuthenticated(req, res, next){
 		res.redirect('/users/login');
 	}
 }
-
 
 module.exports = router;

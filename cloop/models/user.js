@@ -1,11 +1,10 @@
+// Lead author: Joanna
 var mongoose = require("mongoose");
-var Class = require("./class.js");
 var Post = require("./post.js");
 var Comment = require("./comment.js");
-var bcrypt=require('bcryptjs');
+var bcrypt = require('bcryptjs');
 
 var UserSchema = mongoose.Schema({
-// for MVP - username, password, and email b/c implementing login and register
   username: {
 	  type:String,
 	  index:true,
@@ -36,8 +35,7 @@ var UserSchema = mongoose.Schema({
   classesEnrolled:[{
 	  type: mongoose.Schema.Types.ObjectId, 
 	  ref: 'Class'
-  }], 
-  //TODO: find a better way to do this vvvvvvv
+  }],
   upvotePost:[{
 	  type: mongoose.Schema.Types.ObjectId, 
 	  ref: 'Post'
@@ -138,10 +136,14 @@ UserSchema.statics.getUserById=function(id,callback){
  * @return classes collections with specific student id
  */
 UserSchema.statics.getClassesTakenByStudent=function(student,callback){
-	var query={student:student};
-	User
-		.find(query,callback)
-		.populate('classesTaken');
+	User.findOne({_id: student.id}, function(err, studentFound){
+    studentFound.populate('classesTaken');
+    var classNames = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++)
+      classNames.append(studentFound.classesEnrolled[i].name);
+    
+    callback(classNames);
+  });
 }
 
 /**
@@ -223,7 +225,7 @@ UserSchema.statics.addUpvotePost = function(userId, postId, callback) {
     } else {
       Post.addUpvote(postId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -241,7 +243,7 @@ UserSchema.statics.unUpvotePost = function(userId, postId, callback) {
     } else {
       Post.unUpvote(postId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -259,7 +261,7 @@ UserSchema.statics.addFlagPost = function(userId, postId, callback) {
     } else {
       Post.addFlag(postId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -277,7 +279,7 @@ UserSchema.statics.unFlagPost = function(userId, postId, callback) {
     } else {
       Post.unFlag(postId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -295,7 +297,7 @@ UserSchema.statics.addUpvoteComment = function(userId, commentId, callback) {
     } else {
       Comment.addUpvote(commentId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -313,7 +315,7 @@ UserSchema.statics.unUpvoteComment = function(userId, commentId, callback) {
     } else {
       Comment.unUpvote(commentId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -331,7 +333,7 @@ UserSchema.statics.addFlagComment = function(userId, commentId, callback) {
     } else {
       Comment.addFlag(commentId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -349,7 +351,7 @@ UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
     } else {
       Comment.unFlag(commentId, callback);
     }
-  })
+  });
 }
 
 /**
@@ -361,7 +363,7 @@ UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
  */
 UserSchema.statics.addClass = function(userId, classId, callback) {
   var that = this;
-  that.update({"_id": userId}, {$push: {"classesEnrolled": classId}}, callback);
+  that.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
 }
 
 /**
@@ -383,7 +385,7 @@ UserSchema.statics.removeClass = function(userId, classId, callback) {
  * @param classId {ObjectId} - class id
  * @return true or false
  */
-UserSchema.methods.hasTakenAlready = function (user, classId) {
+UserSchema.statics.hasTakenAlready = function (user, classId) {
     var index = user.classesTaken.indexOf(classId);
     return index > -1;
 }
@@ -395,13 +397,10 @@ UserSchema.methods.hasTakenAlready = function (user, classId) {
  * @param classId {ObjectId} - class id
  * @return true or false
  */
-UserSchema.methods.isEnrolledIn = function (user, classId) {
+UserSchema.statics.isEnrolledIn = function (user, classId) {
     var index = user.classesEnrolled.indexOf(classId);
     return index > -1;
 }
-
-var User = mongoose.model("User", UserSchema);
-module.exports = User;
 
 /**
  * Generic Helper Function
@@ -424,3 +423,6 @@ var addOrRemoveFromList = function(list, item, action) {
     }
     return list;
 }
+
+var User = mongoose.model("User", UserSchema);
+module.exports = User;

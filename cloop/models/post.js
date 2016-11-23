@@ -1,7 +1,8 @@
+// Lead author: Danny
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var Comment = require("./comment");
-var Class = require("./class");
+
+// var Comment = require("./comment");
 
 var PostSchema = mongoose.Schema({
     author: {type: ObjectId, ref:"User"},
@@ -77,19 +78,18 @@ PostSchema.statics.editPost = function(postId, text, callback) {
  */
 PostSchema.statics.removePost = function(postId, callback) {
     var that = this;
-    that.findOne({"_id": postId}, function(err, result) {
-        if (err) {
-            callback(err);
-        } else {
-            Comment.remove({"_id": {"$in": result.comments}}, function(err, result) {
-                if (err) {
-                    callback(err);
-                } else {
-                    that.remove({"_id": postId}, callback);
-                }
-            });    
-        }
-    });
+    that.remove({"_id": postId}, callback);
+        // if (err) {
+        //     callback(err);
+        // } else {
+        //     Comment.remove({"_id": {"$in": result.comments}}, function(err, result) {
+        //         if (err) {
+        //             callback(err);
+        //         } else {
+        //             that.remove({"_id": postId}, callback);
+        //         }
+        //     });    
+        // }
 }
 
 /**
@@ -146,14 +146,7 @@ PostSchema.statics.unFlag = function(postId, callback) {
  */
 PostSchema.statics.createPost = function(authorId, classId, text, callback) {
     var that = this;
-    that.create({"author": authorId, "text": text}, function(err, result) {
-        if (err) {
-            callback(err);
-        } else {
-            var postId = result._id;
-            Class.addPost(classId, postId, callback);
-        }
-    });
+    that.create({"author": authorId, "text": text}, callback);
 }
 
 var PostModel = mongoose.model("Post", PostSchema);
