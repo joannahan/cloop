@@ -125,7 +125,13 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
     that.update(
         {"_id": classId},
         {"$push": {"students": userId}},
-        callback);
+        function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                User.addClass(userId, classId, callback);
+            }
+        });
 }
 
 /**
@@ -140,7 +146,13 @@ ClassSchema.statics.removeStudent = function(classId, userId, callback) {
     that.update(
         {"_id": classId},
         {"$pull": {"students": userId}},
-        callback);
+        function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                User.removeClass(userId, classId, callback);
+            }
+        });
 }
 
 /**

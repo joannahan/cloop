@@ -343,6 +343,28 @@ UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
 }
 
 /**
+ * Adds a class to a user's enrolled classes 
+ *
+ * @param userId {ObjectId} - the user's id
+ * @param classId {ObjectId} - the class's id
+ */
+UserSchema.statics.addClass = function(userId, classId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$push: {"classesEnrolled": classId}}, callback);
+}
+
+/**
+ * Removes a class from a user's enrolled classes 
+ *
+ * @param userId {ObjectId} - the user's id
+ * @param classId {ObjectId} - the class's id
+ */
+UserSchema.statics.removeClass = function(userId, classId, callback) {
+  var that = this;
+  that.update({"_id": userId}, {$pull: {"classesEnrolled": classId}}, callback);
+}
+
+/**
  * Checks if user has taken a class
  * 
  * @param user {Object} - logged in user object

@@ -28,7 +28,7 @@ router.get('/getall', function(req, res, next) {
 //create new comment
 router.post('/comment/:postId', function(req, res, next) {
 	var commentText = req.body.commentText;
-	var authorId = req.session.userId;
+	var authorId = req.user.id;
 	var postId = req.body.postId;
 	Comment.createComment(authorId, postId, commentText, requestCallback(res));
 });
@@ -36,7 +36,7 @@ router.post('/comment/:postId', function(req, res, next) {
 //delete comment
 router.delete('/:_id', function(req, res, next) {
 	var commentId = req.body._id;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 
 	Comment.getComment(commentId, function(err, result) {
 		if (err) {
@@ -55,7 +55,7 @@ router.delete('/:_id', function(req, res, next) {
 router.put('/edit/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var newText = req.body.newText;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Comment.getComment(commentId, function(err, result) {
 		if (err) {
@@ -73,7 +73,7 @@ router.put('/edit/:_id', function(req, res, next) {
 //upvote comment
 router.post('/upvote', function(req, res, next) {
 	var commentId = req.body.commentId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Comment.addUpvoteComment(userId, commentId, requestCallback(res));
 });
@@ -81,7 +81,7 @@ router.post('/upvote', function(req, res, next) {
 //unupvote comment
 router.post('/unupvote', function(req, res, next) {
 	var commentId = req.body.commentId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Comment.unUpvoteComment(userId, commentId, requestCallback(res));
 });
@@ -89,7 +89,7 @@ router.post('/unupvote', function(req, res, next) {
 //flag comment
 router.post('/flag', function(req, res, next) {
 	var commentId = req.body.commentId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Comment.addFlagComment(userId, commentId, requestCallback(res));
 });
@@ -97,7 +97,7 @@ router.post('/flag', function(req, res, next) {
 //unflag comment
 router.post('/unflag', function(req, res, next) {
 	var commentId = req.body.commentId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Comment.unFlagComment(userId, commentId, requestCallback(res));
 });

@@ -48,7 +48,7 @@ router.post('/user/add', function(req, res, next) {
 
 //remove student from a class
 router.post('/user/remove', function(req, res, next) {
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	var classId = req.body.classId;
 	Class.removeStudent(classId, userId, requestCallback(res));
 });

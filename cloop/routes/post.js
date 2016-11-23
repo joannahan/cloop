@@ -28,7 +28,7 @@ router.get('/getall', function(req, res, next) {
 //create new post
 router.post('/post/:classId', function(req, res, next) {
 	var postText = req.body.postText;
-	var authorId = req.session.userId;
+	var authorId = req.user.id;
 	var classId = req.body.classId;
 	Post.createPost(authorId, classId, postText, requestCallback(res));
 });
@@ -36,7 +36,7 @@ router.post('/post/:classId', function(req, res, next) {
 //delete post
 router.delete('/:_id', function(req, res, next) {
 	var postId = req.body._id;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 
 	Post.getPost(postId, function(err, result) {
 		if (err) {
@@ -55,7 +55,7 @@ router.delete('/:_id', function(req, res, next) {
 router.put('/edit/:_id', function(req, res, next) {
 	var postId = req.body._id;
 	var newText = req.body.newText;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Post.getPost(postId, function(err, result) {
 		if (err) {
@@ -73,7 +73,7 @@ router.put('/edit/:_id', function(req, res, next) {
 //upvote post
 router.post('/upvote', function(req, res, next) {
 	var postId = req.body.postId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Post.addUpvotePost(userId, postId, requestCallback(res));
 });
@@ -81,7 +81,7 @@ router.post('/upvote', function(req, res, next) {
 //unupvote post
 router.post('/unupvote', function(req, res, next) {
 	var postId = req.body.postId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Post.unUpvotePost(userId, postId, requestCallback(res));
 });
@@ -89,7 +89,7 @@ router.post('/unupvote', function(req, res, next) {
 //flag post
 router.post('/flag', function(req, res, next) {
 	var postId = req.body.postId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Post.addFlagPost(userId, postId, requestCallback(res));
 });
@@ -97,7 +97,7 @@ router.post('/flag', function(req, res, next) {
 //unflag post
 router.post('/unflag', function(req, res, next) {
 	var postId = req.body.postId;
-	var userId = req.session.userId;
+	var userId = req.user.id;
 	
 	Post.unFlagPost(userId, postId, requestCallback(res));
 });
