@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require("mongoose");
 var router = express.Router();
 var User = require('../models/user');
 var Class = require('../models/class');
@@ -39,15 +40,18 @@ router.post('/class', function(req, res, next) {
 });
 
 //add student to a class
-router.post('/add/:_id', function(req, res, next) {
-	var userId = req.body._id;
-	var classId = req.body.classId;
+router.post('/user/add', function(req, res, next) {
+	console.log("called");
+	console.log(req.user.id);
+	console.log(mongoose.Types.ObjectId(req.body.classId));
+	var userId = req.user.id;
+	var classId = mongoose.Types.ObjectId(req.body.classId);
 	Class.addStudent(classId, userId, requestCallback(res));
 });
 
 //remove student from a class
-router.post('/add/:_id', function(req, res, next) {
-	var userId = req.body._id;
+router.post('/user/remove', function(req, res, next) {
+	var userId = req.session.userId;
 	var classId = req.body.classId;
 	Class.removeStudent(classId, userId, requestCallback(res));
 });
