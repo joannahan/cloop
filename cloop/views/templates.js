@@ -29,9 +29,9 @@ templates['post.hbs'] = template({"1":function(container,depth0,helpers,partials
 
   return "<!-- helper to only display if removed is false, and checks the number of flags-->\n<!-- register a helper function to evaluate the number of flags and change removed? -->\n\n<div class=\"post\">\n\n	<div class=\"post_header\">\n		<span class=\"upvotes\">"
     + alias4(((helper = (helper = helpers.numUpvotes || (depth0 != null ? depth0.numUpvotes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"numUpvotes","hash":{},"data":data}) : helper)))
-    + "</span>\n		<span class=\"comment_author\">"
+    + "</span>\n		<span class=\"post_author\">"
     + alias4(((helper = (helper = helpers.author || (depth0 != null ? depth0.author : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"author","hash":{},"data":data}) : helper)))
-    + "</span>\n		<!--relevantTime: displays timeCreated if not edited, and \"edited\" + timeEdited if edited --> \n		<span class=\"comment_time\">"
+    + "</span>\n		<!--relevantTime: displays timeCreated if not edited, and \"edited\" + timeEdited if edited --> \n		<span class=\"post_time\">"
     + alias4(((helper = (helper = helpers.relevantTime || (depth0 != null ? depth0.relevantTime : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"relevantTime","hash":{},"data":data}) : helper)))
     + "</span>\n	</div>\n\n	<div class=\"post_body\">\n		<p>"
     + alias4(((helper = (helper = helpers.text || (depth0 != null ? depth0.text : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"text","hash":{},"data":data}) : helper)))

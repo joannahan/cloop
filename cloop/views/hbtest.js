@@ -24,7 +24,7 @@ var post_data_1 = {
 
 	numUpvotes: "^ 3",
 	author: "Ming Wang",
-	relevantTime: "posted 10h ago",
+	relevantTime: "posted 10 hours ago",
 	text: "What constitutes a RESTful route?",
 	resource: "rec5.pdf",
 	comment: [
