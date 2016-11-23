@@ -73,7 +73,7 @@ router.post('/upvote/:_id', function(req, res, next) {
 	var postId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for upvote method in user model
+	Post.addUpvotePost(userId, postId, requestCallback);
 });
 
 //unupvote post
@@ -81,7 +81,7 @@ router.post('/unupvote/:_id', function(req, res, next) {
 	var postId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for unupvote method in user model
+	Post.unUpvotePost(userId, postId, requestCallback);
 });
 
 //flag post
@@ -89,7 +89,7 @@ router.post('/flag/:_id', function(req, res, next) {
 	var postId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for flag method in user model
+	Post.addFlagPost(userId, postId, requestCallback);
 });
 
 //unflag post
@@ -97,7 +97,7 @@ router.post('/unflag/:_id', function(req, res, next) {
 	var postId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for unflag method in user model
+	Post.unFlagPost(userId, postId, requestCallback);
 });
 
 module.exports = router;

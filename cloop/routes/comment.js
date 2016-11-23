@@ -68,36 +68,36 @@ router.put('/edit/:_id', function(req, res, next) {
 	});
 });
 
-//upvote post
+//upvote comment
 router.post('/upvote/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for upvote method in user model
+	Comment.addUpvoteComment(userId, commentId, requestCallback);
 });
 
-//unupvote post
+//unupvote comment
 router.post('/unupvote/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for unupvote method in user model
+	Comment.unUpvoteComment(userId, commentId, requestCallback);
 });
 
-//flag post
+//flag comment
 router.post('/flag/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for flag method in user model
+	Comment.addFlagComment(userId, commentId, requestCallback);
 });
 
-//unflag post
+//unflag comment
 router.post('/unflag/:_id', function(req, res, next) {
 	var commentId = req.body._id;
 	var userId = req.session.userId;
 	
-	//waiting for unflag method in user model
+	Comment.unFlagComment(userId, commentId, requestCallback);
 });
 
 module.exports = router;

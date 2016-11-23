@@ -17,7 +17,7 @@ var PostSchema = mongoose.Schema({
 /**
  * Gets a specific post
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.getPost = function(postId, callback) {
@@ -28,7 +28,7 @@ PostSchema.statics.getPost = function(postId, callback) {
 /**
  * Gets all comments of a post
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.getComments = function(postId, callback) {
@@ -48,8 +48,8 @@ PostSchema.statics.getComments = function(postId, callback) {
 /**
  * Adds a comment to a post
  * 
- * @param postId {int} - The id of the post
- * @param commentId {int} - The id of the comment
+ * @param postId {ObjectId} - The id of the post
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 PostSchema.statics.addComment = function(postId, commentId, callback) {
@@ -60,7 +60,7 @@ PostSchema.statics.addComment = function(postId, commentId, callback) {
 /**
  * Edits a post with new text, and updates time edited
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param text {string} - The new text for the post
  * @param callback {function} - callback function
  */
@@ -72,7 +72,7 @@ PostSchema.statics.editPost = function(postId, text, callback) {
 /**
  * Removes a post and all its associated comments
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.removePost = function(postId, callback) {
@@ -95,7 +95,7 @@ PostSchema.statics.removePost = function(postId, callback) {
 /**
  * Add an upvote to a post
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.addUpvote = function(postId, callback) {
@@ -106,7 +106,7 @@ PostSchema.statics.addUpvote = function(postId, callback) {
 /**
  * Remove an upvote from a post
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.unUpvote = function(postId, callback) {
@@ -117,7 +117,7 @@ PostSchema.statics.unUpvote = function(postId, callback) {
 /**
  * Add a flag to a post
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.addFlag = function(postId, callback) {
@@ -128,7 +128,7 @@ PostSchema.statics.addFlag = function(postId, callback) {
 /**
  * Remove a flag from a post
  * 
- * @param postId {int} - The id of the post
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 PostSchema.statics.unFlag = function(postId, callback) {
@@ -139,8 +139,8 @@ PostSchema.statics.unFlag = function(postId, callback) {
 /**
  * Creates a new post for a class
  * 
- * @param authorId {int} - The id of the author
- * @param classId {int} - The id of the class
+ * @param authorId {ObjectId} - The id of the author
+ * @param classId {ObjectId} - The id of the class
  * @param text {string} - The text of the post
  * @param callback {function} - callback function
  */

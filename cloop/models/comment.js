@@ -14,7 +14,7 @@ var CommentSchema = mongoose.Schema({
 /**
  * Gets a specific comment
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.getComment = function(commentId, callback) {
@@ -25,7 +25,7 @@ CommentSchema.statics.getComment = function(commentId, callback) {
 /**
  * Edits a comment with new text, and updates time edited
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param text {string} - The new text for the comment
  * @param callback {function} - callback function
  */
@@ -37,7 +37,7 @@ CommentSchema.statics.editComment = function(commentId, text, callback) {
 /**
  * Removes a comment
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.removeComment = function(commentId, callback) {
@@ -54,7 +54,7 @@ CommentSchema.statics.removeComment = function(commentId, callback) {
 /**
  * Add an upvote to a comment
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.addUpvote = function(commentId, callback) {
@@ -65,7 +65,7 @@ CommentSchema.statics.addUpvote = function(commentId, callback) {
 /**
  * Remove an upvote from a comment
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.unUpvote = function(commentId, callback) {
@@ -76,7 +76,7 @@ CommentSchema.statics.unUpvote = function(commentId, callback) {
 /**
  * Add a flag to a comment
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.addFlag = function(commentId, callback) {
@@ -87,7 +87,7 @@ CommentSchema.statics.addFlag = function(commentId, callback) {
 /**
  * Remove a flag from a comment
  * 
- * @param commentId {int} - The id of the comment
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
 CommentSchema.statics.unFlag = function(commentId, callback) {
@@ -98,8 +98,8 @@ CommentSchema.statics.unFlag = function(commentId, callback) {
 /**
  * Creates a new comment for a post
  * 
- * @param authorId {int} - The author of the comment
- * @param postId {int} - The id of the post
+ * @param authorId {ObjectId} - The author of the comment
+ * @param posttId {ObjectId} - The id of the post
  * @param text {string} - The text of the comment
  * @param callback {function} - callback function
  */

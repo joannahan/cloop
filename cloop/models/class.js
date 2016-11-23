@@ -18,9 +18,20 @@ var ClassSchema = mongoose.Schema({
 	});
 
 /**
+ * Gets a specific class by name
+ * 
+ * @param commentId {int} - The id of the comment
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.getClass = function(name, callback) {
+    var that = this;
+    that.findOne({"_id": name}, callback);
+}
+
+/**
  * Get all students of a class
  * 
- * @param classId {int} - The id of the class
+ * @param classId {ObjectId} - The id of the class
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getStudents = function(classId, callback) {
@@ -40,7 +51,7 @@ ClassSchema.statics.getStudents = function(classId, callback) {
 /**
  * Get all posts of a class
  * 
- * @param classId {int} - The id of the class
+ * @param classId {ObjectId} - The id of the class
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getPosts = function(classId, callback) {
@@ -60,7 +71,7 @@ ClassSchema.statics.getPosts = function(classId, callback) {
 /**
  * Get all posts of a class, sorted by upvotes
  * 
- * @param classId {int} - The id of the class
+ * @param classId {ObjectId} - The id of the class
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getPostsSortedByUpvotes = function(classId, callback) {
@@ -84,8 +95,8 @@ ClassSchema.statics.getPostsSortedByUpvotes = function(classId, callback) {
 /**
  * Add a post to a class
  * 
- * @param classId {int} - The id of the class
- * @param postId {int} - The id of the post
+ * @param classId {ObjectId} - The id of the class
+ * @param postId {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
 ClassSchema.statics.addPost = function(classId, postId, callback) {
@@ -105,8 +116,8 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
 /**
  * Add a student to a class
  * 
- * @param classId {int} - The id of the class
- * @param userId {int} - The id of the user
+ * @param classId {ObjectId} - The id of the class
+ * @param userId {ObjectId} - The id of the user
  * @param callback {function} - callback function
  */
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
@@ -126,8 +137,8 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
 /**
  * Remove a student from a class
  * 
- * @param classId {int} - The id of the class
- * @param userId {int} - The id of the user
+ * @param classId {ObjectId} - The id of the class
+ * @param userId {ObjectId} - The id of the user
  * @param callback {function} - callback function
  */
 ClassSchema.statics.removeStudent = function(classId, userId, callback) {
