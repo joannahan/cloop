@@ -5,7 +5,7 @@
 	<p> Classes: </p>
 	<ul>
 	{{#each class}}
-	<li>{{class.name}}<input type='button' class='remove' data-post-id={{_id}} data-author={{author._id}} value='Delete'></li>
+	<li>{{this}}<input type='button' class='remove' data-post-id={{_id}} data-author={{author._id}} value='x'></li>
 	{{/each}}
 	</ul>
 	<form action="group/class" method="post">
