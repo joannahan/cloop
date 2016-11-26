@@ -1,7 +1,7 @@
 // Lead author: Danny
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
-
+var User = require("./user");
 // var Comment = require("./comment");
 
 var PostSchema = mongoose.Schema({
@@ -26,17 +26,27 @@ PostSchema.statics.getPost = function(postId, callback) {
     that.findOne({"_id": postId}, callback);
 }
 
+
 /**
  * Gets all comments of an array of posts
  * 
  * @param postIds {Array[ObjectId]} - The ids of the posts
  * @param callback {function} - callback function
  */
-PostSchema.statics.getComments = function(postIds, callback) {
+PostSchema.statics.populateComments = function(postIds, callback) {
     var that = this;
     that
         .find({"_id": {$in: postIds}})
-        .populate("comments")
+        //.populate("comments")
+        .populate("author")
+        .populate({
+        	path: 'comments',
+        	model: 'Comment',
+        	populate: {
+        		path: 'author',
+        		model: 'User'
+        	}
+        })
         .exec(callback);
 }
 

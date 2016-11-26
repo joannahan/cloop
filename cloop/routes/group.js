@@ -64,25 +64,26 @@ router.get('/:name', function(req, res, next) {
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Class Page";
 
-	Class.getClass(className, function(err, result) {
+	Class.getClass(className, function(err, _class) {
 		if (err) {
 			console.log(err);
 		} else {
-			var classId = result._id;
+			var classId = _class._id;
 			handlebarsObject.classId = classId;
 
-			Class.getPosts(classId, function(err, result) {
+			Class.getPosts(classId, function(err, posts) {
 				if (err) {
 					console.log(err);
 				} else {
-					var classPosts = result.posts;
+					var classPosts = posts.posts;
 					var postIds = classPosts.map(function(a) {return a._id});
 
-					Post.getComments(postIds, function(err, results) {
+					Post.populateComments(postIds, function(err, posts) {
 						if (err) {
 							console.log(err);
 						} else {
-							handlebarsObject.post = results.reverse();
+							//console.log("getPosts:" + posts);
+							handlebarsObject.post = posts.reverse();
 							//for each author in results, replace it with name
 							res.render('class_page', handlebarsObject);
 						}

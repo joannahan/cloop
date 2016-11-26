@@ -4,6 +4,7 @@ var router = express.Router();
 
 var User = require('../models/user');
 var Comment = require('../models/comment');
+var Class = require('../models/class');
 
 var requestCallback = function(res) {
 	return function(err, result) {
@@ -13,7 +14,17 @@ var requestCallback = function(res) {
 			res.redirect('/group');
 		}
 	}
-}
+};
+
+var requestCallback2 = function(res) {
+	return function(err, result) {
+		if (err) {
+			res.send(err);
+		} else {
+			res.redirect('/group/' + result.name);
+		}
+	}
+};
 
 //Get all comments
 router.get('/', function(req,res){
@@ -32,7 +43,15 @@ router.post('/:postId/comment', function(req, res, next) {
 	var authorId = req.user.id;
 	var postId = req.params.postId;
 
-	Comment.createComment(authorId, postId, commentText, requestCallback(res));
+	Comment.createComment(authorId, postId, commentText, requestCallback(res)); 
+//	Comment.createComment(authorId, postId, commentText, function(err, _class) {
+//		if (err) {
+//			console.log(err);
+//		} else {
+//			console.log("AD:LKFJA:LKDJFL:DKAJF>>>>>>>" + _class);
+//			Class.getClassByPostId(postId, requestCallback2(res));
+//		}
+//	});
 });
 
 //delete comment

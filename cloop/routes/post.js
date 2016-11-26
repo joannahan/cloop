@@ -24,7 +24,7 @@ var requestCallback2 = function(res) {
 			res.redirect('/group/' + result.name);
 		}
 	}
-}
+};
 
 
 //Get all posts
@@ -48,7 +48,9 @@ router.post('/:classId/post', function(req, res, next) {
 		if (err) {
 			console.log(err);
 		} else {
+			//console.log("post" + post);
 			var postId = post._id;
+			//console.log("postId" + postId);
 			Class.addPost(classId, postId, function(err, result){
 				if (err){
 					if (debug===1) console.log("classId.err"+err);

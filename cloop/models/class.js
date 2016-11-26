@@ -42,6 +42,20 @@ ClassSchema.statics.getClassById = function(id, callback) {
 }
 
 /**
+ * Gets a specific class's name by post id
+ * 
+ * @param id {ObjectId} - The id of the post
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.getClassByPostId = function(id, callback) {
+    var that = this;
+//    var query={id:{"$in" : that.posts}};
+//    that.find(query, callback);
+}
+
+
+
+/**
  * Get all students of a class
  * 
  * @param classId {ObjectId} - The id of the class
@@ -71,7 +85,15 @@ ClassSchema.statics.getPosts = function(classId, callback) {
     var that = this;
     that
         .findOne({"_id": classId})
-        .populate("posts")
+        //.populate('posts')
+        .populate({
+        	path: 'posts',
+        	model: 'Post',
+        	populate: {
+        		path: 'author',
+        		model: 'User'
+        	}
+        })
         .exec(callback);
 }
 
