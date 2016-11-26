@@ -63,7 +63,10 @@ router.get('/:name', function(req, res, next) {
 	var handlebarsObject = {};
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Class Page";
-
+	if (req.user === undefined) {
+		//return {end:"end"};
+		throw new Error("Please login first.");
+	} 
 	Class.getClass(className, function(err, _class) {
 		if (err) {
 			console.log(err);

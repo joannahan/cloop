@@ -27,16 +27,6 @@ PostSchema.statics.getPost = function(postId, callback) {
 }
 
 /**
- * Get all post ids
- * 
- * @param callback {function} - callback function
- */
-PostSchema.statics.getAllPostIds = function(callback) {
-    var that = this;
-    that.findOne({"_id": postId}, callback);
-}
-
-/**
  * Gets all comments of an array of posts
  * 
  * @param postIds {Array[ObjectId]} - The ids of the posts
