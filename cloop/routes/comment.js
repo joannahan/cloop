@@ -43,15 +43,13 @@ router.post('/:postId/comment', function(req, res, next) {
 	var authorId = req.user.id;
 	var postId = req.params.postId;
 
-	Comment.createComment(authorId, postId, commentText, requestCallback(res)); 
-//	Comment.createComment(authorId, postId, commentText, function(err, _class) {
-//		if (err) {
-//			console.log(err);
-//		} else {
-//			console.log("AD:LKFJA:LKDJFL:DKAJF>>>>>>>" + _class);
-//			Class.getClassByPostId(postId, requestCallback2(res));
-//		}
-//	});
+	Comment.createComment(authorId, postId, commentText, function(err, _class) {
+		if (err) {
+			console.log(err);
+		} else {
+			Class.getClassByPostId(postId, requestCallback2(res));
+		}
+	});
 });
 
 //delete comment

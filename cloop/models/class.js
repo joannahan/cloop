@@ -49,8 +49,8 @@ ClassSchema.statics.getClassById = function(id, callback) {
  */
 ClassSchema.statics.getClassByPostId = function(id, callback) {
     var that = this;
-//    var query={id:{"$in" : that.posts}};
-//    that.find(query, callback);
+    var query = {posts: {"$in":[id]}};
+    that.findOne(query, callback);
 }
 
 
