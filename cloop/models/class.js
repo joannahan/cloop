@@ -31,6 +31,17 @@ ClassSchema.statics.getClass = function(name, callback) {
 }
 
 /**
+ * Gets a specific class's name by id
+ * 
+ * @param id {ObjectId} - The id of the class
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.getClassById = function(id, callback) {
+    var that = this;
+    that.findOne({"_id": id}, callback);
+}
+
+/**
  * Get all students of a class
  * 
  * @param classId {ObjectId} - The id of the class

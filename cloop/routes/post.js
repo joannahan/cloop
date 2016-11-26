@@ -14,7 +14,18 @@ var requestCallback = function(res) {
 			res.redirect('/group');
 		}
 	}
+};
+
+var requestCallback2 = function(res) {
+	return function(err, result) {
+		if (err) {
+			res.send(err);
+		} else {
+			res.redirect('/group/' + result.name);
+		}
+	}
 }
+
 
 //Get all posts
 router.get('/', function(req,res){
@@ -26,18 +37,27 @@ router.get('/', function(req,res){
 //	
 //});
 
+var debug = 1;
 //create new post
 router.post('/:classId/post', function(req, res, next) {
 	var postText = req.body.postText;
 	var authorId = req.user.id;
 	var classId = req.params.classId;
 
-	Post.createPost(authorId, postText, function(err, result) {
+	Post.createPost(authorId, postText, function(err, post) {
 		if (err) {
 			console.log(err);
 		} else {
-			var postId = result._id;
-			Class.addPost(classId, postId, requestCallback(res));
+			var postId = post._id;
+			Class.addPost(classId, postId, function(err, result){
+				if (err){
+					if (debug===1) console.log("classId.err"+err);
+					res.send(err);
+				} else {
+					Class.getClassById(classId, requestCallback2(res));
+				}
+			});
+
 		}
 	});
 });
