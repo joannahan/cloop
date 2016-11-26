@@ -127,45 +127,6 @@ UserSchema.statics.getUserById=function(id,callback){
 	User.findById(id,callback);
 }
 
-/**
- * Get all authors
- * 
- * @param postId {ObjectId} - The id of the post
- * @param callback {function} - callback function
- */
-UserSchema.statics.getAllAuthors = function(posts, callback) {
-    var that = this;
-    var posts = posts.posts;
-    //console.log("posts.posts.length:" + posts.length);
-    for (var i=0; i<posts.length; i++) {
-        posts[i].author = {_id: posts[i].author, 
-        		name: ''};
-    	console.log("previous author.............:" + posts[i].author);
-        var postAuthor = posts[i].author;
-        var name='';
-        User.getUserById(postAuthor,  function(err,user) {
-        	if (err) {
-        		console.log("error" + err);
-        	} else {
-        		//console.log("after author.............:" + posts[i].author);
-        		console.log("posts.posts.............:" + user);
-        		postAuthor.name = {name: user.name};
-        	}
-        }); 
-        
-        console.log("after author.............:" + posts[i].author);
-        //console.log("posts.posts.............:" + userObject.name);
-
-    }
-//    posts.forEach (function(post) {
-//    	console.log("post.author:" + post.author);
-//    	console.log("author:" + User.getUserById(post.author));
-//        post.author = {_id: post.author, 
-//        		user: User.getUserById(post.author)};
-//    });
-    return posts;
-}
-
 
 /**
  * Get classes student has taken
