@@ -61,7 +61,7 @@ router.delete('/:_id', function(req, res, next) {
 		if (err) {
 			res.send(err);
 		} else {
-			if (result.author === userId) {
+			if (result.author == userId) {
 				Comment.removeComment(commentId, requestCallback(res));
 			} else {
 				res.send("Wrong user!");

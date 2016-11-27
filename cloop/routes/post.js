@@ -69,15 +69,30 @@ router.post('/:classId/post', function(req, res, next) {
 router.delete('/:_id', function(req, res, next) {
 	var postId = req.params._id;
 	var userId = req.user.id;
-
+	console.log("poop:" + postId);
 	Post.getPost(postId, function(err, result) {
 		if (err) {
+			console.log("ERROR"+err);
 			res.send(err);
 		} else {
-			if (result.author === userId) {
-				Post.removePost(postId, requestCallback(res));
+			console.log("RESULTAUTHOR: "+ result.author + "USERID: " + userId);
+			if (result.author == userId) {
+				//Post.removePost(postId, requestCallback(res));
+				Post.removePost(postId, function(err, result) {
+					res.json({
+						success:true,
+						remove:true,
+						message: ""
+					})
+				});
 			} else {
-				res.send("Wrong user!");
+				//res.send("Wrong user!");
+				console.log("WRONG PERSON");
+				res.json({
+					success:true,
+					remove:false,
+					message: "Wrong user!"
+				});
 			}
 		}
 	});
