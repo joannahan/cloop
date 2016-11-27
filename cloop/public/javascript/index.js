@@ -7,9 +7,6 @@ $(document).ready(function() {
     $.get('/group/getall', function(posts) {
  
 	});
-
-	//
-	$()
     
 	/*
 	 * security protection:
@@ -18,6 +15,7 @@ $(document).ready(function() {
 	if ($login && $login.data('userid')===''){
 		window.location.href = "/users/login";
 	}
+
 	/*
 	 * Custom Handlebars Function Helpers
 	 * source: http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/ 

@@ -29,13 +29,18 @@ router.get('/', function(req, res, next) {
 			});
 		}
 
-		var data = {
-		username: req.user.username,
-		email: req.user.email,
-		class: classlist
-		};
+		Class.getAllClasses(function(classNames){
 
-		res.render('user_page', data);	
+			var data = {
+				username: req.user.username,
+				email: req.user.email,
+				userclass: classlist,
+				allclass: classNames
+			};
+
+			res.render('user_page', data);	
+
+		});
 	});
 });
 
@@ -107,6 +112,7 @@ router.get('/search/:_name', function(req, res, next) {
 router.post('/class', function(req, res, next) {
 	var className = req.body.className;
 	Class.createClass(className, requestCallback(res));
+	//possibly update class list for autocomplete
 });
 
 //add student to a class
