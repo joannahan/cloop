@@ -9,11 +9,8 @@ var Comment = require('../models/comment');
 
 var requestCallback = function(res) {
 	return function(err, result) {
-		if (err) {
-			res.send(err);
-		} else {
-			res.redirect('/group');
-		}
+		if (err)	res.send(err);
+		else		res.redirect('/group');
 	}
 }
 
@@ -29,13 +26,18 @@ router.get('/', function(req, res, next) {
 			});
 		}
 
-		var data = {
-		username: req.user.username,
-		email: req.user.email,
-		class: classlist
-		};
+		Class.getAllClasses(function(classNames){
 
-		res.render('user_page', data);	
+			var data = {
+				username: req.user.username,
+				email: req.user.email,
+				userclass: classlist,
+				allclass: classNames
+			};
+
+			res.render('user_page', data);	
+
+		});
 	});
 });
 
@@ -106,7 +108,18 @@ router.get('/search/:_name', function(req, res, next) {
 //create new class page
 router.post('/class', function(req, res, next) {
 	var className = req.body.className;
-	Class.createClass(className, requestCallback(res));
+	Class.createClass(className, function(err, result) {
+		if (err) {
+			if (err.code === 11000) {
+				req.flash('error_msg','There already exists a class with that name.');
+	  			res.redirect('/group');
+			}
+			else res.send(err);
+		}	
+		else
+			res.redirect('/group');
+	});
+	//possibly update class list for autocomplete
 });
 
 //add student to a class
@@ -132,20 +145,20 @@ router.post('/user/remove', function(req, res, next) {
 });
 
 //common helper function for callback
-var done=function(res, err, success, customMessage){
+var done = function(res, err, success, customMessage) {
 	if (err) {
 		console.log(err);
-			res.json({
+		res.json({
 			success: false, 
 			message: err.message
 		});
-	}else if (err===null && success===false){
+	} else if (err === null && success === false) {
 		// console.log(customMessage);
 		res.json({
 			success: false, 
 			message: customMessage	
 		});	
-	}else{
+	} else {
 		res.json({
 			success: true, 
 			message: customMessage	

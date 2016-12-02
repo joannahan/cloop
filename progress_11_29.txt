@@ -1,0 +1,38 @@
+Progress Report for 11/28 Mentor Meeting
+
+Last Mentor Meeting: 11/21 3:30-4PM
+Topics covered:
+Data models, schemas
+Anonymity
+Storing resources - automatically make external storage?
+MIT certificates or MIT email validation
+Preventing CSRF attacks
+Had: Routes, schemas, framework, basic handlebars templates and css
+
+Group Meeting: 11/21 4-6PM
+-Implemented login (Joanna)
+-Investigated resource storage, MIT certs, security (Danny)
+-Investigated tabs (Manuel)
+-Implemented handlebars templates (Ming)
+Agenda for next meeting:
+-Finalize templates/UI
+-Connect views with models, basic functionality
+
+Group Meeting: 11/22 - 11/23
+-Implemented MVP
+-Displaying user/class pages, posts, comments
+-Adding and joining classes and users
+-Debugging involving usernames showing as id numbers, circular dependencies
+-Security/hard navigating to class pages by url
+-Navigation between user and class pages
+
+Known issues:
+-Duplicate classes
+-accounts under the same email
+-Infinite up votes
+-Deleting comments when you aren’t the author works on the view, but not on the server (refreshing will restore the comment)
+
+To implement:
+-Only display delete if you are the author
+-Class search/possibly autocomplete/unify create&join
+-Resources

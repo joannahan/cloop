@@ -7,7 +7,8 @@ var ClassSchema = mongoose.Schema({
       name:{
     	  type:String,
     	  index:true,
-    	  required:true
+    	  required:true,
+          unique: true
       },
       students:[{
     	  type: mongoose.Schema.Types.ObjectId, 
@@ -53,6 +54,22 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
     that.findOne(query, callback);
 }
 
+/**
+ * Gets list of all class names
+ * @param callback {function} - callback function
+ */
+ ClassSchema.statics.getAllClasses = function(callback) {
+    this.find({}, function(err, results){
+        if (err) {
+            callback(err);
+        } else {
+            var classNames = results.map(function(x){
+                return x.name;
+            });
+            callback(classNames);
+        }
+    });
+ }
 
 
 /**

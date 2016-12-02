@@ -44,35 +44,21 @@ router.post('/register', function(req,res){
 	req.checkBody('password','Password is required').notEmpty();
 	req.checkBody('password2','Password do not match').equals(req.body.password);
 	var errors=req.validationErrors();
-	if(errors){
-//		console.log("error:" + errors);
-		res.render('register',{
-			errors:errors
-		});		
-	}else{
-//		console.log("name:" + name);
-		User.getUserByUsername(username, function(err,user){	
-//			console.log("error:" + err);
-//			console.log("user:" + user);
+	if (errors)
+		res.render('register',{errors:errors});		
+	else {
+		var newUser = new User({name:name, email:email, username:username, password:password});
+		User.createUser(newUser, function(err,user) {
 			if(err) {
-				//return done(res, err, false, null);
-				req.flash('error_msg',err.message);
-			}else if (user!=null){
-				req.flash('error_msg','Same user name is already used by someone. Please select a new user name.');
-				res.redirect('/users/register');
-			}else{	
-//				console.log("user:" + user);
-				var newUser=new User({
-					name:name,
-					email:email,
-					username:username,
-					password:password
-				});
-				User.createUser(newUser, function(err,user){
-					if(err) throw err;
-				});
+				if (err.code == 11000) {
+					req.flash('error_msg','Same user name is already used by someone. Please select a new user name.');
+					res.redirect('/users/register');
+				} else {
+					req.flash('error_msg',err.message);
+				}
+			} else {
 				req.flash('success_msg','You are registered and can now login');
-				res.redirect('/users/login');				
+				res.redirect('/users/login');
 			}
 		});
 	}
@@ -88,14 +74,13 @@ router.post('/login',
 	passport.authenticate('local',{successRedirect:'/group',failureRedirect:'/users/login',failureFlash:true}),
 	function(req, res) {
 		res.redirect('/');
-});
+	}
+);
 
 //Logout
 router.get('/logout', function(req, res){
 	req.logout();
-
 	req.flash('success_msg', 'You are logged out');
-
 	res.redirect('/users/login');
 });
 
@@ -119,6 +104,7 @@ passport.use(new LocalStrategy(
 
   }
 ));
+
 //serialize user session
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
@@ -131,22 +117,21 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
-
 //common helper function for callback
-var done=function(res, err, success, customMessage){
+var done = function(res, err, success, customMessage) {
 	if (err) {
 		console.log(err);
 			res.json({
 			success: false, 
 			message: err.message
 		});
-	}else if (err===null && success===false){
+	} else if (err===null && success===false) {
 		console.log(customMessage);
 		res.json({
 			success: false, 
 			message: customMessage	
 		});	
-	}else{
+	} else {
 		res.json({
 			success: true, 
 			message: customMessage	

@@ -1,0 +1,18 @@
+Progress Report for 12/5 Mentor Meeting
+
+Last Mentor Meeting: 11/28 3:30-4PM
+Topics covered:
+MVP Demo
+-images/resources: limiting the ones we support
+-threat model
+-infinite upvoting issue
+-debugging - something caused a server crash
+-refine the UI
+-listing design insights, textual constraints, revising design document
+
+Progress since last mentor meeting:
+-Revision of design document, schemas, and data model
+-Email validation (still need to send email verification)
+-Restricting unique usernames and emails
+-Infinite upvoting: each post keeps track of who up votes it
+-Search bar and displaying of all available classes (todo: trie autocomplete)
