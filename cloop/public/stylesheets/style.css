@@ -1,9 +1,17 @@
-/*Lead author: Joanna*/
+/*Lead author: Ming*/
+@import url('https://fonts.googleapis.com/css?family=Reem+Kufi');
+
 body {
   padding: 10px;
   /*font-family: 'Roboto Condensed', sans-serif;*/
 
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.title {
+	font-family: 'Reem Kufi', sans-serif;
+	font-size: 40px;
+
 }
 
 /*The button*/

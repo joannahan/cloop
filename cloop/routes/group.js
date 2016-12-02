@@ -28,15 +28,17 @@ router.get('/', function(req, res, next) {
 
 		Class.getAllClasses(function(classNames){
 
+			//remove userClass from allclass
+			var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
+
 			var data = {
 				username: req.user.username,
 				email: req.user.email,
 				userclass: classlist,
-				allclass: classNames
+				allclass: otherClasses
 			};
 
 			res.render('user_page', data);	
-
 		});
 	});
 });

@@ -20,6 +20,12 @@ $(document).ready(function() {
 	 * Custom Handlebars Function Helpers
 	 * source: http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/ 
 	 */
+
+	//Helper for autocomplete
+	Handlebars.registerHelper('addClassToTrie', function(word){
+
+	})
+
 	Handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
 	    if (arguments.length < 3)
 	        throw new Error("Handlebars Helper equal needs 2 parameters");

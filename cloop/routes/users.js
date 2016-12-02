@@ -42,7 +42,7 @@ router.post('/register', function(req,res){
 	req.checkBody('email','Email is not valid').isEmail();
 	req.checkBody('username','Username is required').notEmpty();
 	req.checkBody('password','Password is required').notEmpty();
-	req.checkBody('password2','Password do not match').equals(req.body.password);
+	req.checkBody('password2','Passwords do not match').equals(req.body.password);
 	var errors=req.validationErrors();
 	if (errors)
 		res.render('register',{errors:errors});		
@@ -51,13 +51,13 @@ router.post('/register', function(req,res){
 		User.createUser(newUser, function(err,user) {
 			if(err) {
 				if (err.code == 11000) {
-					req.flash('error_msg','Same user name is already used by someone. Please select a new user name.');
+					req.flash('error_msg','Username already in use. Please select a new username.');
 					res.redirect('/users/register');
 				} else {
 					req.flash('error_msg',err.message);
 				}
 			} else {
-				req.flash('success_msg','You are registered and can now login');
+				req.flash('success_msg','You are registered and can now log in');
 				res.redirect('/users/login');
 			}
 		});
@@ -80,7 +80,7 @@ router.post('/login',
 //Logout
 router.get('/logout', function(req, res){
 	req.logout();
-	req.flash('success_msg', 'You are logged out');
+	req.flash('success_msg', 'You have been logged out');
 	res.redirect('/users/login');
 });
 
