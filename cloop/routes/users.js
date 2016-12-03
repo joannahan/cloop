@@ -6,6 +6,22 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+var secret = require('../secret/secret');
+var transporter = secret['transporter'];
+
+router.get('/mail', function(req, res, next) {
+	var mailOptions = {
+		from: 'noreply.cloop@gmail.com',
+		to: 'data1013@mit.edu',
+		subject: 'Testing Mail',
+		text: 'cloopcloop'
+	}
+
+	transporter.sendMail(mailOptions);
+
+	res.send('Success!');
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   //res.send('This is the user page lmao');
@@ -35,15 +51,17 @@ router.post('/register', function(req,res){
 	var username=req.body.username;
 	var password=req.body.password;
 	var password2=req.body.password2;
-	
+
 	//Validation
 	req.checkBody('name','Name is required').notEmpty();
 	req.checkBody('email','Email is required').notEmpty();
 	req.checkBody('email','Email is not valid').isEmail();
+	req.checkBody('email', 'Email must end in @mit.edu').isMITEmail();
 	req.checkBody('username','Username is required').notEmpty();
 	req.checkBody('password','Password is required').notEmpty();
 	req.checkBody('password2','Passwords do not match').equals(req.body.password);
 	var errors=req.validationErrors();
+	console.log(errors);
 	if (errors)
 		res.render('register',{errors:errors});		
 	else {

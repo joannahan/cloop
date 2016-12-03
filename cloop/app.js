@@ -72,6 +72,16 @@ app.use(expressValidator({
       msg   : msg,
       value : value
     };
+  },
+
+  customValidators: {
+  	isMITEmail: function(email) {
+		emailLength = email.length;
+		emailValidation = '@mit.edu';
+		emailValidationLength = emailValidation.length;
+
+		return email.slice(emailLength - emailValidationLength) === emailValidation;
+	}
   }
 }));
 
