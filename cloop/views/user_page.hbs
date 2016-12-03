@@ -4,20 +4,13 @@
 	<p> Email: {{email}} </p>
 	<p> Classes: </p>
 	<ul>
-	<!--
-		{{#each userclass}}
-			<li>
-				<form action='group/{{this}}' method='get'>{{this}}<input type="submit" value="Go to class page"></form>
-				<input type="submit" data_taken='{{classes._id}}' value="Add to Taken Class"> 
-			</li>
-		{{/each}}
-	-->
 		{{#each classes}}
-			<li>
+			<li id='{{this.name}}'>
 				<form action='group/{{this.name}}' method='get'>{{this.name}}<input type="submit" value="Go to class page"></form>
 				<input type="submit" id='takenClass'+ {{this._id}} data-taken='{{this._id}}' value="Add to Taken Class"> 
 				<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
 				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
+				<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' readonly hidden><input type='submit' value='x'></form>
 			</li>
 		{{/each}}
 		
