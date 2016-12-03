@@ -5,77 +5,30 @@ var Comment = require("./comment.js");
 var bcrypt = require('bcryptjs');
 
 var UserSchema = mongoose.Schema({
-  username: {
-	  type:String,
-	  index:true,
-	  required:true,
-    unique:true
-  },
-  password:{
-	  type:String,
-	  required:true
-  },
-  email:{
-	  type:String
-  },
-  student: {
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'User'
-  },
-  kerberos:{
-	  type:String,
-	  index:true
-  },
-  name:{
-	  type:String
-  },
-  classesTaken:[{
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'Class'
-  }], 
-  classesEnrolled:[{
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'Class'
-  }],
-  upvotePost:[{
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'Post'
-  }],
-  upvoteComment:[{
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'Comment'
-  }],
-  flagPost:[{
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'Post'
-  }], 
-  flagComment:[{
-	  type: mongoose.Schema.Types.ObjectId, 
-	  ref: 'Comment'
-  }], 
-  flaggedRemovals:{
-	  type:Number,
-	  default: 0
-  }
+  username:   {type:String,  required:true, unique:true, index:true},
+  password:   {type:String,  required:true},
+  hashed:     {type:Boolean, required:true},
+  name:       {type:String,  required:true},
+  email:      {type:String,  required:true, unique: true},
+  
+  classesTaken:     [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}], 
+  classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}]
 });
 
-//TODO: implement upvote and flag methods after finding a better schema
+UserSchema.pre('save', function(next) {
+  var user = this
+  if (user.hashed) return next()
 
-/**
- * Create a user object
- * 
- * @param newUser {Object} - new User object
- * @param callback {function} - callback function
- * @return new user
- */
-UserSchema.statics.createUser=function(newUser, callback){
-	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(newUser.password, salt, function(err, hash) {
-	        newUser.password=hash;
-	        newUser.save(callback);
-	    });
-	});	
-}
+  bcrypt.genSalt(function(err, salt) {
+      if (err) return next(err)
+
+      bcrypt.hash(user.password, salt, function(err, hash) {
+          user.password = hash;
+          user.hashed = true;
+          next()
+      });
+  });
+})
 
 /**
  * Compare user password to hashed password
@@ -85,11 +38,10 @@ UserSchema.statics.createUser=function(newUser, callback){
  * @param callback {function} - callback function
  * @return success or error
  */
-UserSchema.statics.comparePassword=function(candidatePassword,hash,callback){
-	bcrypt.compare(candidatePassword,hash,function(err,isMatch){
-		if(err) throw err;
-		callback(null,isMatch);
-	});
+UserSchema.methods.verifyPassword = function(password, callback) {
+  bcrypt.compare(password, this.password, function(err,isMatch) {
+   callback(err,isMatch);
+  });
 }
 
 /**
@@ -99,9 +51,8 @@ UserSchema.statics.comparePassword=function(candidatePassword,hash,callback){
  * @param callback {function} - callback function
  * @return user object with specific name
  */
-UserSchema.statics.getUserByName=function(name,callback){
-	var query={name:name};
-	User.findOne(query,callback);
+UserSchema.statics.getUserByName = function(name,callback) {
+	User.findOne({name:name},callback);
 }
 
 
@@ -112,9 +63,8 @@ UserSchema.statics.getUserByName=function(name,callback){
  * @param callback {function} - callback function
  * @return user object with specific username
  */
-UserSchema.statics.getUserByUsername=function(username,callback){
-	var query={username:username};
-	User.findOne(query,callback);	
+UserSchema.statics.getUserByUsername = function(username,callback) {
+	User.findOne({username:username},callback);	
 }
 
 /**
@@ -124,7 +74,7 @@ UserSchema.statics.getUserByUsername=function(username,callback){
  * @param callback {function} - callback function
  * @return user object with specific user id
  */
-UserSchema.statics.getUserById=function(id,callback){
+UserSchema.statics.getUserById = function(id,callback) {
 	User.findById(id,callback);
 }
 
@@ -135,7 +85,7 @@ UserSchema.statics.getUserById=function(id,callback){
  * @param callback {function} - callback function
  * @return classes collections with specific student id
  */
-UserSchema.statics.getClassesTakenByStudent=function(student,callback){
+UserSchema.statics.getClassesTakenByStudent = function(student,callback) {
 	User.findOne({_id: student.id}, function(err, studentFound){
     var classIds = [];
     for (var i = 0; i < studentFound.classesEnrolled.length; i++){
@@ -155,17 +105,16 @@ UserSchema.statics.getClassesTakenByStudent=function(student,callback){
  * @return success or error
  */
 UserSchema.statics.updateClassesTakenList = function (classId, userId, action, callback) {
-	var query={_id:userId};
-    User.findOne(query, function (err, user) {
-        if (err || user == null){
-        	return callback(err, user);
-        }     	
-        var classesTaken = user.classesTaken;
-        addOrRemoveFromList(classesTaken, classId, action);
-        user.save(function (err, user) {
-            return callback(err, user);
-        });
-    });
+  User.findOne({_id:userId}, function (err, user) {
+      if (err || user == null){
+      	return callback(err, user);
+      }     	
+      var classesTaken = user.classesTaken;
+      addOrRemoveFromList(classesTaken, classId, action);
+      user.save(function (err, user) {
+          return callback(err, user);
+      });
+  });
 }
 
 /**
@@ -175,7 +124,7 @@ UserSchema.statics.updateClassesTakenList = function (classId, userId, action, c
  * @param callback {function} - callback function
  * @return classes collections with specific student id
  */
-UserSchema.statics.getClassesEnrolledByStudent=function(studentToFind,callback){
+UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback) {
   User.findOne({_id: studentToFind.id}, function(err, studentFound){
     var classIds = [];
     for (var i = 0; i < studentFound.classesEnrolled.length; i++){
@@ -210,150 +159,6 @@ UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action
 }
 
 /**
- * Adds a post to the user's upvoted posts
- * 
- * @param userId {ObjectId} - the user's id
- * @param postId {ObjectId} - the post's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.addUpvotePost = function(userId, postId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$push: {"upvotePost": postId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Post.addUpvote(postId, callback);
-    }
-  });
-}
-
-/**
- * Removes a post from the user's upvoted posts
- * 
- * @param userId {ObjectId} - the user's id
- * @param postId {ObjectId} - the post's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.unUpvotePost = function(userId, postId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$pull: {"upvotePost": postId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Post.unUpvote(postId, callback);
-    }
-  });
-}
-
-/**
- * Adds a post to the user's flagged posts
- * 
- * @param userId {ObjectId} - the user's id
- * @param postId {ObjectId} - the post's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.addFlagPost = function(userId, postId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$push: {"flagPost": postId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Post.addFlag(postId, callback);
-    }
-  });
-}
-
-/**
- * Removes a post from the user's flagged posts
- * 
- * @param userId {ObjectId} - the user's id
- * @param postId {ObjectId} - the post's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.unFlagPost = function(userId, postId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$pull: {"flagPost": postId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Post.unFlag(postId, callback);
-    }
-  });
-}
-
-/**
- * Adds a comment to the user's upvoted comments
- * 
- * @param userId {ObjectId} - the user's id
- * @param commentId {ObjectId} - the comment's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.addUpvoteComment = function(userId, commentId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$push: {"upvoteComment": commentId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Comment.addUpvote(commentId, callback);
-    }
-  });
-}
-
-/**
- * Removes a comment from the user's upvoted comments
- * 
- * @param userId {ObjectId} - the user's id
- * @param commentId {ObjectId} - the comment's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.unUpvoteComment = function(userId, commentId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$pull: {"upvoteComment": commentId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Comment.unUpvote(commentId, callback);
-    }
-  });
-}
-
-/**
- * Adds a comment to the user's flagged comments
- * 
- * @param userId {ObjectId} - the user's id
- * @param commentId {ObjectId} - the comment's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.addFlagComment = function(userId, commentId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$push: {"flagComment": commentId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Comment.addFlag(commentId, callback);
-    }
-  });
-}
-
-/**
- * Removes a comment from the user's flagged comments
- * 
- * @param userId {ObjectId} - the user's id
- * @param commentId {ObjectId} - the comment's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$pull: {"flagComment": commentId}}, function(err, result) {
-    if (err) {
-      callback(err);
-    } else {
-      Comment.unFlag(commentId, callback);
-    }
-  });
-}
-
-/**
  * Adds a class to a user's enrolled classes 
  *
  * @param userId {ObjectId} - the user's id
@@ -361,8 +166,7 @@ UserSchema.statics.unFlagComment = function(userId, commentId, callback) {
  * @param callback {function} - callback function
  */
 UserSchema.statics.addClass = function(userId, classId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
+  User.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
 }
 
 /**
@@ -373,8 +177,7 @@ UserSchema.statics.addClass = function(userId, classId, callback) {
  * @param callback {function} - callback function
  */
 UserSchema.statics.removeClass = function(userId, classId, callback) {
-  var that = this;
-  that.update({"_id": userId}, {$pull: {"classesEnrolled": classId}}, callback);
+  User.update({"_id": userId}, {$pull: {"classesEnrolled": classId}}, callback);
 }
 
 /**
@@ -411,7 +214,7 @@ UserSchema.statics.isEnrolledIn = function (user, classId) {
  */
 var addOrRemoveFromList = function(list, item, action) {
     // add to list
-    if (action==='add') {
+    if (action ==='add') {
         list.push(item);
     } else { 
         // remove from list
