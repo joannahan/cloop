@@ -73,7 +73,7 @@ router.get('/:name', function(req, res, next) {
 	if (req.user === undefined) {
 		//return {end:"end"};
 		throw new Error("Please login first.");
-	} 
+	} 	
 	Class.getClass(className, function(err, _class) {
 		if (err) {
 			console.log(err);
@@ -96,6 +96,46 @@ router.get('/:name', function(req, res, next) {
 							handlebarsObject.post = posts.reverse();
 							//for each author in results, replace it with name
 							res.render('class_page', handlebarsObject);
+						}
+					});
+				}
+			});
+		}
+	});
+});
+
+//get archived class page
+router.get('/archives/:name', function(req, res, next) {
+	var className = req.params.name;
+	var handlebarsObject = {};
+	handlebarsObject.title = className;
+	handlebarsObject.description = "Class Page";
+	if (req.user === undefined) {
+		//return {end:"end"};
+		throw new Error("Please login first.");
+	} 	
+	Class.getClass(className, function(err, _class) {
+		if (err) {
+			console.log(err);
+		} else {
+			var classId = _class._id;
+			handlebarsObject.classId = classId;
+
+			Class.getPosts(classId, function(err, posts) {
+				if (err) {
+					console.log(err);
+				} else {
+					var classPosts = posts.posts;
+					var postIds = classPosts.map(function(a) {return a._id});
+
+					Post.populateComments(postIds, function(err, posts) {
+						if (err) {
+							console.log(err);
+						} else {
+							//console.log("getPosts:" + posts);
+							handlebarsObject.post = posts.reverse();
+							//for each author in results, replace it with name
+							res.render('archived_class_page', handlebarsObject);
 						}
 					});
 				}

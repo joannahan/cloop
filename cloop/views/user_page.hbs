@@ -16,8 +16,12 @@
 			<li>
 				<form action='group/{{this.name}}' method='get'>{{this.name}}<input type="submit" value="Go to class page"></form>
 				<input type="submit" id='takenClass'+ {{this._id}} data-taken='{{this._id}}' value="Add to Taken Class"> 
+				<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
+				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
 			</li>
-		{{/each}}	
+		{{/each}}
+		
+			
 	
 	</ul>
 

@@ -114,6 +114,20 @@ $(document).ready(function() {
 		});		
 	 });
 	
+	$('#archivedClass*').click(function(){
+		var $name = $(this).data('archived');
+		console.log("$name: "+ $name);
+	    $.get('/group/'+$name, function(err, _class) {
+    		if (err) {
+    			//TODO
+    			console.log(err);
+    		} else {
+    			//TODO
+    			console.log("ALKFJ:AKLDFJ");
+    		}
+		});
+	 });
+	
 	
 
 });

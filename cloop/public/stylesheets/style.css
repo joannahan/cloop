@@ -14,6 +14,10 @@ body {
 
 }
 
+form {
+	display: inline;
+}
+
 /*The button*/
 .upvote {
 	background-image: url(../resources/upvote.png);
