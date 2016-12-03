@@ -128,7 +128,6 @@ UserSchema.statics.getUserById=function(id,callback){
 	User.findById(id,callback);
 }
 
-
 /**
  * Get classes student has taken
  * 
@@ -160,9 +159,9 @@ UserSchema.statics.updateClassesTakenList = function (classId, userId, action, c
     User.findOne(query, function (err, user) {
         if (err || user == null){
         	return callback(err, user);
-        }         	
+        }     	
         var classesTaken = user.classesTaken;
-        addOrRemoveFromList(classesTaken, userId, action);
+        addOrRemoveFromList(classesTaken, classId, action);
         user.save(function (err, user) {
             return callback(err, user);
         });
@@ -201,7 +200,7 @@ UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action
     User.findOne(query, function (err, user) {
         if (err || user == null){
         	return callback(err, user);
-        }         	
+        }  
         var classesEnrolled = user.classesEnrolled;
         addOrRemoveFromList(classesEnrolled, userId, action);
         user.save(function (err, user) {

@@ -20,9 +20,11 @@ router.get('/', function(req, res, next) {
 	//get user's classes:
 	User.getClassesEnrolledByStudent(req.user, function(classIds){
 		var classlist = [];
+		var classes = [];
 		for (var i = 0; i < classIds.length; i++){
 			Class.findOne({_id:classIds[i]}, function(err, resclass){
 				classlist.push(resclass.name);
+				classes.push(resclass);
 			});
 		}
 
@@ -30,12 +32,13 @@ router.get('/', function(req, res, next) {
 
 			//remove userClass from allclass
 			var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
-
+			console.log("classlist: " + classlist + classes);
 			var data = {
 				username: req.user.username,
 				email: req.user.email,
 				userclass: classlist,
-				allclass: otherClasses
+				allclass: otherClasses,
+				classes: classes
 			};
 
 			res.render('user_page', data);	
@@ -144,6 +147,38 @@ router.post('/user/remove', function(req, res, next) {
 	var userId = req.user.id;
 	var classId = req.body.classId;
 	Class.removeStudent(classId, userId, requestCallback(res));
+});
+
+//update classesTaken list based on whether taken or not
+router.put('/:id', function(req, res, next) {
+	// if already taken, but want to untake
+	Class.getClassById(req.params.id, function(err,data){
+		if (err){
+			return done(res, err, false, null);
+		}
+		var _class = data;
+		console.log("class:" + _class);
+		console.log("REQUSER: " + req.user);
+		var isTaken=(req.user.classesTaken.indexOf(_class._id)>-1);
+		console.log("CLASSID: "+ _class._id);
+		console.log("ISTAKEN: " + isTaken);
+		var action=req.body.action;
+		if (!isTaken && action=='add') {
+			User.updateClassesTakenList(_class._id,req.user._id, action, function(err, user){
+				if (err) {
+					return done(res, err, false, null);				
+				} else {
+					console.log("POOP: " + user);
+		  			res.json({
+						success: true,
+						_class: _class
+					});	
+				}
+			});					
+		}else{
+			return done(res, null, true, 'there is no required acton:'+action +' a class (add=class, remove=remove class).');
+		}		
+	});
 });
 
 //common helper function for callback

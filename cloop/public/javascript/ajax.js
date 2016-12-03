@@ -93,6 +93,27 @@ $(document).ready(function() {
 		});
 	 });
 	
+	$('#takenClass*').click(function(){
+		var $id = $(this).data('taken');
+		console.log($id);
+		$.ajax({
+			context:this,
+			type:'PUT',
+			url:'/group/'+ $id,
+			data:{
+				action:'add',
+			},
+			success:function(result){	
+				//TODO
+				console.log("HELLO ADDED");
+			},
+			error:function(){
+				//TODO
+				alert(status.message);
+			}			
+		});		
+	 });
+	
 	
 
 });
