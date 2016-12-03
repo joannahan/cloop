@@ -60,25 +60,26 @@ router.post('/register', function(req,res){
 	req.checkBody('username','Username is required').notEmpty();
 	req.checkBody('password','Password is required').notEmpty();
 	req.checkBody('password2','Passwords do not match').equals(req.body.password);
-	var errors=req.validationErrors();
-	console.log(errors);
-	if (errors)
-		res.render('register',{errors:errors});		
+
+	var errors = req.validationErrors();
+	
+	if (errors)	res.render('register', {errors:errors});
 	else {
-		var newUser = new User({name:name, email:email, username:username, password:password});
-		User.createUser(newUser, function(err,user) {
+		var user = new User({name:name, email:email, username:username, password:password, hashed:false});
+		
+		user.save(function(err, user) {
 			if(err) {
 				if (err.code == 11000) {
-					req.flash('error_msg','Username already in use. Please select a new username.');
+					req.flash('error_msg','A user already exists with this username and/or email');
 					res.redirect('/users/register');
 				} else {
 					req.flash('error_msg',err.message);
 				}
 			} else {
-				req.flash('success_msg','You are registered and can now log in');
+				req.flash('success_msg','You are registered and can now login');
 				res.redirect('/users/login');
 			}
-		});
+		})
 	}
 });
 
@@ -104,22 +105,22 @@ router.get('/logout', function(req, res){
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-	  User.getUserByUsername(username, function(err, user){
+	  User.getUserByUsername(username, function(err, user) {
 		  if(err) throw err;
 		  if(!user){
 			  return done(null, false,{message:'Unknown User'});
 		  }
-		  User.comparePassword(password, user.password, function(err, isMatch){
-			  if(err)throw err;
-			  if(isMatch){
+		  user.verifyPassword(password, function(err, isMatch){
+			  if (err) 
+			  	throw err;
+			  if (isMatch) {
 				  //insert user object to a session here later
-				  return done(null,user)
-			  }else{
-				  return done(null,false,{message:'Invalid password'});
+				  return done(null, user)
+			  } else {
+				  return done(null, false, {message:'Invalid password'});
 			  }
 		  })
 	  });
-
   }
 ));
 

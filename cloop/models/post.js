@@ -5,14 +5,16 @@ var User = require("./user");
 // var Comment = require("./comment");
 
 var PostSchema = mongoose.Schema({
-    author: {type: ObjectId, ref:"User"},
-    text: String,
-    resource: {type: String, default: null},
-    comments: [{type: ObjectId, ref:"Comment"}],
-    timeCreated: {type: Date, default: Date.now},
-    timeEdited: {type: Date, default: null},
-    numUpvotes: {type: Number, default: 0},
-    numFlags: {type: Number, default: 0}
+    text:           {type: String,                required: true},
+    author:         {type: ObjectId, ref: "User", required: true},
+    timeCreated:    {type: Date, default: Date.now},
+    timeEdited:     {type: Date, default: null},
+    
+    comments:       [{type: ObjectId, ref:"Comment"}],
+    upvoteUsers:    [{type: ObjectId, ref: "User"}],
+    flagUsers:      [{type: ObjectId, ref: "User"}],
+    
+    resource:       {type: String, default: null}
 });
 
 /**
@@ -22,8 +24,7 @@ var PostSchema = mongoose.Schema({
  * @param callback {function} - callback function
  */
 PostSchema.statics.getPost = function(postId, callback) {
-    var that = this;
-    that.findOne({"_id": postId}, callback);
+    Post.findOne({"_id": postId}, callback);
 }
 
 /**
@@ -33,9 +34,7 @@ PostSchema.statics.getPost = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.populateComments = function(postIds, callback) {
-    var that = this;
-    that
-        .find({"_id": {$in: postIds}})
+    Post.find({"_id": {$in: postIds}})
         //.populate("comments")
         .populate("author")
         .populate({
@@ -57,8 +56,7 @@ PostSchema.statics.populateComments = function(postIds, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.addComment = function(postId, commentId, callback) {
-    var that = this;
-    that.update({"_id": postId}, {"$push": {"comments": commentId}}, callback);
+    Post.update({"_id": postId}, {"$push": {"comments": commentId}}, callback);
 }
 
 /**
@@ -69,8 +67,7 @@ PostSchema.statics.addComment = function(postId, commentId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.editPost = function(postId, text, callback) {
-    var that = this;
-    that.update({"_id": postId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
+    Post.update({"_id": postId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
 }
 
 /**
@@ -80,8 +77,7 @@ PostSchema.statics.editPost = function(postId, text, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.removePost = function(postId, callback) {
-    var that = this;
-    that.remove({"_id": postId}, callback);
+    Post.remove({"_id": postId}, callback);
         // if (err) {
         //     callback(err);
         // } else {
@@ -102,8 +98,7 @@ PostSchema.statics.removePost = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.addUpvote = function(postId, callback) {
-    var that = this;
-    that.update({"_id": postId}, {"$inc": {"numUpvotes": 1}}, callback)
+    // Post.update({"_id": postId}, {"$inc": {"numUpvotes": 1}}, callback)
 }
 
 /**
@@ -113,8 +108,7 @@ PostSchema.statics.addUpvote = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.unUpvote = function(postId, callback) {
-    var that = this;
-    that.update({"_id": postId}, {"$dec": {"numUpvotes": 1}}, callback)
+    // Post.update({"_id": postId}, {"$dec": {"numUpvotes": 1}}, callback)
 }
 
 /**
@@ -124,8 +118,7 @@ PostSchema.statics.unUpvote = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.addFlag = function(postId, callback) {
-    var that = this;
-    that.update({"_id": postId}, {"$inc": {"numFlags": 1}}, callback)
+    // Post.update({"_id": postId}, {"$inc": {"numFlags": 1}}, callback)
 }
 
 /**
@@ -135,8 +128,7 @@ PostSchema.statics.addFlag = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.unFlag = function(postId, callback) {
-    var that = this;
-    that.update({"_id": postId}, {"$dec": {"numFlags": 1}}, callback)
+    // Post.update({"_id": postId}, {"$dec": {"numFlags": 1}}, callback)
 }
 
 /**
@@ -147,10 +139,9 @@ PostSchema.statics.unFlag = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.createPost = function(authorId, text, callback) {
-    var that = this;
-    that.create({"author": authorId, "text": text}, callback);
+    Post.create({"author": authorId, "text": text}, callback);
 }
 
-var PostModel = mongoose.model("Post", PostSchema);
+var Post = mongoose.model("Post", PostSchema);
 
-module.exports = PostModel;
+module.exports = Post;
