@@ -53,9 +53,7 @@ router.post('/register', function(req,res) {
 	if (errors)	res.render('register', {errors:errors});
 	else {
 		var verificationString = generateVerificationString();
-
-		var user = new User({name:name, email:email, username:username, password:password, hashed:false, verificationString: verificationString});
-
+		var user = new User({name:name, email:email, username:username, password:password, verificationString: verificationString});
 		
 		user.save(function(err, user) {
 			if(err) {
