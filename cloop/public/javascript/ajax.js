@@ -113,6 +113,7 @@ $(document).ready(function() {
 			}			
 		});		
 	 });
+
 	
 //	$('#archivedClass*').click(function(){
 //		var $name = $(this).data('archived');

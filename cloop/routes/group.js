@@ -16,7 +16,6 @@ var requestCallback = function(res) {
 
 /* GET user page. */
 router.get('/', function(req, res, next) {
-	//res.send('Class Page');
 	//get user's classes:
 	User.getClassesEnrolledByStudent(req.user, function(classIds){
 		var classlist = [];
@@ -179,14 +178,22 @@ router.post('/user/add', function(req, res, next) {
 			var classId = result._id;
 			Class.addStudent(classId, userId, requestCallback(res));
 		}
-	})
+	});
 });
 
 //remove student from a class
 router.post('/user/remove', function(req, res, next) {
 	var userId = req.user.id;
-	var classId = req.body.classId;
-	Class.removeStudent(classId, userId, requestCallback(res));
+	var className = req.body.className;
+
+	Class.getClass(className, function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			var classId = result._id;
+			Class.removeStudent(classId, userId, requestCallback(res));
+		}
+	});
 });
 
 //update classesTaken list based on whether taken or not
