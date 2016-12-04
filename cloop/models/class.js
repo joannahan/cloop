@@ -1,23 +1,14 @@
 // Lead author: Danny
 var mongoose = require("mongoose");
+var ObjectId = mongoose.Schema.Types.ObjectId;
+
 var User = require("./user");
 var Post = require("./post");
 
 var ClassSchema = mongoose.Schema({
-      name:{
-    	  type:String,
-    	  index:true,
-    	  required:true,
-          unique: true
-      },
-      students:[{
-    	  type: mongoose.Schema.Types.ObjectId, 
-    	  ref: 'User'
-      }],
-      posts:[{
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Post'
-      }]
+      name:         {type:String, index:true, required:true, unique: true},
+      students:     [{type: ObjectId, ref: 'User'}],
+      posts:        [{type: ObjectId, ref: 'Post'}]
     });
 
 /**
@@ -27,8 +18,7 @@ var ClassSchema = mongoose.Schema({
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClass = function(name, callback) {
-    var that = this;
-    that.findOne({"name": name}, callback);
+    Class.findOne({"name": name}, callback);
 }
 
 /**
@@ -38,8 +28,7 @@ ClassSchema.statics.getClass = function(name, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClassById = function(id, callback) {
-    var that = this;
-    that.findOne({"_id": id}, callback);
+    Class.findOne({"_id": id}, callback);
 }
 
 /**
@@ -49,9 +38,7 @@ ClassSchema.statics.getClassById = function(id, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClassByPostId = function(id, callback) {
-    var that = this;
-    var query = {posts: {"$in":[id]}};
-    that.findOne(query, callback);
+    Class.findOne({posts: {"$in":[id]}}, callback);
 }
 
 /**
@@ -59,7 +46,7 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
  * @param callback {function} - callback function
  */
  ClassSchema.statics.getAllClasses = function(callback) {
-    this.find({}, function(err, results){
+    Class.find({}, function(err, results){
         if (err) {
             callback(err);
         } else {
@@ -79,9 +66,7 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getStudents = function(classId, callback) {
-    var that = this;
-    that
-        .findOne({"_id": classId})
+    Class.findOne({"_id": classId})
         .populate("students")
         .exec(function(err, results) {
             if (err) {
@@ -99,9 +84,7 @@ ClassSchema.statics.getStudents = function(classId, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getPosts = function(classId, callback) {
-    var that = this;
-    that
-        .findOne({"_id": classId})
+    Class.findOne({"_id": classId})
         //.populate('posts')
         .populate({
         	path: 'posts',
@@ -134,9 +117,7 @@ ClassSchema.statics.getAllPosts=function(callback){
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getPostsSortedByUpvotes = function(classId, callback) {
-    var that = this;
-    that
-        .findOne({"_id": classId})
+    Class.findOne({"_id": classId})
         .populate("posts")
         .exec(function(err, results) {
             if (err) {
@@ -159,8 +140,7 @@ ClassSchema.statics.getPostsSortedByUpvotes = function(classId, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.addPost = function(classId, postId, callback) {
-    var that = this;
-    that.update(
+    Class.update(
         {"_id": classId},
         {"$push": {"posts": postId}},
         callback);
@@ -174,8 +154,7 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
-    var that = this;
-    that.update(
+    Class.update(
         {"_id": classId},
         {"$push": {"students": userId}},
         function(err, result) {
@@ -196,8 +175,7 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.removeStudent = function(classId, userId, callback) {
-    var that = this;
-    that.update(
+    Class.update(
         {"_id": classId},
         {"$pull": {"students": userId}},
         function(err, result) {
@@ -216,8 +194,7 @@ ClassSchema.statics.removeStudent = function(classId, userId, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.createClass = function(name, callback) {
-    var that = this;
-    that.create({"name": name}, callback);
+    Class.create({"name": name}, callback);
 }
 
 var Class = mongoose.model("Class", ClassSchema);

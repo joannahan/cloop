@@ -1,13 +1,14 @@
 // Lead author: Joanna
 var mongoose = require("mongoose");
+var bcrypt = require('bcryptjs');
+
 var Post = require("./post.js");
 var Comment = require("./comment.js");
-var bcrypt = require('bcryptjs');
 
 var UserSchema = mongoose.Schema({
   username:   {type:String,  required:true, unique:true, index:true},
   password:   {type:String,  required:true},
-  hashed:     {type:Boolean, required:true},
+  hashed:     {type:Boolean, default:false, required:true},
   name:       {type:String,  required:true},
   email:      {type:String,  required:true, unique: true},
   
@@ -34,9 +35,7 @@ UserSchema.pre('save', function(next) {
  * Compare user password to hashed password
  * 
  * @param candidatePassword {String} - user's password
- * @param hash {String} - hash string
  * @param callback {function} - callback function
- * @return success or error
  */
 UserSchema.methods.verifyPassword = function(password, callback) {
   bcrypt.compare(password, this.password, function(err,isMatch) {
@@ -79,23 +78,6 @@ UserSchema.statics.getUserById = function(id,callback) {
 }
 
 /**
- * Get classes student has taken
- * 
- * @param student {Object} - Object Id of specific student
- * @param callback {function} - callback function
- * @return classes collections with specific student id
- */
-UserSchema.statics.getClassesTakenByStudent = function(student,callback) {
-	User.findOne({_id: student.id}, function(err, studentFound){
-    var classIds = [];
-    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
-      classIds.push(studentFound.classesEnrolled[i]);
-    }
-    callback(classIds);
-  });
-}
-
-/**
  * Add or remove class from classesTaken array
  * 
  * @param classId {ObjectId} - class id
@@ -129,7 +111,6 @@ UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback
     var classIds = [];
     for (var i = 0; i < studentFound.classesEnrolled.length; i++){
       classIds.push(studentFound.classesEnrolled[i]);
-
     }
     callback(classIds);
   });
@@ -145,17 +126,15 @@ UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback
  * @return success or error
  */
 UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action, callback) {
-	var query={_id:userId};
-    User.findOne(query, function (err, user) {
-        if (err || user == null){
-        	return callback(err, user);
-        }  
-        var classesEnrolled = user.classesEnrolled;
-        addOrRemoveFromList(classesEnrolled, userId, action);
-        user.save(function (err, user) {
-            return callback(err, user);
-        });
+  User.findOne({_id:userId}, function (err, user) {
+    if (err || user == null)  return callback(err, user);
+
+    var classesEnrolled = user.classesEnrolled;
+    addOrRemoveFromList(classesEnrolled, userId, action);
+    user.save(function (err, user) {
+      return callback(err, user);
     });
+  });
 }
 
 /**
@@ -166,7 +145,18 @@ UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action
  * @param callback {function} - callback function
  */
 UserSchema.statics.addClass = function(userId, classId, callback) {
-  User.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
+  User.findOne({"_id": userId})
+  .populate("classesEnrolled")
+  .exec(function(err, user) {
+    if (err || user == null) return callback(err, user);
+
+    var classesEnrolled = user.classesEnrolled;
+    if (classesEnrolled.indexOf(classId) < 0) {
+        User.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
+    } else {
+      callback(new Error("Already enrolled in class"), null)
+    }
+  })
 }
 
 /**

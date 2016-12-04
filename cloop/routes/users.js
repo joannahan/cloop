@@ -45,12 +45,12 @@ router.get('/register', function(req,res){
 });
 
 //create new registered user
-router.post('/register', function(req,res){
-	var name=req.body.name;
-	var email=req.body.email;
-	var username=req.body.username;
-	var password=req.body.password;
-	var password2=req.body.password2;
+router.post('/register', function(req,res) {
+	var name = req.body.name;
+	var email = req.body.email;
+	var username = req.body.username;
+	var password = req.body.password;
+	var password2 = req.body.password2;
 
 	//Validation
 	req.checkBody('name','Name is required').notEmpty();
@@ -65,7 +65,7 @@ router.post('/register', function(req,res){
 	
 	if (errors)	res.render('register', {errors:errors});
 	else {
-		var user = new User({name:name, email:email, username:username, password:password, hashed:false});
+		var user = new User({name:name, email:email, username:username, password:password});
 		
 		user.save(function(err, user) {
 			if(err) {

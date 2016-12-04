@@ -4,12 +4,13 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var Post = require("./post");
 
 var CommentSchema = mongoose.Schema({
-    author: {type: ObjectId, ref:"User"},
-    text: String,
-    timeCreated: {type: Date, default: Date.now},
-    timeEdited: {type: Date, default: null},
-    numUpvotes: {type: Number, default: 0},
-    numFlags: {type: Number, default: 0}
+    text:           {type: String, required: true},
+    author:         {type: ObjectId, ref:"User"},
+    timeCreated:    {type: Date, default: Date.now},
+    timeEdited:     {type: Date, default: null},
+    
+    upvoteUsers:    [{type: ObjectId, ref: "User"}],
+    flagUsers:      [{type: ObjectId, ref: "User"}]
 });
 
 /**
