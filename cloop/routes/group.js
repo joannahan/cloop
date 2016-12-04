@@ -16,33 +16,42 @@ var requestCallback = function(res) {
 
 /* GET user page. */
 router.get('/', function(req, res, next) {
-	//get user's classes:
-	User.getClassesEnrolledByStudent(req.user, function(classIds){
-		var classlist = [];
-		var classes = [];
-		for (var i = 0; i < classIds.length; i++){
-			Class.findOne({_id:classIds[i]}, function(err, resclass){
-				classlist.push(resclass.name);
-				classes.push(resclass);
+	//check to see if the user is verified
+	if (req.user.verifiedEmail) {
+			//get user's classes:
+		User.getClassesEnrolledByStudent(req.user, function(classIds){
+			var classlist = [];
+			var classes = [];
+			for (var i = 0; i < classIds.length; i++){
+				Class.findOne({_id:classIds[i]}, function(err, resclass){
+					classlist.push(resclass.name);
+					classes.push(resclass);
+				});
+			}
+
+			Class.getAllClasses(function(classNames){
+
+				//remove userClass from allclass
+				var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
+				console.log("classlist: " + classlist + classes);
+				var data = {
+					username: req.user.username,
+					email: req.user.email,
+					userclass: classlist,
+					allclass: otherClasses,
+					classes: classes
+				};
+
+				res.render('user_page', data);	
 			});
-		}
-
-		Class.getAllClasses(function(classNames){
-
-			//remove userClass from allclass
-			var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
-			console.log("classlist: " + classlist + classes);
-			var data = {
-				username: req.user.username,
-				email: req.user.email,
-				userclass: classlist,
-				allclass: otherClasses,
-				classes: classes
-			};
-
-			res.render('user_page', data);	
 		});
-	});
+	} else {
+		var data = {
+			username: req.user.username,
+			email: req.user.email
+		}
+		res.render('verification', data);	
+	}
 });
 
 //get all posts

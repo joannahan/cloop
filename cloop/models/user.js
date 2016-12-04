@@ -14,7 +14,7 @@ var UserSchema = mongoose.Schema({
   classesTaken:     [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}], 
   classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}],
 
-  verificationString: type:String,
+  verificationString: {type:String},
   verifiedEmail: {type:Boolean, default:false}
 });
 
