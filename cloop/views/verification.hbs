@@ -1,5 +1,5 @@
 <div class="user_verification" id={{_id}}>
 	<h1>Welcome, {{username}}</h1>
 	<p> Email: {{email}}</p>
-	<form action='/users/verify' method='post'><input type='text' value='Verification string'><input type='submit' value='Verify email'></form>
+	<form action='/users/verify' method='post'><input type='text' placeholder='Verification string' name='verificationString'><input type='submit' value='Verify email'></form>
 </div>
