@@ -87,7 +87,12 @@ router.post('/verify', function(req, res) {
 
 	User.verifyAccount(userId, verificationString, function(err, result) {
 		if (err === "Verification Error") {
-			
+			req.flash("error_msg", "The verification code you have entered is not valid. Please double check and try again.");
+			res.redirect('/group');
+		} else if (err) {
+			console.log(err);
+		} else {
+			res.redirect('/group');
 		}
 	});
 });

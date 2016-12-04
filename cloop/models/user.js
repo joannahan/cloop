@@ -15,7 +15,7 @@ var UserSchema = mongoose.Schema({
   classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}],
 
   verificationString: {type:String},
-  verifiedEmail: {type:Boolean, default:false}
+  verifiedEmail: {type:Boolean, default:true}
 });
 
 UserSchema.pre('save', function(next) {
@@ -207,6 +207,13 @@ UserSchema.statics.isEnrolledIn = function (user, classId) {
     return index > -1;
 }
 
+/**
+ * Verifies a user's account, if the correct string for the user is given
+ * 
+ * @param userId {ObjectId} - the user's id
+ * @param verificationString {string} - the code that the user typed
+ * @param callback {function} - a callback function
+ */
 UserSchema.statics.verifyAccount = function(userId, verificationString, callback) {
     User.findOne({_id: userId}, function(err, result) {
       if (err) {
