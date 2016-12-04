@@ -1,6 +1,7 @@
 // Lead author: Danny
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
+
 var User = require("./user");
 // var Comment = require("./comment");
 
@@ -18,6 +19,17 @@ var PostSchema = mongoose.Schema({
 });
 
 /**
+ * Creates a new post for a class
+ * 
+ * @param authorId {ObjectId} - The id of the author
+ * @param text {string} - The text of the post
+ * @param callback {function} - callback function
+ */
+PostSchema.statics.createPost = function(authorId, text, callback) {
+    Post.create({"author": authorId, "text": text}, callback);
+}
+
+/**
  * Gets a specific post
  * 
  * @param postId {ObjectId} - The id of the post
@@ -25,38 +37,6 @@ var PostSchema = mongoose.Schema({
  */
 PostSchema.statics.getPost = function(postId, callback) {
     Post.findOne({"_id": postId}, callback);
-}
-
-/**
- * Gets all comments of an array of posts
- * 
- * @param postIds {Array[ObjectId]} - The ids of the posts
- * @param callback {function} - callback function
- */
-PostSchema.statics.populateComments = function(postIds, callback) {
-    Post.find({"_id": {$in: postIds}})
-        //.populate("comments")
-        .populate("author")
-        .populate({
-        	path: 'comments',
-        	model: 'Comment',
-        	populate: {
-        		path: 'author',
-        		model: 'User'
-        	}
-        })
-        .exec(callback);
-}
-
-/**
- * Adds a comment to a post
- * 
- * @param postId {ObjectId} - The id of the post
- * @param commentId {ObjectId} - The id of the comment
- * @param callback {function} - callback function
- */
-PostSchema.statics.addComment = function(postId, commentId, callback) {
-    Post.update({"_id": postId}, {"$push": {"comments": commentId}}, callback);
 }
 
 /**
@@ -92,56 +72,80 @@ PostSchema.statics.removePost = function(postId, callback) {
 }
 
 /**
- * Add an upvote to a post
+ * Adds a comment to a post
  * 
  * @param postId {ObjectId} - The id of the post
+ * @param commentId {ObjectId} - The id of the comment
  * @param callback {function} - callback function
  */
-PostSchema.statics.addUpvote = function(postId, callback) {
-    // Post.update({"_id": postId}, {"$inc": {"numUpvotes": 1}}, callback)
+PostSchema.statics.addComment = function(postId, commentId, callback) {
+    Post.update({"_id": postId}, {"$push": {"comments": commentId}}, callback);
 }
 
 /**
- * Remove an upvote from a post
+ * Gets all comments of an array of posts
  * 
- * @param postId {ObjectId} - The id of the post
+ * @param postIds {Array[ObjectId]} - The ids of the posts
  * @param callback {function} - callback function
  */
-PostSchema.statics.unUpvote = function(postId, callback) {
-    // Post.update({"_id": postId}, {"$dec": {"numUpvotes": 1}}, callback)
+PostSchema.statics.populateComments = function(postIds, callback) {
+    Post.find({"_id": {$in: postIds}})
+        //.populate("comments")
+        .populate("author")
+        .populate({
+            path: 'comments',
+            model: 'Comment',
+            populate: {
+                path: 'author',
+                model: 'User'
+            }
+        })
+        .exec(callback);
 }
 
 /**
- * Add a flag to a post
+ * Add a user to a post's set of users who have upvoted the post
  * 
  * @param postId {ObjectId} - The id of the post
+ * @param userId {ObjectId} - The id of the user
  * @param callback {function} - callback function
  */
-PostSchema.statics.addFlag = function(postId, callback) {
-    // Post.update({"_id": postId}, {"$inc": {"numFlags": 1}}, callback)
+PostSchema.statics.userUpvote = function(postId, userId, callback) {
+    Post.update({"_id": postId}, {$addToSet: {"upvoteUsers": userId}}, callback)
 }
 
 /**
- * Remove a flag from a post
+ * Remove a user from a post's set of users who have upvoted the post
  * 
  * @param postId {ObjectId} - The id of the post
+ * @param userId {ObjectId} - The id of the user
  * @param callback {function} - callback function
  */
-PostSchema.statics.unFlag = function(postId, callback) {
-    // Post.update({"_id": postId}, {"$dec": {"numFlags": 1}}, callback)
+PostSchema.statics.userUnupvote = function(postId, userId, callback) {
+    Post.update({"_id": postId}, {$pull: {"upvoteUsers": userId}}, callback)   
 }
 
 /**
- * Creates a new post for a class
+ * Add a user to a post's set of users who have flagged the post
  * 
- * @param authorId {ObjectId} - The id of the author
- * @param text {string} - The text of the post
+ * @param postId {ObjectId} - The id of the post
+ * @param userId {ObjectId} - The id of the user
  * @param callback {function} - callback function
  */
-PostSchema.statics.createPost = function(authorId, text, callback) {
-    Post.create({"author": authorId, "text": text}, callback);
+PostSchema.statics.userFlag = function(postId, userId, callback) {
+    Post.update({"_id": postId}, {$addToSet: {"flagUsers": userId}}, callback)
+}
+
+/**
+ * Remove a user from a post's set of users who have flagged the post
+ * 
+ * @param postId {ObjectId} - The id of the post
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
+PostSchema.statics.userUnflag = function(postId, userId, callback) {
+    Post.update({"_id": postId}, {$pull: {"flagUsers": userId}}, callback)
 }
 
 var Post = mongoose.model("Post", PostSchema);
-
 module.exports = Post;

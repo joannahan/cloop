@@ -148,18 +148,7 @@ UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action
  * @param callback {function} - callback function
  */
 UserSchema.statics.addClass = function(userId, classId, callback) {
-  User.findOne({"_id": userId})
-  .populate("classesEnrolled")
-  .exec(function(err, user) {
-    if (err || user == null) return callback(err, user);
-
-    var classesEnrolled = user.classesEnrolled;
-    if (classesEnrolled.indexOf(classId) < 0) {
-        User.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
-    } else {
-      callback(new Error("Already enrolled in class"), null)
-    }
-  })
+  User.update({"_id": userId}, {$addToSet: {"classesEnrolled": classId}}, callback);
 }
 
 /**

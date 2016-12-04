@@ -9,7 +9,7 @@ var ClassSchema = mongoose.Schema({
       name:         {type:String, index:true, required:true, unique: true},
       students:     [{type: ObjectId, ref: 'User'}],
       posts:        [{type: ObjectId, ref: 'Post'}]
-    });
+});
 
 /**
  * Gets a specific class by name
@@ -50,9 +50,7 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
         if (err) {
             callback(err);
         } else {
-            var classNames = results.map(function(x){
-                return x.name;
-            });
+            var classNames = results.map(function(x){return x.name});
             callback(classNames);
         }
     });
@@ -69,11 +67,8 @@ ClassSchema.statics.getStudents = function(classId, callback) {
     Class.findOne({"_id": classId})
         .populate("students")
         .exec(function(err, results) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(results);
-            }
+            if (err)    callback(err);
+            else        callback(results);
         });
 }
 
