@@ -16,34 +16,42 @@ var requestCallback = function(res) {
 
 /* GET user page. */
 router.get('/', function(req, res, next) {
-	//res.send('Class Page');
-	//get user's classes:
-	User.getClassesEnrolledByStudent(req.user, function(classIds){
-		var classlist = [];
-		var classes = [];
-		for (var i = 0; i < classIds.length; i++){
-			Class.findOne({_id:classIds[i]}, function(err, resclass){
-				classlist.push(resclass.name);
-				classes.push(resclass);
+	//check to see if the user is verified
+	if (req.user.verifiedEmail) {
+			//get user's classes:
+		User.getClassesEnrolledByStudent(req.user, function(classIds){
+			var classlist = [];
+			var classes = [];
+			for (var i = 0; i < classIds.length; i++){
+				Class.findOne({_id:classIds[i]}, function(err, resclass){
+					classlist.push(resclass.name);
+					classes.push(resclass);
+				});
+			}
+
+			Class.getAllClasses(function(classNames){
+
+				//remove userClass from allclass
+				var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
+				console.log("classlist: " + classlist + classes);
+				var data = {
+					username: req.user.username,
+					email: req.user.email,
+					userclass: classlist,
+					allclass: otherClasses,
+					classes: classes
+				};
+
+				res.render('user_page', data);	
 			});
-		}
-
-		Class.getAllClasses(function(classNames){
-
-			//remove userClass from allclass
-			var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
-			console.log("classlist: " + classlist + classes);
-			var data = {
-				username: req.user.username,
-				email: req.user.email,
-				userclass: classlist,
-				allclass: otherClasses,
-				classes: classes
-			};
-
-			res.render('user_page', data);	
 		});
-	});
+	} else {
+		var data = {
+			username: req.user.username,
+			email: req.user.email
+		}
+		res.render('verification', data);	
+	}
 });
 
 //get all posts
@@ -179,14 +187,22 @@ router.post('/user/add', function(req, res, next) {
 			var classId = result._id;
 			Class.addStudent(classId, userId, requestCallback(res));
 		}
-	})
+	});
 });
 
 //remove student from a class
 router.post('/user/remove', function(req, res, next) {
 	var userId = req.user.id;
-	var classId = req.body.classId;
-	Class.removeStudent(classId, userId, requestCallback(res));
+	var className = req.body.className;
+
+	Class.getClass(className, function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			var classId = result._id;
+			Class.removeStudent(classId, userId, requestCallback(res));
+		}
+	});
 });
 
 //update classesTaken list based on whether taken or not
