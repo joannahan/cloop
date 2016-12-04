@@ -12,7 +12,10 @@ var UserSchema = mongoose.Schema({
   email:      {type:String,  required:true, unique: true},
   
   classesTaken:     [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}], 
-  classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}]
+  classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}],
+
+  verificationString: type:String,
+  verifiedEmail: {type:Boolean, default:false}
 });
 
 UserSchema.pre('save', function(next) {
@@ -202,6 +205,20 @@ UserSchema.statics.hasTakenAlready = function (user, classId) {
 UserSchema.statics.isEnrolledIn = function (user, classId) {
     var index = user.classesEnrolled.indexOf(classId);
     return index > -1;
+}
+
+UserSchema.statics.verifyAccount = function(userId, verificationString, callback) {
+    User.findOne({_id: userId}, function(err, result) {
+      if (err) {
+        callback(err);
+      } else {
+        if (result.verificationString === verificationString) {
+          User.update({_id: userId}, {verifiedEmail: true}, callback)
+        } else {
+          callback("Verification Error");
+        }
+      }
+    });
 }
 
 /**

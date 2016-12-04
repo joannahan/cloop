@@ -9,19 +9,6 @@ var User = require('../models/user');
 var secret = require('../secret/secret');
 var transporter = secret['transporter'];
 
-router.get('/mail', function(req, res, next) {
-	var mailOptions = {
-		from: 'noreply.cloop@gmail.com',
-		to: 'data1013@mit.edu',
-		subject: 'Testing Mail',
-		text: 'cloopcloop'
-	}
-
-	transporter.sendMail(mailOptions);
-
-	res.send('Success!');
-});
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   //res.send('This is the user page lmao');
@@ -65,7 +52,9 @@ router.post('/register', function(req,res){
 	
 	if (errors)	res.render('register', {errors:errors});
 	else {
-		var user = new User({name:name, email:email, username:username, password:password, hashed:false});
+		var verificationString = generateVerificationString();
+
+		var user = new User({name:name, email:email, username:username, password:password, hashed:false, verificationString: verificationString});
 		
 		user.save(function(err, user) {
 			if(err) {
@@ -76,15 +65,35 @@ router.post('/register', function(req,res){
 					req.flash('error_msg',err.message);
 				}
 			} else {
-				req.flash('success_msg','You are registered and can now login');
+				var mailOptions = {
+					from: 'noreply.cloop@gmail.com',
+					to: email,
+					subject: 'Verify your cloop account!',
+					text: 'Thank you for registering with cloop! Please log in and use the following code to verify your account for full access to cloop: ' + verificationString
+				}
+
+				transporter.sendMail(mailOptions);				
+
+				req.flash('success_msg','You are registered and can now log in. You should receive an email that will allow you to verify your account.');
 				res.redirect('/users/login');
 			}
 		})
 	}
 });
 
+router.post('/verify', function(req, res) {
+	var userId = req.user.id;
+	var verificationString = req.body.verificationString;
+
+	User.verifyAccount(userId, verificationString, function(err, result) {
+		if (err === "Verification Error") {
+			
+		}
+	});
+});
+
 //Login
-router.get('/login',function(req,res){
+router.get('/login', function(req,res){
 	res.render('login');
 });
 
@@ -157,6 +166,17 @@ var done = function(res, err, success, customMessage) {
 		});			
 	}
 	return done;
+}
+
+var generateVerificationString = function() {
+	var text = [];
+
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    for (var i=0; i < 6; i++)
+        text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+
+    return text.join("");
 }
 
 
