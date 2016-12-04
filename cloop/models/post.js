@@ -47,7 +47,7 @@ PostSchema.statics.getPost = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.editPost = function(postId, text, callback) {
-    Post.update({"_id": postId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
+    Post.update({"_id": postId}, {$set: {"text": text, "timeEdited": Date.now}}, callback);
 }
 
 /**
@@ -61,7 +61,7 @@ PostSchema.statics.removePost = function(postId, callback) {
         // if (err) {
         //     callback(err);
         // } else {
-        //     Comment.remove({"_id": {"$in": result.comments}}, function(err, result) {
+        //     Comment.remove({"_id": {$in: result.comments}}, function(err, result) {
         //         if (err) {
         //             callback(err);
         //         } else {
@@ -79,7 +79,7 @@ PostSchema.statics.removePost = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.addComment = function(postId, commentId, callback) {
-    Post.update({"_id": postId}, {"$push": {"comments": commentId}}, callback);
+    Post.update({"_id": postId}, {$addToSet: {"comments": commentId}}, callback);
 }
 
 /**
@@ -125,6 +125,14 @@ PostSchema.statics.userUnupvote = function(postId, userId, callback) {
     Post.update({"_id": postId}, {$pull: {"upvoteUsers": userId}}, callback)   
 }
 
+PostSchema.virtual('isUpvoteUser').get(function(userId) {
+    return this.upvoteUsers.indexOf(userId) >= 0
+})
+
+PostSchema.virtual('upvoteCount').get(function() {
+    return this.upvoteUsers.length;    
+})
+
 /**
  * Add a user to a post's set of users who have flagged the post
  * 
@@ -146,6 +154,14 @@ PostSchema.statics.userFlag = function(postId, userId, callback) {
 PostSchema.statics.userUnflag = function(postId, userId, callback) {
     Post.update({"_id": postId}, {$pull: {"flagUsers": userId}}, callback)
 }
+
+PostSchema.virtual('isFlagUser').get(function(userId) {
+    return this.flagUsers.indexOf(userId) >= 0
+})
+
+PostSchema.virtual('flagCount').get(function() {
+    return this.flagUsers.length;    
+})
 
 var Post = mongoose.model("Post", PostSchema);
 module.exports = Post;

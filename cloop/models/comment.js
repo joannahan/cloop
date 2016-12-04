@@ -1,6 +1,7 @@
 // Lead author: Danny
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
+
 var Post = require("./post");
 
 var CommentSchema = mongoose.Schema({
@@ -46,7 +47,7 @@ CommentSchema.statics.getComment = function(commentId, callback) {
  * @param callback {function} - callback function
  */
 CommentSchema.statics.editComment = function(commentId, text, callback) {
-    Comment.update({"_id": commentId}, {"$set": {"text": text, "timeEdited": Date.now}}, callback);
+    Comment.update({"_id": commentId}, {$set: {"text": text, "timeEdited": Date.now}}, callback);
 }
 
 /**
@@ -84,6 +85,14 @@ CommentSchema.statics.userUnupvote = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$pull: {"upvoteUsers": userId}}, callback)   
 }
 
+CommentSchema.virtual('isUpvoteUser').get(function(userId) {
+    return this.upvoteUsers.indexOf(userId) >= 0
+})
+
+CommentSchema.virtual('upvoteCount').get(function() {
+    return this.upvoteUsers.length;    
+})
+
 /**
  * Add a user to a comments's set of users who have flagged the comment
  * 
@@ -105,6 +114,14 @@ CommentSchema.statics.userFlag = function(commentId, userId, callback) {
 CommentSchema.statics.userUnflag = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$pull: {"flagUsers": userId}}, callback)
 }
+
+CommentSchema.virtual('isFlagUser').get(function(userId) {
+    return this.flagUsers.indexOf(userId) >= 0
+})
+
+CommentSchema.virtual('flagCount').get(function() {
+    return this.flagUsers.length;    
+})
 
 var Comment = mongoose.model("Comment", CommentSchema);
 module.exports = Comment;
