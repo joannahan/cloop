@@ -211,7 +211,8 @@ UserSchema.statics.addClass = function(userId, classId, callback) {
       callback(new Error("Already enrolled in class"), null)
     }
   })
-};
+  User.update({"_id": userId}, {$addToSet: {"classesEnrolled": classId}}, callback);
+}
 
 /**
  * Removes a class from a user's enrolled classes 

@@ -9,7 +9,7 @@ var ClassSchema = mongoose.Schema({
       name:         {type:String, index:true, required:true, unique: true},
       students:     [{type: ObjectId, ref: 'User'}],
       posts:        [{type: ObjectId, ref: 'Post'}]
-    });
+});
 
 /**
  * Gets a specific class by name
@@ -37,8 +37,8 @@ ClassSchema.statics.getClassById = function(id, callback) {
  * @param id {ObjectId} - The id of the post
  * @param callback {function} - callback function
  */
-ClassSchema.statics.getClassByPostId = function(id, callback) {
-    Class.findOne({posts: {"$in":[id]}}, callback);
+ClassSchema.statics.getClassByPostId = function(postId, callback) {
+    Class.findOne({posts: {$in: postId}}, callback);
 }
 
 /**
@@ -50,9 +50,7 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
         if (err) {
             callback(err);
         } else {
-            var classNames = results.map(function(x){
-                return x.name;
-            });
+            var classNames = results.map(function(x){return x.name});
             callback(classNames);
         }
     });
@@ -84,11 +82,8 @@ ClassSchema.statics.getStudents = function(classId, callback) {
     Class.findOne({"_id": classId})
         .populate("students")
         .exec(function(err, results) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(results);
-            }
+            if (err)    callback(err);
+            else        callback(results);
         });
 }
 
@@ -157,7 +152,7 @@ ClassSchema.statics.getPostsSortedByUpvotes = function(classId, callback) {
 ClassSchema.statics.addPost = function(classId, postId, callback) {
     Class.update(
         {"_id": classId},
-        {"$push": {"posts": postId}},
+        {$addToSet: {"posts": postId}},
         callback);
 }
 
@@ -171,7 +166,7 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
     Class.update(
         {"_id": classId},
-        {"$push": {"students": userId}},
+        {$addToSet: {"students": userId}},
         function(err, result) {
             if (err) {
                 callback(err);
@@ -218,7 +213,7 @@ ClassSchema.statics.updateStudentList = function (classId, userId, action, callb
 ClassSchema.statics.removeStudent = function(classId, userId, callback) {
     Class.update(
         {"_id": classId},
-        {"$pull": {"students": userId}},
+        {$pull: {"students": userId}},
         function(err, result) {
             if (err) {
                 callback(err);
