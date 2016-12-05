@@ -93,6 +93,24 @@ $(document).ready(function() {
 		});
 	 });
 	
+	$('#addNewClass').click(function(){
+		var $newClassName=$('#newClassName');
+		if ($newClassName.val()===''){
+			alert('please enter a new class name.');
+			return;
+		}
+		console.log("addNewClass.click");
+		$.post('/group/class', {className:$newClassName.val()}, function(err, newClass) {
+			if (err) {
+				if (err.message !== undefined){
+					alert(err.message);
+				}					
+			} else {
+				//Do nothing;
+			}
+		});
+	}); 
+	
 	$('#takenClass*').click(function(){
 		var $id = $(this).data('taken');
 		console.log($id);
@@ -113,7 +131,20 @@ $(document).ready(function() {
 			}			
 		});		
 	 });
+	$('#untakenClassesList').delegate('.untakenClass','click', function(){
 
+		var $id = $(this).data('classid');
+		console.log($id);
+		$.post('/group/enroll', {classId:$id}, function(err, untakenClass) {
+			if (err) {
+				if (err.message !== undefined){
+					alert(err.message);
+				}
+			} else {
+				//Do nothing
+			}
+		});
+	 });
 	
 //	$('#archivedClass*').click(function(){
 //		var $name = $(this).data('archived');

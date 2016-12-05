@@ -1,35 +1,55 @@
 <!-- Lead author: Ming -->
 <div class = "user_page" id={{_id}}>
-	<h1>Welcome, {{username}}</h1>
-	<p> Email: {{email}} </p>
+	<h1>Welcome, {{user.name}}</h1>
+	<p> Email: {{user.email}} </p>
 	<p> Classes: </p>
 	<ul>
-		{{#each classes}}
+		{{#each enrolledClasses}}
 			<li id='{{this.name}}'>
 				<form action='group/{{this.name}}' method='get'>{{this.name}}<input type="submit" value="Go to class page"></form>
-				<input type="submit" id='takenClass'+ {{this._id}} data-taken='{{this._id}}' value="Add to Taken Class"> 
+				<input type="submit" id='takenClass'+ {{this._id}} data-taken='{{this._id}}' value="Move to Taken Class"> 
 				<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
 				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
 				<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
 			</li>
 		{{/each}}
-		
-			
+	</ul>
 	
+	<p> Taken Classes: </p>
+	<ul id="takenClassesList">
+		{{#each takenClasses}}
+			<li>
+				{{this.name}}
+				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
+			</li>
+		{{/each}}
 	</ul>
 
 	<input id="search-input" type="text" placeholder="Search for classes">
 	<ul id="results-list"></ul>
 
-	<ul>
+	<!-- <ul>
 		{{#each allclass}}
 			<li> 
 				<form action='group/user/add' method='post'><input type='text' name='className' value = '{{this}}' readonly><input type='submit' value='Join class'></form>
 			</li>
 		{{/each}}
+	</ul> -->
+	
+	<ul id="untakenClassesList">
+		{{#each untakenClasses}}
+			<li> 
+				<input type='text' name='className' value = '{{this.name}}' readonly>	
+				<input type='button' id='untakenClass_{{this._id}}' class='untakenClass' data-classid={{this._id}} value='Join class'>
+			</li>
+		{{/each}}
 	</ul>
 
-	<form action="group/class" method="post">
+<!--	<form action="group/class" method="post">
 		<input type="text" name="className"><input type="submit" value="Create class">
 	</form>
+-->
+	<form action="group/class" method="post">
+		<input type="text" id='newClassName' name="className" value=""><input type="button" id='addNewClass' value="Create class">
+	</form>	
 </div>

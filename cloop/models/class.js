@@ -45,7 +45,7 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
  * Gets list of all class names
  * @param callback {function} - callback function
  */
- ClassSchema.statics.getAllClasses = function(callback) {
+ ClassSchema.statics.getAllClassesNames = function(callback) {
     Class.find({}, function(err, results){
         if (err) {
             callback(err);
@@ -57,6 +57,21 @@ ClassSchema.statics.getClassByPostId = function(id, callback) {
         }
     });
  }
+ 
+ /**
+  * Gets list of all classes
+  * @param callback {function} - callback function
+  */
+  ClassSchema.statics.getAllClasses = function(callback) {
+     Class.find({}, function(err, classes){
+         if (err) {
+             callback(err);
+         } else {
+             callback(classes);
+         }
+     });
+  }
+
 
 
 /**
@@ -168,6 +183,32 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
 }
 
 /**
+ * Add a student to a class
+ * 
+ * @param classId {ObjectId} - The id of the class
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
+ClassSchema.statics.updateStudentList = function (classId, userId, action, callback) {
+	var query={"_id": classId};
+	console.log("query: "+ query);	
+
+	Class.findOne(query, function (err, _class) {
+		console.log("Add to this class: "+ _class);	
+
+	      if (err || _class == null){
+	      	return callback(err, _class);
+	      }     	
+	      var studentsEnrolled = _class.students;
+	      addOrRemoveFromList(studentsEnrolled, userId, action);
+	      console.log("Add:user "+ _class);	
+	      _class.save(function (err, _class) {
+	          return callback(err, _class);
+	      });
+	  });
+	}
+
+/**
  * Remove a student from a class
  * 
  * @param classId {ObjectId} - The id of the class
@@ -195,6 +236,28 @@ ClassSchema.statics.removeStudent = function(classId, userId, callback) {
  */
 ClassSchema.statics.createClass = function(name, callback) {
     Class.create({"name": name}, callback);
+}
+
+/**
+ * Generic Helper Function
+ * Mutates list and adds or removes 1st instance of item in list (if present)
+ * 
+ * @param list {Array} - list of items
+ * @param item {ObjectId} - id
+ * @return updated list 
+ */
+var addOrRemoveFromList = function(list, item, action) {
+    // add to list
+    if (action ==='add') {
+        list.push(item);
+    } else { 
+        // remove from list
+    	var index = list.indexOf(item);
+        if (index > -1) {
+            list.splice(index, 1);
+        }
+    }
+    return list;
 }
 
 var Class = mongoose.model("Class", ClassSchema);

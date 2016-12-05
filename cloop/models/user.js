@@ -81,6 +81,40 @@ UserSchema.statics.getUserById = function(id,callback) {
 }
 
 /**
+ * Get classes student has taken
+ * 
+ * @param student {Object} - Object Id of specific student
+ * @param callback {function} - callback function
+ * @return classes collections with specific student id
+ */
+UserSchema.statics.getClassesTakenByStudent = function(student,callback) {
+	User.findOne({_id: student.id}, function(err, studentFound){
+    var classIds = [];
+    for (var i = 0; i < studentFound.classTaken.length; i++){
+      classIds.push(studentFound.classTaken[i]);
+    }
+    callback(classIds);
+  });
+}
+
+/**
+ * Get classes student has taken
+ * 
+ * @param student {Object} - Object Id of specific student
+ * @param callback {function} - callback function
+ * @return classes collections with specific student id
+ */
+UserSchema.statics.getClassesTakenByStudentId = function(studentId,callback) {
+	User.findOne({_id: studentId}, function(err, studentFound){
+    var classIds = [];
+    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
+      classIds.push(studentFound.classesEnrolled[i]);
+    }
+    callback(classIds);
+  });
+}
+
+/**
  * Add or remove class from classesTaken array
  * 
  * @param classId {ObjectId} - class id
@@ -89,7 +123,7 @@ UserSchema.statics.getUserById = function(id,callback) {
  * @param callback {function} - callback function
  * @return success or error
  */
-UserSchema.statics.updateClassesTakenList = function (classId, userId, action, callback) {
+UserSchema.statics.updateClassesTakenList = function (userId,classId, action, callback) {
   User.findOne({_id:userId}, function (err, user) {
       if (err || user == null){
       	return callback(err, user);
@@ -118,6 +152,23 @@ UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback
     callback(classIds);
   });
 }
+/**
+ * Get classes student is currently enrolled in
+ * 
+ * @param student {Object} - Object Id of specific student
+ * @param callback {function} - callback function
+ * @return classes collections with specific student id
+ */
+UserSchema.statics.getClassesEnrolledByStudentId = function(studentId,callback) {
+  User.findOne({_id: studentId}, function(err, studentFound){
+	  callback(studentFound.classesEnrolled);
+//    var classIds = [];
+//    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
+//      classIds.push(studentFound.classesEnrolled[i]);
+//    }
+//    callback(classIds);
+  });
+}
 
 /**
  * Add or remove class from classesEnrolled array
@@ -128,12 +179,12 @@ UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback
  * @param callback {function} - callback function
  * @return success or error
  */
-UserSchema.statics.updateClassesEnrolledList = function (classId, userId, action, callback) {
+UserSchema.statics.updateClassesEnrolledList = function (userId, classId, action, callback) {
   User.findOne({_id:userId}, function (err, user) {
     if (err || user == null)  return callback(err, user);
 
     var classesEnrolled = user.classesEnrolled;
-    addOrRemoveFromList(classesEnrolled, userId, action);
+    addOrRemoveFromList(classesEnrolled, classId, action);
     user.save(function (err, user) {
       return callback(err, user);
     });
@@ -160,7 +211,7 @@ UserSchema.statics.addClass = function(userId, classId, callback) {
       callback(new Error("Already enrolled in class"), null)
     }
   })
-}
+};
 
 /**
  * Removes a class from a user's enrolled classes 
