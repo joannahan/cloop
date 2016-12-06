@@ -3,7 +3,12 @@ var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var User = require("./user");
-// var Comment = require("./comment");
+var Comment = require("./comment");
+
+console.log("USER")
+console.log(User)
+console.log("COMMENT")
+console.log(Comment)
 
 var PostSchema = mongoose.Schema({
     text:           {type: String,                required: true},
