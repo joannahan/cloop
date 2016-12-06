@@ -11,6 +11,7 @@ var ClassSchema = mongoose.Schema({
       posts:        [{type: ObjectId, ref: 'Post'}]
 });
 
+
 /**
  * Gets a specific class by name
  * 
@@ -163,18 +164,30 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
  * @param userId {ObjectId} - The id of the user
  * @param callback {function} - callback function
  */
+ClassSchema.statics.addEnrolledStudent = function(classId, userId, callback) {
+	Class.addStudent(classId, userId, function(err, _class){
+		if (err){
+			callback(err);
+		}else{
+			User.addEnrolledClass(userId, classId, callback);
+		}
+	})
+}
+
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
     Class.update(
         {"_id": classId},
         {$addToSet: {"students": userId}},
-        function(err, result) {
-            if (err) {
-                callback(err);
-            } else {
-                console.log(User);
-                User.addClass(userId, classId, callback);
-            }
-        });
+        callback);
+}
+
+ClassSchema.statics.removeStudent = function(classId,userId, callback) {
+	var studentIds=[];
+	studentIds.push(userId);
+    Class.update(
+        {"_id": classId},
+        {$pullAll: {"students": studentIds}},
+        callback);
 }
 
 /**

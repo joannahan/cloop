@@ -1,3 +1,4 @@
+//Lead author: Joanna
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,6 +12,9 @@ var handlebars = require('handlebars');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
+var request = require('request');
+var fs = require('fs');
+//var async = require ('async');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var group = require('./routes/group');
@@ -102,6 +106,213 @@ app.use('/users', users);
 app.use('/group', group);
 app.use('/post', post);
 app.use('/comment', comment);
+
+//API request
+var destination = fs.createWriteStream("./seeds/courses2.json");
+var requests = [{
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=1', 
+    // would like to only query the 
+    //    qs: {from: 'items'},
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=2', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=3', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=4', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=5', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=6', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=7', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=8', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=9', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=10', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=11', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=12', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=14', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=15', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=16', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=17', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=18', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=20', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=21', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=22', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=STS', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}, {
+    url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=MAS', 
+    method: 'GET', 
+    headers: { 
+        'client_id': 'd9788cbff7e84180b7ba51fe78cde6c3',
+        'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
+    }
+}];
+for (var i=0; i<requests.length; i++) {
+	request(requests[i])
+		.pipe(destination, {end: false})
+		.on('finish', function() {
+			console.log('done');
+		})
+		.on('error', function(err) {
+			console.log(err);
+		});
+}
+
+
+
+//async.map(requests, function(obj, callback) {
+//	request(obj, function(error, response, body) {
+//		if(!error && response.statusCode == 200) {
+//			var body = JSON.parse(body);
+//			callback(null, body);
+//		} else {
+//			callback(error || response.statusCode);
+//		}
+//	});
+//}, function(err, results) {
+//	if (err) {
+//		console.log("error: " + err);
+//	} else {
+//		//console.log(JSON.stringify(results));
+//		results
+//			.forEach(function(v) {destination.write(JSON.stringify(v));});
+//		destination
+//			.on('finish', function() {
+//				console.log('done');
+//			})
+//			.on('error', function(err) {
+//				console.log(err);
+//			});
+//	}
+//});
+
+//	.pipe(destination)
+//	.on('finish', function() {
+//		console.log('done');
+//	})
+//	.on('error', function(err) {
+//		console.log(err);
+//	});
+
 
 
 // error handlers

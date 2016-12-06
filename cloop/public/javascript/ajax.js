@@ -99,7 +99,6 @@ $(document).ready(function() {
 			alert('please enter a new class name.');
 			return;
 		}
-		console.log("addNewClass.click");
 		$.post('/group/class', {className:$newClassName.val()}, function(err, newClass) {
 			if (err) {
 				if (err.message !== undefined){
@@ -111,31 +110,22 @@ $(document).ready(function() {
 		});
 	}); 
 	
-	$('#takenClass*').click(function(){
+	$('#moveEnrolledClass*').click(function(){
 		var $id = $(this).data('taken');
-		console.log($id);
-		$.ajax({
-			context:this,
-			type:'PUT',
-			url:'/group/'+ $id,
-			data:{
-				action:'add',
-			},
-			success:function(result){	
-				//TODO
-				console.log("HELLO ADDED");
-			},
-			error:function(){
-				//TODO
-				alert(status.message);
-			}			
-		});		
+		$.post('/group/user/move_enrolled_class', {classId:$id}, function(err, _class) {
+			if(err){
+				if (err.message !== undefined){
+					alert(err.message);
+				}					
+			} else {
+				//Do nothing;
+			}
+		});
 	 });
 	$('#untakenClassesList').delegate('.untakenClass','click', function(){
 
 		var $id = $(this).data('classid');
-		console.log($id);
-		$.post('/group/enroll', {classId:$id}, function(err, untakenClass) {
+		$.post('/group/user/enroll_class', {classId:$id}, function(err, untakenClass) {
 			if (err) {
 				if (err.message !== undefined){
 					alert(err.message);
@@ -144,22 +134,6 @@ $(document).ready(function() {
 				//Do nothing
 			}
 		});
-	 });
-	
-//	$('#archivedClass*').click(function(){
-//		var $name = $(this).data('archived');
-//		console.log("$name: "+ $name);
-//	    $.get('/group/'+$name, function(err, _class) {
-//    		if (err) {
-//    			//TODO
-//    			console.log(err);
-//    		} else {
-//    			//TODO
-//    			console.log("ALKFJ:AKLDFJ");
-//    		}
-//		});
-//	 });
-	
-	
+	 });	
 
 });

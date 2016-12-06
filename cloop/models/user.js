@@ -171,47 +171,66 @@ UserSchema.statics.getClassesEnrolledByStudentId = function(studentId,callback) 
 }
 
 /**
- * Add or remove class from classesEnrolled array
+ * Move a enrolled class from classesEnrolled array to classesTaken array 
  * 
  * @param classId {ObjectId} - class id
  * @param userId {ObjectId} - user id
- * @param action {String} - add or remove 
  * @param callback {function} - callback function
- * @return success or error
  */
-UserSchema.statics.updateClassesEnrolledList = function (userId, classId, action, callback) {
-  User.findOne({_id:userId}, function (err, user) {
-    if (err || user == null)  return callback(err, user);
-
-    var classesEnrolled = user.classesEnrolled;
-    addOrRemoveFromList(classesEnrolled, classId, action);
-    user.save(function (err, user) {
-      return callback(err, user);
-    });
-  });
+UserSchema.statics.moveFromEnrolledClassToTakenClass= function (userId, classId, callback) {
+	User.addTakenClass(userId, classId, function(err, user){
+		if(err){
+			callback(err);
+		}else{
+			console.log("user:"+user);
+			User.removeEnrolledClass(userId, classId, function(err,user){
+				return callback(err, user);
+			});			
+		}
+	});  
 }
 
-/**
- * Adds a class to a user's enrolled classes 
- *
- * @param userId {ObjectId} - the user's id
- * @param classId {ObjectId} - the class's id
- * @param callback {function} - callback function
- */
-UserSchema.statics.addClass = function(userId, classId, callback) {
-  User.findOne({"_id": userId})
-  .populate("classesEnrolled")
-  .exec(function(err, user) {
-    if (err || user == null) return callback(err, user);
+UserSchema.statics.addEnrolledClass = function(userId, classId, callback) {
+    User.update(
+        {"_id": userId},
+        {$addToSet: {"classesEnrolled": classId}},
+        callback);
+}
 
-    var classesEnrolled = user.classesEnrolled;
-    if (classesEnrolled.indexOf(classId) < 0) {
-        User.update({"_id": userId}, {"$push": {"classesEnrolled": classId}}, callback);
-    } else {
-      callback(new Error("Already enrolled in class"), null)
-    }
-  })
-  User.update({"_id": userId}, {$addToSet: {"classesEnrolled": classId}}, callback);
+UserSchema.statics.removeEnrolledClass = function(userId, classId, callback) {
+	var classIds=[];
+	classIds.push(classId);
+	console.log('removeEnrolleduserIds:userId:'+userId);
+	console.log('removeEnrolledclassIds:classIds:'+classIds);
+    User.update(
+        {"_id": userId},
+        {$pullAll: {"classesEnrolled": classIds}},
+        callback);
+}
+
+UserSchema.statics.addTakenClass = function(userId, classId, callback) {
+	User.update(
+        {"_id": userId},
+        {$addToSet: {"classesTaken": classId}},
+        callback);
+}
+
+UserSchema.statics.removeTakenClass = function(userId, classId, callback) {
+	var classIds=[];
+	classIds.push(classId);
+	User.update(
+        {"_id": userId},
+        {$pullAll: {"classesTaken": classIds}},
+        callback);
+}
+
+UserSchema.statics.getAllClass = function(userId, classId, callback) {
+	var classIds=[];
+	classIds.push(classId);
+	User.update(
+        {"_id": userId},
+        {$pullAll: {"classesTaken": classIds}},
+        callback);
 }
 
 /**
@@ -270,27 +289,6 @@ UserSchema.statics.verifyAccount = function(userId, verificationString, callback
     });
 }
 
-/**
- * Generic Helper Function
- * Mutates list and adds or removes 1st instance of item in list (if present)
- * 
- * @param list {Array} - list of items
- * @param item {ObjectId} - id
- * @return updated list 
- */
-var addOrRemoveFromList = function(list, item, action) {
-    // add to list
-    if (action ==='add') {
-        list.push(item);
-    } else { 
-        // remove from list
-    	var index = list.indexOf(item);
-        if (index > -1) {
-            list.splice(index, 1);
-        }
-    }
-    return list;
-}
 
 var User = mongoose.model("User", UserSchema);
 module.exports = User;
