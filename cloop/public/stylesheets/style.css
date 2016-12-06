@@ -1,16 +1,62 @@
 /*Lead author: Ming*/
 @import url('https://fonts.googleapis.com/css?family=Reem+Kufi');
 
-body {
-  padding: 10px;
-  /*font-family: 'Roboto Condensed', sans-serif;*/
+/* color variables */
+:root {
+	--background-color: white;
+	--text-color: black;
+	--post-backg: #95a5b2;
+	--post-border: #51687c;
+	--input-backg: white;
+}
 
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body {
+  padding: 20px;
+
+  background-color: var(--background-color);
+  color: var(--text-color);
+
+  font: 15px;
+}
+
+ul {
+	list-style: none;
+}
+
+.title > a {
+	color: var(--text-color);
+}
+
+.title > a:hover {
+	color: var(--text-color);
+	text-decoration: none;
 }
 
 .title {
 	font-family: 'Reem Kufi', sans-serif;
-	font-size: 40px;
+	font-size: 50px;
+}
+
+.page-header {
+	border: 0px;
+	margin: 0px;
+	margin-top: 20px;
+}
+
+.form-group {
+	width: 50%;
+	margin-bottom: 5px;
+}
+
+.row {
+	padding-top: 1%;
+}
+
+input {
+	background-color: var(--input-backg);
+	border-radius: 3px;
+	margin: 2px;
+	border: 2px solid var(--post-border);
 
 }
 
@@ -18,12 +64,17 @@ form {
 	display: inline;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 /*The button*/
-.upvote {
-	background-image: url(../resources/upvote.png);
-	width: 25px;
-	height: 25px;
-	border-radius:25px;
+.upv {
+	background-color: var(--background-color);
+	border-radius: 5px;
 	border:none;
 }
 
@@ -56,18 +107,16 @@ form {
 
 /*Post styling*/
 .post {
-	/*background-color: #e2e2e2;*/
-	/*border-radius: 3px;*/
-	outline: 1px solid #c1c1c1;
-	/*padding: 10px 10px 10px 10px;*/
+	border: 2px solid var(--post-border);
+	border-radius: 5px;
 	margin-bottom: 10px;
 }
 
 .post_header {
-	background-color: #c1c1c1;
-/*	border-top-right-radius: 3px;
-	border-top-left-radius: 3px;*/
-	padding: 10px;
+	background-color: var(--post-backg);
+	border-bottom: 2px solid var(--post-border);
+	padding: 5px;
+	z-index: -1;
 }
 
 .post_author {
@@ -76,7 +125,8 @@ form {
 
 .post_time {
 	font-size: 10px;
-	color: #828282;
+	color: var(--text-color);
+	opacity: 85%;
 }
 
 .post_body {
@@ -86,23 +136,19 @@ form {
 .post_footer {
 	/* indent */
 	margin-left: 10px;
-
 	padding-bottom: 10px;
 }
 
 /*Comment styling*/
 .comment {
-	outline: 1px solid #e2e2e2;
-/*	border-radius: 3px;*/
-	/*outline: black dotted 2px;*/
-	/*padding: 10px 10px 10px 10px;*/
+	border: 2px solid var(--post-border);
+	border-radius: 5px;
 	margin-bottom: 10px;
 	margin-right: 10px;
 }
 .comment_header {
-	background-color: #e2e2e2;
-/*	border-top-right-radius: 3px;
-	border-top-left-radius: 3px;*/
+	background-color: var(--post-backg);
+	border-bottom: 2px solid var(--post-border);
 	padding: 5px;
 }
 
@@ -112,7 +158,7 @@ form {
 
 .comment_time {
 	font-size: 10px;
-	color: #828282;
+	color: var(--text-color);
 }
 
 .comment_body {

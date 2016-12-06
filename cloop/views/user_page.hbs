@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="/javascript/trie_main.js"></script>	
 	<h1>Welcome, {{username}}</h1>
 	<p> Email: {{email}} </p>
-	<p> Classes: </p>
+	<h4> Classes: </h4>
 	<ul>
 		{{#each classes}}
 			<li id='{{this.name}}'>
@@ -17,10 +17,12 @@
 				<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
 			</li>
 		{{/each}}
-		
-			
-	
 	</ul>
+
+	<form action="group/class" method="post">
+	<input type="text" name="className"><input type="submit" value="Create class">
+	</form>
+	<br>
 
 	<input id="search-input" type="text" placeholder="Search for classes">
 	<ul id="results-list"></ul>
@@ -33,7 +35,4 @@
 		{{/each}}
 	</ul> -->
 
-	<form action="group/class" method="post">
-		<input type="text" name="className"><input type="submit" value="Create class">
-	</form>
 </div>
