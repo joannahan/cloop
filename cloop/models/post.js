@@ -2,13 +2,7 @@
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-var User = require("./user");
-var Comment = require("./comment");
-
-console.log("USER")
-console.log(User)
-console.log("COMMENT")
-console.log(Comment)
+//var Comment = require("./comment");
 
 var PostSchema = mongoose.Schema({
     text:           {type: String,                required: true},
@@ -62,7 +56,13 @@ PostSchema.statics.editPost = function(postId, text, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.removePost = function(postId, callback) {
-    Post.remove({"_id": postId}, callback);
+    // Post.findOne({"_id": postId}, function(err, post) {
+    //     if (err) callback(err)
+    //     else
+    //         Comment.remove({"_id": {$in : post.comments}}, function(err) {
+    //             Post.remove({"_id": postId}, callback)
+    //         })
+    // })
 }
 
 /**

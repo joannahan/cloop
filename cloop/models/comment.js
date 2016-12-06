@@ -24,8 +24,13 @@ var CommentSchema = mongoose.Schema({
  */
 CommentSchema.statics.createComment = function(authorId, postId, text, callback) {
     Comment.create({"author": authorId, "text": text}, function(err, comment) {
-        if (err)    callback(err);
-        else        Post.addComment(postId, comment._id, callback);
+        if (err) {
+            console.log("ERROR ON COMMENT.CREATE")
+            callback(err);
+        } else {
+            console.log("NO ERROR ON COMMENT.CREATE")
+            Post.addComment(postId, comment._id, callback);
+        }        
     });
 }
 
