@@ -19,7 +19,7 @@ var requestCallback = function(res) {
 router.get('/', function(req, res, next) {
 	//check to see if the user is verified
 	if (req.user.verifiedEmail) {
-			var enrolledClasses = [];
+		var enrolledClasses = [];
 		for (var i = 0; i < req.user.classesEnrolled.length; i++){
 			Class.findOne({_id:req.user.classesEnrolled[i]}, function(err, enrolledClass){
 					enrolledClasses.push(enrolledClass);
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 						takenClasses.push(takenClass);
 					});
 				}
-					var untakenClasses = [];
+		var untakenClasses = [];
 		Class.getAllClasses(function(allClasses){
 			untakenClasses=getUntakenClasses(allClasses,req);
 	//			console.log("enrolledClasses:"+req.user.classesEnrolled);
@@ -55,6 +55,28 @@ router.get('/', function(req, res, next) {
 	}
 });
 
+//gets all class names the user isn't in
+//error handled in class function
+router.get('/nonuserclasses', function(req,res, next) {
+	User.getClassesEnrolledByStudent(req.user, function(classIds){
+		var classnamelist = [];
+		for (var i = 0; i < classIds.length; i++){
+			Class.findOne({_id:classIds[i]}, function(err, resclass){
+				classnamelist.push(resclass.name);
+			});
+		}	
+
+		Class.getAllClassesNames(function(classNames){
+			//filter
+			var nonUClasses = classNames.filter(function(el){return classnamelist.indexOf(el) < 0});
+			res.json({
+				success:true,
+				classes:nonUClasses
+			});
+		});
+	});
+});
+
 //get all posts
 router.get('/getall', function(req, res, next) {
 	//TODO get all posts from each specific class
@@ -73,7 +95,7 @@ router.get('/getall', function(req, res, next) {
 	});			
 });
 
-//common helper function for untakeClasses
+//function for untakeClasses
 var getUntakenClasses = function(allClasses,req) {
 	var enrolledClasses=req.user.classesTaken;
 	var takenClasses=req.user.classesEnrolled;
@@ -222,10 +244,10 @@ router.post('/class', function(req, res, next) {
 	var className = req.body.className;
 //	readTextFile("./seeds/courses.json", function(text) {
 //		var data = JSON.parse(text);
-//		console.log("U SUCK " + data);
+//		console.log("CRAPPPPP " + data);
 //	});
 //	data.forEach(function(obj) {
-//		console.log("FARTS" + obj.subjectId);
+//		console.log("WHATTTTT" + obj.subjectId);
 //	});
 	Class.getClass(className, function(err, _class){
 		if (err){
@@ -273,7 +295,7 @@ router.post('/user/enroll_class', function(req, res, next) {
 			}
 		});		
 	}else{
-		return done(res, null, true, 'You already enroll/take this class.');
+		return done(res, null, true, 'You are already enrolled/have taken this class.');
 	}
 });
 

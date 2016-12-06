@@ -96,16 +96,17 @@ $(document).ready(function() {
 	$('#addNewClass').click(function(){
 		var $newClassName=$('#newClassName');
 		if ($newClassName.val()===''){
-			alert('please enter a new class name.');
+			alert('Please enter a new class name.');
 			return;
 		}
 		$.post('/group/class', {className:$newClassName.val()}, function(err, newClass) {
 			if (err) {
 				if (err.message !== undefined){
 					alert(err.message);
-				}					
+				}
+				location.reload();
 			} else {
-				//Do nothing;
+				location.reload();
 			}
 		});
 	}); 
@@ -116,9 +117,10 @@ $(document).ready(function() {
 			if(err){
 				if (err.message !== undefined){
 					alert(err.message);
-				}					
+				}
+				location.reload();
 			} else {
-				//Do nothing;
+				location.reload();
 			}
 		});
 	 });
@@ -130,8 +132,9 @@ $(document).ready(function() {
 				if (err.message !== undefined){
 					alert(err.message);
 				}
+				location.reload();
 			} else {
-				//Do nothing
+				location.reload();
 			}
 		});
 	 });	

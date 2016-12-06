@@ -171,7 +171,7 @@ UserSchema.statics.getClassesEnrolledByStudentId = function(studentId,callback) 
 }
 
 /**
- * Move a enrolled class from classesEnrolled array to classesTaken array 
+ * Move an enrolled class from classesEnrolled array to classesTaken array 
  * 
  * @param classId {ObjectId} - class id
  * @param userId {ObjectId} - user id

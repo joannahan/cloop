@@ -1,8 +1,12 @@
 <!-- Lead author: Ming -->
 <div class = "user_page" id={{_id}}>
-	<h1>Welcome, {{user.name}}</h1>
-	<p> Email: {{user.email}} </p>
-	<p> Classes: </p>
+		<!-- autocomplete imports -->
+		<script type="text/javascript" src="/javascript/trie.js"></script>		
+		<script type="text/javascript" src="/javascript/trie_controller.js"></script>			
+		<script type="text/javascript" src="/javascript/trie_main.js"></script>	
+	<h1>Welcome, {{username}}</h1>
+	<p> Email: {{email}} </p>
+	<p> Enrolled Classes: </p>
 	<ul>
 		{{#each enrolledClasses}}
 			<li id='{{this.name}}'>
@@ -28,13 +32,16 @@
 	<input id="search-input" type="text" placeholder="Search for classes">
 	<ul id="results-list"></ul>
 
-	<!-- <ul>
+
+
+<!-- 	<ul>
 		{{#each allclass}}
 			<li> 
 				<form action='group/user/add' method='post'><input type='text' name='className' value = '{{this}}' readonly><input type='submit' value='Join class'></form>
 			</li>
 		{{/each}}
 	</ul> -->
+
 	
 	<ul id="untakenClassesList">
 		{{#each untakenClasses}}
