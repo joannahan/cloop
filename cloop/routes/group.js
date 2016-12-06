@@ -30,21 +30,29 @@ router.get('/', function(req, res, next) {
 				});
 			}
 
-			Class.getAllClasses(function(classNames){
-
-				//remove userClass from allclass
-				var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
-				console.log("classlist: " + classlist + classes);
-				var data = {
+			var data = {
 					username: req.user.username,
 					email: req.user.email,
 					userclass: classlist,
-					allclass: otherClasses,
 					classes: classes
 				};
+			res.render('user_page', data);
 
-				res.render('user_page', data);	
-			});
+			// Class.getAllClasses(function(classNames){
+
+			// 	//remove userClass from allclass
+			// 	var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
+
+			// 	var data = {
+			// 		username: req.user.username,
+			// 		email: req.user.email,
+			// 		userclass: classlist,
+			// 		allclass: otherClasses,
+			// 		classes: classes
+			// 	};
+
+			// 	res.render('user_page', data);	
+			// });
 		});
 	} else {
 		var data = {
@@ -53,6 +61,28 @@ router.get('/', function(req, res, next) {
 		}
 		res.render('verification', data);	
 	}
+});
+
+//gets all class names the user isn't in
+//error handled in class function
+router.get('/nonuserclasses', function(req,res, next) {
+	User.getClassesEnrolledByStudent(req.user, function(classIds){
+		var classnamelist = [];
+		for (var i = 0; i < classIds.length; i++){
+			Class.findOne({_id:classIds[i]}, function(err, resclass){
+				classnamelist.push(resclass.name);
+			});
+		}	
+
+		Class.getAllClasses(function(classNames){
+			//filter
+			var nonUClasses = classNames.filter(function(el){return classnamelist.indexOf(el) < 0});
+			res.json({
+				success:true,
+				classes:nonUClasses
+			});
+		});
+	});
 });
 
 //get all posts

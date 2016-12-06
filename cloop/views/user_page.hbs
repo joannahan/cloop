@@ -1,5 +1,9 @@
 <!-- Lead author: Ming -->
 <div class = "user_page" id={{_id}}>
+		<!-- autocomplete imports -->
+		<script type="text/javascript" src="/javascript/trie.js"></script>		
+		<script type="text/javascript" src="/javascript/trie_controller.js"></script>			
+		<script type="text/javascript" src="/javascript/trie_main.js"></script>	
 	<h1>Welcome, {{username}}</h1>
 	<p> Email: {{email}} </p>
 	<p> Classes: </p>
@@ -21,13 +25,13 @@
 	<input id="search-input" type="text" placeholder="Search for classes">
 	<ul id="results-list"></ul>
 
-	<ul>
+<!-- 	<ul>
 		{{#each allclass}}
 			<li> 
 				<form action='group/user/add' method='post'><input type='text' name='className' value = '{{this}}' readonly><input type='submit' value='Join class'></form>
 			</li>
 		{{/each}}
-	</ul>
+	</ul> -->
 
 	<form action="group/class" method="post">
 		<input type="text" name="className"><input type="submit" value="Create class">
