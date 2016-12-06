@@ -58,17 +58,6 @@ PostSchema.statics.editPost = function(postId, text, callback) {
  */
 PostSchema.statics.removePost = function(postId, callback) {
     Post.remove({"_id": postId}, callback);
-        // if (err) {
-        //     callback(err);
-        // } else {
-        //     Comment.remove({"_id": {$in: result.comments}}, function(err, result) {
-        //         if (err) {
-        //             callback(err);
-        //         } else {
-        //             that.remove({"_id": postId}, callback);
-        //         }
-        //     });    
-        // }
 }
 
 /**
