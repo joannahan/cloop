@@ -19,40 +19,32 @@ var requestCallback = function(res) {
 router.get('/', function(req, res, next) {
 	//check to see if the user is verified
 	if (req.user.verifiedEmail) {
-			//get user's classes:
-		User.getClassesEnrolledByStudent(req.user, function(classIds){
-			var classlist = [];
-			var classes = [];
-			for (var i = 0; i < classIds.length; i++){
-				Class.findOne({_id:classIds[i]}, function(err, resclass){
-					classlist.push(resclass.name);
-					classes.push(resclass);
+		var enrolledClasses = [];
+		for (var i = 0; i < req.user.classesEnrolled.length; i++){
+			Class.findOne({_id:req.user.classesEnrolled[i]}, function(err, enrolledClass){
+					enrolledClasses.push(enrolledClass);
 				});
 			}
-
+				var takenClasses = [];
+		for (var j=0; j<req.user.classesTaken.length; j++) {
+			Class.findOne({_id:req.user.classesTaken[j]}, function(err, takenClass) {
+						takenClasses.push(takenClass);
+					});
+				}
+		var untakenClasses = [];
+		Class.getAllClasses(function(allClasses){
+			untakenClasses=getUntakenClasses(allClasses,req);
+	//			console.log("enrolledClasses:"+req.user.classesEnrolled);
+	//			console.log("takenClasses:"+req.user.classesTaken);
+	//			console.log("untakenClasses:"+untakenClasses);
+			console.log("group page*************");
 			var data = {
-					username: req.user.username,
-					email: req.user.email,
-					userclass: classlist,
-					classes: classes
-				};
+				user: req.user,
+				untakenClasses: untakenClasses,
+				enrolledClasses: enrolledClasses,
+				takenClasses: takenClasses
+			};		
 			res.render('user_page', data);
-
-			// Class.getAllClasses(function(classNames){
-
-			// 	//remove userClass from allclass
-			// 	var otherClasses = classNames.filter(function(el){return classlist.indexOf(el) < 0});
-
-			// 	var data = {
-			// 		username: req.user.username,
-			// 		email: req.user.email,
-			// 		userclass: classlist,
-			// 		allclass: otherClasses,
-			// 		classes: classes
-			// 	};
-
-			// 	res.render('user_page', data);	
-			// });
 		});
 	} else {
 		var data = {
@@ -74,7 +66,7 @@ router.get('/nonuserclasses', function(req,res, next) {
 			});
 		}	
 
-		Class.getAllClasses(function(classNames){
+		Class.getAllClassesNames(function(classNames){
 			//filter
 			var nonUClasses = classNames.filter(function(el){return classnamelist.indexOf(el) < 0});
 			res.json({
@@ -102,6 +94,51 @@ router.get('/getall', function(req, res, next) {
 		});				
 	});			
 });
+
+//function for untakeClasses
+var getUntakenClasses = function(allClasses,req) {
+	var enrolledClasses=req.user.classesTaken;
+	var takenClasses=req.user.classesEnrolled;
+	var untakenClasses=[];
+//	console.log("enrolledClasses:"+enrolledClasses);
+//	console.log("takenClasses:"+takenClasses);
+
+	var isTaken=false;
+	for (var k=0; k<allClasses.length; k++) {
+//		console.log("allClass: " + allClasses[k].name);
+		for (var l=0; l<enrolledClasses.length; l++) {
+			//console.log("enrolledClass: " + enrolledClasses[l].name);							
+			if (allClasses[k]._id === enrolledClasses[l]._id) {								
+				//console.log("isTaken: " + isTaken);	
+				isTaken=true;
+				break;
+			}
+		}
+//		console.log("enrrolled:isTaken: " + isTaken);	
+		if (isTaken===true){
+			continue;
+		}else{
+			for (var m=0; m<takenClasses.length; m++) {
+				//console.log("takenClass: " + takenClasses[m].name);							
+				if (allClasses[k]._id === takenClasses[m]._id) {
+					isTaken=true;
+					//console.log("isTaken2: " + isTaken);	
+					break;
+				}
+			}
+//			console.log("takenClasses:isTaken: " + isTaken);	
+			if (isTaken===true){
+				continue;
+			}else{
+//				console.log("push:untakenClasses:" + allClasses[k]);
+				untakenClasses.push(allClasses[k]);
+			}
+		}
+		isTaken = false;
+	}
+//	console.log("push:all_untakenClasses:" + untakenClasses);
+	return untakenClasses;
+}
 
 //get class page
 router.get('/:name', function(req, res, next) {
@@ -189,36 +226,77 @@ router.get('/search/:_name', function(req, res, next) {
 	Class.getClass(className, function() {});
 });
 
+//parse JSON file
+function readTextFile(file, callback) {
+	var rawFile = new XMLHttpRequest();
+	rawFile.overrideMimeType("application/json");
+	rawFile.open("GET", file, true);
+	rawFile.onreadystatechange = function() {
+		if (rawFile.readyState === 4 && rawFile.status == "200") {
+			callback(rawFile.responseText);
+		}
+	}
+	rawFile.send(null);
+}
+
 //create new class page
 router.post('/class', function(req, res, next) {
 	var className = req.body.className;
-	Class.createClass(className, function(err, result) {
-		if (err) {
-			if (err.code === 11000) {
-				req.flash('error_msg','There already exists a class with that name.');
-	  			res.redirect('/group');
+//	readTextFile("./seeds/courses.json", function(text) {
+//		var data = JSON.parse(text);
+//		console.log("CRAPPPPP " + data);
+//	});
+//	data.forEach(function(obj) {
+//		console.log("WHATTTTT" + obj.subjectId);
+//	});
+	Class.getClass(className, function(err, _class){
+		if (err){
+			return done(res, err, false, null);
+		}else{
+			//console.log("create new class:"+_class);
+			if (_class){
+				return done(res, null, true, 'There already exists a class with that name.');
+			}else{
+				Class.createClass(className, function(err, result) {
+					if (err) {
+						if (err.code === 11000) {
+							req.flash('error_msg','There already exists a class with that name.');
+				  			res.redirect('/group');
+						}
+						else res.send(err);
+					}	
+					else
+						res.redirect('/group');
+				});				
 			}
-			else res.send(err);
-		}	
-		else
-			res.redirect('/group');
-	});
-	//possibly update class list for autocomplete
-});
-
-//add student to a class
-router.post('/user/add', function(req, res, next) {
-	var userId = req.user.id;
-	var className = req.body.className;
-
-	Class.getClass(className, function(err, result) {
-		if (err) {
-			console.log(err);
-		} else {
-			var classId = result._id;
-			Class.addStudent(classId, userId, requestCallback(res));
 		}
 	});
+});
+
+router.post('/user/enroll_class', function(req, res, next) {
+	var userId = req.user.id;
+	var classId = req.body.classId;
+	var isEnrolled=(req.user.classesEnrolled.indexOf(classId)>-1);
+	var isTaken=(req.user.classesTaken.indexOf(classId)>-1);
+	if (!isEnrolled && !isTaken){
+		Class.addEnrolledStudent(classId, req.user.id,function(err, user){
+			if (err) {
+				return done(res, err, false, null);
+			} else {
+				//sync user
+				User.getUserById(req.user._id,function(err, user){
+					if(err){
+						return done(res, err, false, null);
+					}else{
+						req.user=user;
+						res.redirect('/group');
+					}						
+				});				
+			}
+		});		
+	}else{
+		return done(res, null, true, 'You are already enrolled/have taken this class.');
+	}
 });
 
 //remove student from a class
@@ -237,33 +315,32 @@ router.post('/user/remove', function(req, res, next) {
 });
 
 //update classesTaken list based on whether taken or not
-router.put('/:id', function(req, res, next) {
-	// if already taken, but want to untake
-	Class.getClassById(req.params.id, function(err,data){
+router.post('/user/move_enrolled_class', function(req, res, next) {
+	// if already taken, but want to move it from classEnrolled array to classTaken array
+	Class.getClassById(req.body.classId, function(err,data){
 		if (err){
 			return done(res, err, false, null);
 		}
 		var _class = data;
-		console.log("class:" + _class);
-		console.log("REQUSER: " + req.user);
 		var isTaken=(req.user.classesTaken.indexOf(_class._id)>-1);
-		console.log("CLASSID: "+ _class._id);
-		console.log("ISTAKEN: " + isTaken);
-		var action=req.body.action;
-		if (!isTaken && action=='add') {
-			User.updateClassesTakenList(_class._id,req.user._id, action, function(err, user){
-				if (err) {
-					return done(res, err, false, null);				
-				} else {
-					console.log("POOP: " + user);
-		  			res.json({
-						success: true,
-						_class: _class
-					});	
+		if(!isTaken){
+			User.moveFromEnrolledClassToTakenClass(req.user._id, _class._id, function(err){
+				if (err){
+					return done(res, err, false, null);
+				}else{
+					//sync user
+					User.getUserById(req.user._id,function(err, user){
+						if(err){
+							return done(res, err, false, null);
+						}else{
+							req.user=user;
+							res.redirect('/group');
+						}
+					});
 				}
 			});					
 		}else{
-			return done(res, null, true, 'there is no required acton:'+action +' a class (add=class, remove=remove class).');
+			return done(res, null, true, 'This class has already been taken.');
 		}		
 	});
 });

@@ -93,42 +93,50 @@ $(document).ready(function() {
 		});
 	 });
 	
-	$('#takenClass*').click(function(){
+	$('#addNewClass').click(function(){
+		var $newClassName=$('#newClassName');
+		if ($newClassName.val()===''){
+			alert('Please enter a new class name.');
+			return;
+		}
+		$.post('/group/class', {className:$newClassName.val()}, function(err, newClass) {
+			if (err) {
+				if (err.message !== undefined){
+					alert(err.message);
+				}
+				location.reload();
+			} else {
+				location.reload();
+			}
+		});
+	}); 
+	
+	$('#moveEnrolledClass*').click(function(){
 		var $id = $(this).data('taken');
-		console.log($id);
-		$.ajax({
-			context:this,
-			type:'PUT',
-			url:'/group/'+ $id,
-			data:{
-				action:'add',
-			},
-			success:function(result){	
-				//TODO
-				console.log("HELLO ADDED");
-			},
-			error:function(){
-				//TODO
-				alert(status.message);
-			}			
-		});		
+		$.post('/group/user/move_enrolled_class', {classId:$id}, function(err, _class) {
+			if(err){
+				if (err.message !== undefined){
+					alert(err.message);
+				}
+				location.reload();
+			} else {
+				location.reload();
+			}
+		});
 	 });
+	$('#untakenClassesList').delegate('.untakenClass','click', function(){
 
-	
-//	$('#archivedClass*').click(function(){
-//		var $name = $(this).data('archived');
-//		console.log("$name: "+ $name);
-//	    $.get('/group/'+$name, function(err, _class) {
-//    		if (err) {
-//    			//TODO
-//    			console.log(err);
-//    		} else {
-//    			//TODO
-//    			console.log("ALKFJ:AKLDFJ");
-//    		}
-//		});
-//	 });
-	
-	
+		var $id = $(this).data('classid');
+		$.post('/group/user/enroll_class', {classId:$id}, function(err, untakenClass) {
+			if (err) {
+				if (err.message !== undefined){
+					alert(err.message);
+				}
+				location.reload();
+			} else {
+				location.reload();
+			}
+		});
+	 });	
 
 });
