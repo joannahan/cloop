@@ -33,11 +33,9 @@ router.get('/', function(req, res, next) {
 				}
 		var untakenClasses = [];
 		Class.getAllClasses(function(allClasses){
-			untakenClasses=getUntakenClasses(allClasses,req);
-	//			console.log("enrolledClasses:"+req.user.classesEnrolled);
-	//			console.log("takenClasses:"+req.user.classesTaken);
-	//			console.log("untakenClasses:"+untakenClasses);
-			console.log("group page*************");
+			untakenClasses= getUntakenClasses(allClasses,req);
+			//sort alphanumerically?
+
 			var data = {
 				user: req.user,
 				untakenClasses: untakenClasses,

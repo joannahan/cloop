@@ -4,8 +4,8 @@
 		<script type="text/javascript" src="/javascript/trie.js"></script>		
 		<script type="text/javascript" src="/javascript/trie_controller.js"></script>			
 		<script type="text/javascript" src="/javascript/trie_main.js"></script>	
-	<h1>Welcome, {{username}}</h1>
-	<p> Email: {{email}} </p>
+	<h1>Welcome, {{user.name}}</h1>
+	<p> Email: {{user.email}} </p>
 	<h4> Enrolled Classes: </h4>
 	<ul>
 		{{#each enrolledClasses}}
