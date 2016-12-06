@@ -44,11 +44,8 @@ router.post('/:postId/comment', function(req, res, next) {
 	var postId = req.params.postId;
 
 	Comment.createComment(authorId, postId, commentText, function(err, _class) {
-		if (err) {
-			console.log(err);
-		} else {
-			Class.getClassByPostId(postId, requestCallback2(res));
-		}
+		if (err)	console.log(err);
+		else		Class.getClassByPostId(postId, requestCallback2(res));
 	});
 });
 

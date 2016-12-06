@@ -39,7 +39,7 @@ ClassSchema.statics.getClassById = function(id, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClassByPostId = function(postId, callback) {
-    Class.findOne({posts: {$in: postId}}, callback);
+    Class.findOne({posts: postId}, callback);
 }
 
 /**
