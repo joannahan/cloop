@@ -1,0 +1,10 @@
+Progress Report for 12/12 Mentor Meeting
+
+Last Mentor Meeting: 12/5 3:30-3:50PM
+Topics:
+-Questions about trie/autocomplete file placement/implementation
+-Security concerns
+-What is needed for feature freeze
+-UI needs improvement
+
+Progress since last mentor meeting:

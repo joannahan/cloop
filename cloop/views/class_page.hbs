@@ -22,7 +22,7 @@
 		<div class="post" id={{_id}}>
 		
 			<div class="post_header">
-				<span class="upvotes"> <button class="upvote post" type="submit"></button> {{upvoteCount}} </span>
+				<span class="upvotes"> <button class="upv" type="submit">^</button> {{upvoteCount}} </span>
 				<span class="post_author">{{author.name}}</span>
 				<span class="post_time">{{timeCreated}}</span>
 				<span class="delete_post"> <input type="submit" value="Delete Post"> </span>
@@ -30,8 +30,6 @@
 		
 			<div class="post_body">
 				<p>{{text}}</p>
-				<!-- icon to represent resource? -->
-				<p> Attached resource: {{resource}} </p>
 			</div>
 		
 			<div class="post_footer">
@@ -39,7 +37,7 @@
 					<!-- render the comment handlebar template -->
 					<div class="comment" id={{_id}}>
 						<div class="comment_header">
-							<span class="upvotes"> <button type="submit" class="upvote comment"></button> {{upvoteCount}}</span>
+							<span class="upvotes"> <button class="upv" type="submit">^</button> {{upvoteCount}}</span>
 							<span class="comment_author">{{author.name}}</span>
 							<span class="comment_time">{{timeCreated}}</span>
 							<span class="delete_comment"> <input type="submit" value="Delete Comment"> </span>
@@ -53,7 +51,7 @@
 				{{/each}}
 				<!-- add a text input for adding a comment, action tag -->
 				<form action='/comment/{{_id}}/comment' method='post' id="new_comment">
-					Reply to this thread: <input type="text" name='commentText'><input type="submit" value = "Post">
+					Reply to this thread: <input type="text" name='commentText'><input type="submit" value = "Comment">
 				</form>
 			</div>
 		</div>
