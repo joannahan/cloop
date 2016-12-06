@@ -63,6 +63,8 @@ PostSchema.statics.removePost = function(postId, callback) {
     //             Post.remove({"_id": postId}, callback)
     //         })
     // })
+    
+    // TODO: CONTINUE CHECKING ROUTING FOR REMOVE POST AND REMOVE COMMENT
 }
 
 /**
