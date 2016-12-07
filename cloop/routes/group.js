@@ -1,4 +1,4 @@
-// Lead author: Danny
+// Lead author: Danny/Joanna
 var express = require('express');
 var mongoose = require("mongoose");
 var router = express.Router();
@@ -19,30 +19,33 @@ var requestCallback = function(res) {
 router.get('/', function(req, res, next) {
 	//check to see if the user is verified
 	if (req.user.verifiedEmail) {
-		var enrolledClasses = [];
-		for (var i = 0; i < req.user.classesEnrolled.length; i++){
-			Class.findOne({_id:req.user.classesEnrolled[i]}, function(err, enrolledClass){
-					enrolledClasses.push(enrolledClass);
+		Class.getClasses(req.user.classesEnrolled, function(err, enrolledClasses){
+			var enrolledClassNames=[];
+			enrolledClasses.forEach(function(item) {
+				enrolledClassNames.push(item.name);
+			});
+			Class.getClasses(req.user.classesTaken, function(err, takenClasses){
+				var takenClassNames=[];
+				takenClasses.forEach(function(item) {
+					takenClassNames.push(item.name);
 				});
-			}
-				var takenClasses = [];
-		for (var j=0; j<req.user.classesTaken.length; j++) {
-			Class.findOne({_id:req.user.classesTaken[j]}, function(err, takenClass) {
-						takenClasses.push(takenClass);
+				Class.getAllClassesNames(function(classNames){
+					//filter
+					var untakenClassNames = classNames.filter(function(el){return enrolledClassNames.indexOf(el) < 0});
+					untakenClassNames = untakenClassNames.filter(function(el){return takenClassNames.indexOf(el) < 0});
+					
+					Class.getClassesByNames(untakenClassNames, function(err, untakenClasses){
+						console.log("************group refresh page*************");					
+						var data = {
+							user: req.user,
+							untakenClasses: untakenClasses,
+							enrolledClasses: enrolledClasses,
+							takenClasses: takenClasses
+						};		
+						res.render('user_page', data);					
 					});
-				}
-		var untakenClasses = [];
-		Class.getAllClasses(function(allClasses){
-			untakenClasses= getUntakenClasses(allClasses,req);
-			//sort alphanumerically?
-
-			var data = {
-				user: req.user,
-				untakenClasses: untakenClasses,
-				enrolledClasses: enrolledClasses,
-				takenClasses: takenClasses
-			};		
-			res.render('user_page', data);
+				});
+			});
 		});
 	} else {
 		var data = {
@@ -57,19 +60,25 @@ router.get('/', function(req, res, next) {
 //error handled in class function
 router.get('/nonuserclasses', function(req,res, next) {
 	User.getClassesEnrolledByStudent(req.user, function(classIds){
-		var classnamelist = [];
-		for (var i = 0; i < classIds.length; i++){
-			Class.findOne({_id:classIds[i]}, function(err, resclass){
-				classnamelist.push(resclass.name);
+		Class.getClasses(req.user.classesEnrolled, function(err, enrolledClasses){
+			var enrolledClassNames=[];
+			enrolledClasses.forEach(function(item) {
+				enrolledClassNames.push(item.name);
 			});
-		}	
-
-		Class.getAllClassesNames(function(classNames){
-			//filter
-			var nonUClasses = classNames.filter(function(el){return classnamelist.indexOf(el) < 0});
-			res.json({
-				success:true,
-				classes:nonUClasses
+			Class.getClasses(req.user.classesTaken, function(err, takenClasses){
+				var takenClassNames=[];
+				takenClasses.forEach(function(item) {
+					takenClassNames.push(item.name);
+				});
+				Class.getAllClassesNames(function(classNames){
+					//filter
+					var nonUClasses = classNames.filter(function(el){return enrolledClassNames.indexOf(el) < 0});
+					nonUClasses = nonUClasses.filter(function(el){return takenClassNames.indexOf(el) < 0});
+					res.json({
+						success:true,
+						classes:nonUClasses
+					});
+				});
 			});
 		});
 	});
@@ -92,51 +101,6 @@ router.get('/getall', function(req, res, next) {
 		});				
 	});			
 });
-
-//function for untakeClasses
-var getUntakenClasses = function(allClasses,req) {
-	var enrolledClasses=req.user.classesTaken;
-	var takenClasses=req.user.classesEnrolled;
-	var untakenClasses=[];
-//	console.log("enrolledClasses:"+enrolledClasses);
-//	console.log("takenClasses:"+takenClasses);
-
-	var isTaken=false;
-	for (var k=0; k<allClasses.length; k++) {
-//		console.log("allClass: " + allClasses[k].name);
-		for (var l=0; l<enrolledClasses.length; l++) {
-			//console.log("enrolledClass: " + enrolledClasses[l].name);							
-			if (allClasses[k]._id === enrolledClasses[l]._id) {								
-				//console.log("isTaken: " + isTaken);	
-				isTaken=true;
-				break;
-			}
-		}
-//		console.log("enrrolled:isTaken: " + isTaken);	
-		if (isTaken===true){
-			continue;
-		}else{
-			for (var m=0; m<takenClasses.length; m++) {
-				//console.log("takenClass: " + takenClasses[m].name);							
-				if (allClasses[k]._id === takenClasses[m]._id) {
-					isTaken=true;
-					//console.log("isTaken2: " + isTaken);	
-					break;
-				}
-			}
-//			console.log("takenClasses:isTaken: " + isTaken);	
-			if (isTaken===true){
-				continue;
-			}else{
-//				console.log("push:untakenClasses:" + allClasses[k]);
-				untakenClasses.push(allClasses[k]);
-			}
-		}
-		isTaken = false;
-	}
-//	console.log("push:all_untakenClasses:" + untakenClasses);
-	return untakenClasses;
-}
 
 //get class page
 router.get('/:name', function(req, res, next) {
@@ -295,6 +259,37 @@ router.post('/user/enroll_class', function(req, res, next) {
 	}else{
 		return done(res, null, true, 'You are already enrolled/have taken this class.');
 	}
+});
+
+router.post('/user/enroll_class_by_name', function(req, res, next) {
+	Class.getClass(req.body.className, function(err, _class){
+		if(err){
+			console.log(err);
+			return err;
+		}else{
+			var isEnrolled=(req.user.classesEnrolled.indexOf(_class._Id)>-1);//Warning:will return null if there is a null in the array
+			var isTaken=(req.user.classesTaken.indexOf(_class._Id)>-1);
+			if (!isEnrolled && !isTaken){
+				Class.addEnrolledStudent(_class._id, req.user.id,function(err, user){
+					if (err) {
+						return done(res, err, false, null);
+					} else {
+						//sync user
+						User.getUserById(req.user._id,function(err, user){
+							if(err){
+								return done(res, err, false, null);
+							}else{
+								req.user=user;
+								res.redirect('/group');
+							}
+						});
+					}
+				});
+			}else{
+				return done(res, null, true, 'You are already enroll/have taken this class.');
+			}
+		}
+	});
 });
 
 //remove student from a class

@@ -51,7 +51,7 @@ var Controller = function() {
     var li = document.createElement('li');
     var classForm = document.createElement('FORM');
     classForm.method = 'POST';
-    classForm.action = 'group/user/enroll_class';
+    classForm.action = 'group/user/enroll_class_by_name';
 
     var classInput = document.createElement('INPUT');
     classInput.type = 'text';
