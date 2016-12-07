@@ -14,7 +14,7 @@ var PostSchema = mongoose.Schema({
     upvoteUsers:    [{type: ObjectId, ref: "User"}],
     flagUsers:      [{type: ObjectId, ref: "User"}],
     
-    resource:       {type: String, default: null}
+    resourceUrl:    String
 });
 
 /**
@@ -22,10 +22,11 @@ var PostSchema = mongoose.Schema({
  * 
  * @param authorId {ObjectId} - The id of the author
  * @param text {string} - The text of the post
+ * @param resourceUrl {string} - The Url (if any) of the post's resource
  * @param callback {function} - callback function
  */
-PostSchema.statics.createPost = function(authorId, text, callback) {
-    Post.create({"author": authorId, "text": text}, callback);
+PostSchema.statics.createPost = function(authorId, text, resourceUrl, callback) {
+    Post.create({"author": authorId, "text": text, "resourceUrl": resourceUrl}, callback);
 }
 
 /**

@@ -7,7 +7,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 
 var secret = require('../secret/secret');
-var transporter = secret['transporter'];
+var transporter = secret.transporter;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

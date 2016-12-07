@@ -118,7 +118,21 @@ button:focus {
 }
 
 .post-box {
+	width: 80%;
+	height: 60px;
+	padding-left: 0;
+	padding-top: 0;
+	border: 2px solid var(--post-border);
+	border-radius: 5px;
+	padding: 4px;
+}
+
+/*#post-button {
+
+}*/
+.comment-box {
 	height: 27px;
+	width: 50%;
 }
 
 /*Post styling*/

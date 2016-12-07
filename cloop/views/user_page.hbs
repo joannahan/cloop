@@ -34,12 +34,12 @@
 	</form> -->
 	
 	<form action="group/class" method="post">
-	<input type="text" id='newClassName' name="className" class='post-box' value=""><input type="button" id='addNewClass' value="Create class">
+	<input type="text" id='newClassName' name="className" class='comment-box' value=""><input type="button" id='addNewClass' value="Create class">
 	</form>	
 	<br>
 	
 
-	<input id="search-input" type="text" class='post-box' placeholder="Search for classes">
+	<input id="search-input" type="text" class='comment-box' placeholder="Search for classes">
 	<ul id="results-list"></ul>
 
 
@@ -58,7 +58,7 @@
 		{{#each untakenClasses}}
 			<li> 
 				<input type='text' class="class_listing" name='className' value = '{{this.name}}' readonly>	
-<!-- 				<input type='button' id='untakenClass_{{this._id}}' class='untakenClass' data-classid={{this._id}} value='Join class'> -->
+				<input type='button' id='untakenClass_{{this._id}}' class='untakenClass' data-classid={{this._id}} value='Join class'>
 			</li>
 		{{/each}}
 	</ul>
