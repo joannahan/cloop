@@ -55,17 +55,15 @@ router.delete('/:_id', function(req, res, next) {
 	var userId = req.user.id;
 
 	Comment.getComment(commentId, function(err, result) {
-		if (err) {
-			res.send(err);
-		} else {
-			if (result.author === userId) {
+		if (err)				res.send(err);
+		else {
+			if (result.author == userId) {
 				Comment.removeComment(commentId, function(err, result) {
 					if (err) 	res.send(err);
 					else 		res.send({remove:true});
 				});
-			} else {
+			} else
 				res.send("Wrong user!");
-			}
 		}
 	});
 });
@@ -77,14 +75,12 @@ router.put('/edit/:_id', function(req, res, next) {
 	var userId = req.user.id;
 	
 	Comment.getComment(commentId, function(err, result) {
-		if (err) {
-			res.send(err);
-		} else {
-			if (result.author === userId) {
+		if (err)		res.send(err);
+		else {
+			if (result.author == userId)
 				Comment.editComment(commentId, newText, requestCallback(res));
-			} else {
+			else
 				res.send("Wrong user!");
-			}
 		}
 	});
 });

@@ -59,11 +59,8 @@ $(document).ready(function() {
 			type:'DELETE',
 			url:'/post/'+ $id,
 			success:function(result){	
-				if (result.remove === false) {
-					alert(result.message);
-				} else {
-		    		$postId.remove();		
-				}
+				if (result.remove)	$postId.remove();
+				else 				alert(result.message);
 			},
 			error:function(){
 				alert(status.message);

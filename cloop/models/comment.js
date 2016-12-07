@@ -60,8 +60,10 @@ CommentSchema.statics.removeComment = function(commentId, callback) {
     Comment.findOne({"_id": commentId}, function(err, result) {
         if (err)    callback(err);
         else {
-            Post.update({},{$pull: {comments: commentId}})
-            Comment.remove({"_id": commentId}, callback);
+            Post.update({},{$pull: {comments: commentId}}, function(err, result) {
+                if (err)    callback(err)
+                else        Comment.remove({"_id": commentId}, callback)
+            })
         }
     });
 }
