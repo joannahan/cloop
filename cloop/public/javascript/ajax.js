@@ -79,14 +79,11 @@ $(document).ready(function() {
 			context:this,
 			type:'DELETE',
 			url:'/comment/'+ $id,
-			success:function(result){	
-				if (result.remove === false) {
-					alert(result.message);
-				} else {
-		    		$commentId.remove();		
-				}
+			success: function(result) {
+				if (result.remove)	$commentId.remove();
+				else				alert(result.message);
 			},
-			error:function(){
+			error: function() {
 				alert(status.message);
 			}
 			
