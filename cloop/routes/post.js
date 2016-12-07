@@ -7,8 +7,8 @@ var Post = require('../models/post');
 var Class = require('../models/class');
 
 var secret = require('../secret/secret');
-var dropboxAccessToken = secret.dropboxAccessToken;
 var Dropbox = require("dropbox");
+var dropboxAccessToken = secret.dropboxAccessToken;
 var dbx = new Dropbox({accessToken: dropboxAccessToken});
 
 var multer  = require('multer');
@@ -56,59 +56,55 @@ router.post('/:classId/post', upload.single("resource"), function(req, res, next
 	if (req.file) {
 		var resourceName = req.file.originalname;
 		var resourceBuffer = req.file.buffer;
-		var resourcePath = '/' + resourceName;
+		var resourcePath = '/' + authorId + '/' + resourceName;
 
 		var resourcePathLength = resourcePath.length;
 		var pdfValidation = ".pdf";
 		var pdfValidationLength = pdfValidation.length;
 
-		if (!resourcePath.slice(resourcePathLength - pdfValidationLength) === pdfValidation) {
+		if (!(resourcePath.slice(resourcePathLength - pdfValidationLength) === pdfValidation)) {
 			res.send("Not a valid pdf");
-		}
+		} else {
+			dbx.filesUpload({path: resourcePath, contents: resourceBuffer, autorename: true})
+				.then(function(response) {
+					resourcePath = response.path_display;
 
-		dbx.filesUpload({path: resourcePath, contents: resourceBuffer, autorename: true})
-		.then(function(response) {
-			resourcePath = response.path_display;
+					dbx.sharingCreateSharedLink({path: resourcePath, short_url: true})
+					.then(function(response) {
+				  		resourceUrl = response.url;
 
-			dbx.sharingCreateSharedLink({path: resourcePath, short_url: true})
-			.then(function(response) {
-		  		resourceUrl = response.url;
-
-		  		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
-					if (err) {
-						res.send(err);
-					} else {
-						//console.log("post" + post);
-						var postId = post._id;
-						//console.log("postId" + postId);
-						Class.addPost(classId, postId, function(err, result){
-							if (err){
-								if (debug===1) console.log("classId.err"+err);
+				  		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
+							if (err) {
 								res.send(err);
 							} else {
-								Class.getClassById(classId, requestCallback2(res));
+								var postId = post._id;
+								Class.addPost(classId, postId, function(err, result){
+									if (err){
+										if (debug===1) console.log("classId.err"+err);
+										res.send(err);
+									} else {
+										Class.getClassById(classId, requestCallback2(res));
+									}
+								});
 							}
 						});
-					}
+
+					})
+				  	.catch(function(error) {
+				  		res.send(error);
+				  	});
+
+				})
+				.catch(function(error) {
+				  	res.send(error);
 				});
-
-			})
-		  	.catch(function(error) {
-		  		res.send(error);
-		  	});
-
-		})
-		.catch(function(error) {
-		  	res.send(error);
-		});
+		}
 	} else {
 		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
 			if (err) {
 				res.send(err);
 			} else {
-				//console.log("post" + post);
 				var postId = post._id;
-				//console.log("postId" + postId);
 				Class.addPost(classId, postId, function(err, result){
 					if (err){
 						if (debug===1) console.log("classId.err"+err);
