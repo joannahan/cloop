@@ -16,7 +16,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
  */
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
-		return next();
+		res.redirect('/group');
 	} else {
 		res.redirect('/users/login');
 	}
