@@ -101,9 +101,17 @@ router.post('/flag', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.userToggleFlag(commentId, userId, function(err, result) {
-		if (result == null || err)	res.send(err);
-		else						res.send(result);
+	Comment.userToggleFlag(commentId, userId, function(err, finalResult) {
+		if (finalResult == null || err)	res.send(err);
+		else {
+			if (finalResult.flagCount >= 10) {
+				Comment.removeComment(commentId, function(err, result) {
+					if (err) 	res.send(err);
+					else 		res.send(finalResult);
+				});
+			} else
+				res.send(finalResult)
+		}
 	});
 });
 

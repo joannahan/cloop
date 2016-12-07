@@ -182,9 +182,30 @@ router.post('/flag', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.userToggleFlag(postId, userId, function(err, result) {
-		if (result == null || err)	res.send(err);
-		else						res.send(result);
+	Post.userToggleFlag(postId, userId, function(err, finalResult) {
+		if (finalResult == null || err)	res.send(err);
+		else {
+			if (finalResult.flagCount >= 10) {
+				Post.getPost(postId, function(err, post) {
+					if (err)	res.send(err);
+					else {
+						Comment.removeAllComments(post.comments, function(err, result) {
+							if (err)			res.send(err);
+							else
+								Post.removePost(postId, function(err, result) {
+									if (err) 	res.send(err);
+									else
+										Class.removePost(postId, function(err, result) {
+											if (err)	res.send(err)
+											else		res.send(finalResult)
+										});
+								});
+						})
+					}
+				});
+			} else
+				res.send(finalResult)
+		}						
 	});
 });
 

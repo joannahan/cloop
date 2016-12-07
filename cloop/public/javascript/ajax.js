@@ -46,7 +46,8 @@ $(document).ready(function() {
 				data: {postId: textId},
 				type: 'POST',
 				success: function(data) {
-					flagCountSpan.text(data.flagCount)
+					flagCountSpan.text(data.flagCount);
+					if (data.flagCount >= 10) textObject.remove()
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);
@@ -58,7 +59,8 @@ $(document).ready(function() {
 				data: {commentId: textId},
 				type: 'POST',
 				success: function(data) {
-					flagCountSpan.text(data.flagCount)
+					flagCountSpan.text(data.flagCount);
+					if (data.flagCount >= 10) textObject.remove();
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);

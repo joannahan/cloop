@@ -10,17 +10,15 @@ After you register an account, you may join classes and post or comment.
 
 Models:
 - class.js: Danny
-- comment.js: Danny
-- post.js: Danny
+- comment.js: Manuel
+- post.js: Manuel
 - user.js: Joanna
 
 Public/Javascript:
 - ajax.js: Danny
-- bootstrap.js: Joanna
 - index.js: Joanna
 
 Public/Stylesheets:
-- bootstrap.css: Joanna
 - style.css: Joanna
 
 Routes:
