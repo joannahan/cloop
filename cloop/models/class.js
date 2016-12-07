@@ -11,6 +11,10 @@ var ClassSchema = mongoose.Schema({
       posts:        [{type: ObjectId, ref: 'Post'}]
 });
 
+ClassSchema.virtual('studentListing').get(function() {
+    var students = populate('students').map(function(s) {return s.name + " (" + s.username + ")"});
+    return students.join(", ");
+})
 
 /**
  * Gets a specific class by name
