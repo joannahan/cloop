@@ -16,7 +16,7 @@ body {
 
   background-color: var(--background-color);
   color: var(--text-color);
-
+  font-family: 'Arial';
   font: 15px;
 }
 
@@ -163,7 +163,6 @@ button:focus {
 .post_body {
 	padding-top: 10px;
 	padding-left: 20px;
-	font-size: 20px;
 
 }
 
@@ -206,8 +205,6 @@ button:focus {
 	padding-top: 10px;
 	padding-left: 30px;
 	padding-bottom: 1px;
-	font-size: 20px;
-	
 }
 
 
