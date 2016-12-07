@@ -108,7 +108,7 @@ app.use('/post', post);
 app.use('/comment', comment);
 
 //API request
-var destination = fs.createWriteStream("./seeds/courses2.json");
+var destination = fs.createWriteStream("./seeds/courses.json");
 var requests = [{
     url: 'https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=1', 
     // would like to only query the 
@@ -266,17 +266,17 @@ var requests = [{
         'client_secret': '6f19f6080e23484dA518BBD66B8DC569'
     }
 }];
-for (var i=0; i<requests.length; i++) {
-	request(requests[i])
-		.pipe(destination, {end: false})
-		.on('finish', function() {
-			console.log('done');
-		})
-		.on('error', function(err) {
-			console.log(err);
-		});
-}
 
+for (var i=0; i<requests.length; i++) {
+    request(requests[i])
+        .pipe(destination, {end: false})
+        .on('finish', function(){
+            console.log('done');
+        })
+        .on('error', function(err) {
+            console.log(err);
+        });
+}
 
 
 //async.map(requests, function(obj, callback) {

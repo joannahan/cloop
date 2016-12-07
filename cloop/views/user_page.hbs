@@ -10,10 +10,10 @@
 	<ul>
 		{{#each enrolledClasses}}
 			<li id='{{this.name}}'>
-				<form action='group/{{this.name}}' method='get'>{{this.name}}<input type="submit" value="Go to class page"></form>
-				<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Move to Taken Class"> 
+				<form action='group/{{this.name}}' method='get'><p class="class_listing"> {{this.name}} </p><input type="submit" value="Go to class page"></form>
+				<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Mark as Taken"> 
 				<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
-				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
+				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form>
 				<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
 			</li>
 		{{/each}}
@@ -23,7 +23,7 @@
 	<ul id="takenClassesList">
 		{{#each takenClasses}}
 			<li>
-				{{this.name}}
+				<p class="class_listing"> {{this.name}} </p>
 				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
 			</li>
 		{{/each}}
@@ -34,12 +34,12 @@
 	</form> -->
 	
 	<form action="group/class" method="post">
-	<input type="text" id='newClassName' name="className" value=""><input type="button" id='addNewClass' value="Create class">
+	<input type="text" id='newClassName' name="className" class='post-box' value=""><input type="button" id='addNewClass' value="Create class">
 	</form>	
 	<br>
 	
 
-	<input id="search-input" type="text" placeholder="Search for classes">
+	<input id="search-input" type="text" class='post-box' placeholder="Search for classes">
 	<ul id="results-list"></ul>
 
 
@@ -57,8 +57,8 @@
 	<ul id="untakenClassesList">
 		{{#each untakenClasses}}
 			<li> 
-				<input type='text' name='className' value = '{{this.name}}' readonly>	
-				<input type='button' id='untakenClass_{{this._id}}' class='untakenClass' data-classid={{this._id}} value='Join class'>
+				<input type='text' class="class_listing" name='className' value = '{{this.name}}' readonly>	
+<!-- 				<input type='button' id='untakenClass_{{this._id}}' class='untakenClass' data-classid={{this._id}} value='Join class'> -->
 			</li>
 		{{/each}}
 	</ul>
