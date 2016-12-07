@@ -11,7 +11,7 @@
 	<div class="class_body">
 		<div id='new-post'>
 			<form action='/post/{{classId}}/post' method="post">
-				Post: <input type="text" name="postText" class='post-box'><input type="submit" value = "Post">
+				<textarea type="text" name="postText" class='post-box'></textarea><br><input type="submit" id="post-button" value = "Post">
 			</form>
 		</div>
 	
@@ -48,7 +48,7 @@
 				{{/each}}
 				<!-- add a text input for adding a comment, action tag -->
 				<form action='/comment/{{_id}}/comment' method='post'>
-					<input type="text" name='commentText' class="post-box"><input type="submit" value = "Comment">
+					<input type="text" name='commentText' class="comment-box"><input type="submit" value = "Comment">
 				</form>
 			</div>
 		</div>
