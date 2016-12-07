@@ -57,15 +57,13 @@ PostSchema.statics.editPost = function(postId, text, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.removePost = function(postId, callback) {
-    // Post.findOne({"_id": postId}, function(err, post) {
-    //     if (err) callback(err)
-    //     else
-    //         Comment.remove({"_id": {$in : post.comments}}, function(err) {
-    //             Post.remove({"_id": postId}, callback)
-    //         })
-    // })
-    
-    // TODO: CONTINUE CHECKING ROUTING FOR REMOVE POST AND REMOVE COMMENT
+    Post.findOne({"_id": postId}, function(err, post) {
+        if (err) callback(err)
+        else
+            Comment.remove({"_id": {$in : post.comments}}, function(err) {
+                Post.remove({"_id": postId}, callback)
+            })
+    })
 }
 
 /**

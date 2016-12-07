@@ -59,8 +59,10 @@ CommentSchema.statics.editComment = function(commentId, text, callback) {
 CommentSchema.statics.removeComment = function(commentId, callback) {
     Comment.findOne({"_id": commentId}, function(err, result) {
         if (err)    callback(err);
-        else        Comment.remove({"_id": commentId}, callback);
-        // TODO: CONTINUE CHECKING ROUTING FOR REMOVE POST AND REMOVE COMMENT
+        else {
+            Post.update({},{$pull: {comments: commentId}})
+            Comment.remove({"_id": commentId}, callback);
+        }
     });
 }
 
