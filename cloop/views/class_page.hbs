@@ -3,29 +3,26 @@
 
 	<div class="class_header">
 		<span class="class_information">
-			<span class="class_title">Welcome to {{title}}</span>
-			<span class="class_description">{{description}}</span>
-			<span><form action='/group' method='get'><input type="submit" value="Back to user page"></form></span>
-		</span
-	<div class="class_header">
+			<span class="class_title"><h2>Welcome to {{title}}</h2></span>
+<!-- 			<span class="class_description">{{description}}</span> -->
+		</span>
+	</div>
 
 	<div class="class_body">
-	<form action='/post/{{classId}}/post' method="post" class="new_post">
-		Create a post: <input type="text" name="postText"><input type="submit" value = "Post"> <!-- <input type="submit" value="Attach"> -->
-	</form>
+		<div id='new-post'>
+			<form action='/post/{{classId}}/post' method="post">
+				<textarea type="text" name="postText" class='post-box'></textarea><br><input type="submit" id="post-button" value = "Post">
+			</form>
+		</div>
 	
 	<div id="posts-table">
 		{{#each post}}
-		<!-- helper to only display if removed is false, and checks the number of flags-->
-		<!-- register a helper function to evaluate the number of flags and change removed? -->
-		
 		<div class="post" id={{_id}}>
-		
 			<div class="post_header">
 				<span class="upvotes"> <button class="upv" type="submit">^</button> {{upvoteCount}} </span>
 				<span class="post_author">{{author.name}}</span>
 				<span class="post_time">{{timeCreated}}</span>
-				<span class="delete_post"> <input type="submit" value="Delete Post"> </span>
+				<span class="delete_btn"> <input type="submit" value="Delete"> </span>
 			</div>
 		
 			<div class="post_body">
@@ -40,7 +37,7 @@
 							<span class="upvotes"> <button class="upv" type="submit">^</button> {{upvoteCount}}</span>
 							<span class="comment_author">{{author.name}}</span>
 							<span class="comment_time">{{timeCreated}}</span>
-							<span class="delete_comment"> <input type="submit" value="Delete Comment"> </span>
+							<span class="delete_btn"> <input type="submit" value="Delete"> </span>
 						</div>
 
 						<div class="comment_body">
@@ -50,8 +47,8 @@
 					
 				{{/each}}
 				<!-- add a text input for adding a comment, action tag -->
-				<form action='/comment/{{_id}}/comment' method='post' id="new_comment">
-					Reply to this thread: <input type="text" name='commentText'><input type="submit" value = "Comment">
+				<form action='/comment/{{_id}}/comment' method='post'>
+					<input type="text" name='commentText' class="comment-box"><input type="submit" value = "Comment">
 				</form>
 			</div>
 		</div>
