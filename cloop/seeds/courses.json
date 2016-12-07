@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=1020">
     <meta content="origin-when-cross-origin" name="referrer" />
     
-    <title>final-proj-Squad-js/courses2.json at 550fe47f0588325d04ae9220ff5867faee794fbc · 6170-fa16/final-proj-Squad-js</title>
+    <title>final-proj-Squad-js/courses.json at c7759957dfd78bfe25ef882232d1411d324580e0 · 6170-fa16/final-proj-Squad-js</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
     <link rel="fluid-icon" href="https://github.mit.edu/fluidicon.png" title="GitHub">
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png">
@@ -24,7 +24,7 @@
       <meta content="GitHub Enterprise" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://github.mit.edu/avatars/u/7285?s=400" property="og:image" /><meta content="6170-fa16/final-proj-Squad-js" property="og:title" /><meta content="https://github.mit.edu/6170-fa16/final-proj-Squad-js" property="og:url" /><meta content="final-proj-Squad-js - Build a web application using everything you&#39;ve learned in 6.170." property="og:description" />
     <meta name="browser-errors-url" content="https://github.mit.edu/api/v3/_private/browser/errors">
     <link rel="assets" href="https://github.mit.edu/">
-    <link rel="web-socket" href="wss://github.mit.edu/_sockets/NjU5NTo5MWEwYzMzZTI3MGUwYzlkNzhmMzRlMmEyZGZhMGJhZTphYTM5YTY2N2U1YTFhMTBkMjhlYTljNjAwOWQyOTUxY2Q1OGU4ZmU0ZWMxYjY3Yjk4MWMxNTAyZTY3ZTFjYjc2--b216edc5dd2f8b3e6ab3afea85b1e1ee5b9f9510">
+    <link rel="web-socket" href="wss://github.mit.edu/_sockets/NjU5NTo5MWEwYzMzZTI3MGUwYzlkNzhmMzRlMmEyZGZhMGJhZTo1MWJjNDg0MjYzZDk1Y2U4Nzc2OTFlNzZkNzM1N2FmODA5MWFkODM5ZDUyODQ3NmE0YjBmNjAzMDdjNjQ0NmIz--5cf8b2f042cc5fcd657be09752a691a86bc8b902">
     <meta name="pjax-timeout" content="1000">
     <link rel="sudo-modal" href="/sessions/sudo_modal">
 
@@ -65,7 +65,7 @@
   <meta name="go-import" content="github.mit.edu/6170-fa16/final-proj-Squad-js git https://github.mit.edu/6170-fa16/final-proj-Squad-js.git">
 
   
-  <link href="https://github.mit.edu/6170-fa16/final-proj-Squad-js/commits/550fe47f0588325d04ae9220ff5867faee794fbc.atom?token=AAAZwzIXUI5sv5t4MZQ70L9iVTqbSDp9ks62U3JewA%3D%3D" rel="alternate" title="Recent Commits to final-proj-Squad-js:550fe47f0588325d04ae9220ff5867faee794fbc" type="application/atom+xml">
+  <link href="https://github.mit.edu/6170-fa16/final-proj-Squad-js/commits/c7759957dfd78bfe25ef882232d1411d324580e0.atom?token=AAAZw4CXFAHBXqGAMV3f_biSSc_3_hxxks62U3ODwA%3D%3D" rel="alternate" title="Recent Commits to final-proj-Squad-js:c7759957dfd78bfe25ef882232d1411d324580e0" type="application/atom+xml">
 
   </head>
 
@@ -203,7 +203,7 @@
             Settings
           </a>
 
-          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/logout" class="logout-form" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="yy766JsdlXoeEmaRswwm33HnGxCNKZ1hwzo5ZUSXLPSQ/rb7k3AzomhotfmufcqCNETOLYMx9ngNEmtrf/QQvw==" /></div>
+          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/logout" class="logout-form" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="ivWcWBRnTaQFjxsE/A6seSTTtQwRojhd5SmNGOhTgPoR90hGcerpB/rb6P8SgV2IpclAQ3odlrnOT+m2PTcQZA==" /></div>
             <button class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
               Sign out
             </button>
@@ -241,7 +241,7 @@
 <ul class="pagehead-actions">
 
   <li>
-        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="afl+RjLajaFNezbdEPvYRFgwVcVRS+eb+7oBhZRpyFnTISvTnoHGnq0YUeNjujDh3OcWYPWJoWCu5SOgdBx/zQ==" /></div>      <input id="repository_id" name="repository_id" type="hidden" value="18353" />
+        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="fj8DSMI8KEfrwREShAXLWWdbjdLNZSLjwGNZ/TcIF9jTwm/L19+oY1yiq98P7zQ00ZsXLytewO/UkS+38j9LIA==" /></div>      <input id="repository_id" name="repository_id" type="hidden" value="18353" />
 
         <div class="select-menu js-menu-container js-select-menu">
           <a href="/6170-fa16/final-proj-Squad-js/subscription"
@@ -316,7 +316,7 @@
     
   <div class="js-toggler-container js-social-container starring-container ">
 
-    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/6170-fa16/final-proj-Squad-js/unstar" class="js-toggler-form starred js-unstar-button" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="F42AwdywJuSE+4EA5Mh/ig0YRmyNGrgWClwUyQlm2vkndes/vm2KHHRi0085oNQseiGI832wwCVRe0i6qpXd4g==" /></div>
+    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/6170-fa16/final-proj-Squad-js/unstar" class="js-toggler-form starred js-unstar-button" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="PFOvEYiu6X5dETe56li+79ZuJD4plZiVOjL3GUZqaLdrJcIpJm4nd7FALrS/t5OtZ4j2Gyfn8gip/dgH1Id5vA==" /></div>
       <button
         class="btn btn-sm btn-with-count js-toggler-target"
         aria-label="Unstar this repository" title="Unstar 6170-fa16/final-proj-Squad-js"
@@ -328,7 +328,7 @@
           0
         </a>
 </form>
-    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/6170-fa16/final-proj-Squad-js/star" class="js-toggler-form unstarred js-star-button" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="v/plFnmSmm+1jcwBMRIMB5aC3+PmkKrTyrH1mPRMetnbQiurZ775hjJjMv7OmYsBOdACVxqE6MCYJQqj/V1Fww==" /></div>
+    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/6170-fa16/final-proj-Squad-js/star" class="js-toggler-form unstarred js-star-button" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="x1mPfZISvWyMyG1scCPpJNcexyMRqUuhZ+uEwMOAR8GwjxpaaJQOTDFLn4kiWjMVhq8rVUt0OMjz5O6FWJRxVw==" /></div>
       <button
         class="btn btn-sm btn-with-count js-toggler-target"
         aria-label="Star this repository" title="Star 6170-fa16/final-proj-Squad-js"
@@ -425,9 +425,9 @@
 
     
 
-<a href="/6170-fa16/final-proj-Squad-js/blob/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds/courses2.json" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+<a href="/6170-fa16/final-proj-Squad-js/blob/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds/courses.json" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
 
-<!-- blob contrib key: blob_contributors:v21:b7d435b1a7785d1d1e8b52638ef03369 -->
+<!-- blob contrib key: blob_contributors:v21:ff811ea0b186826f21c30cde661c8bd7 -->
 
 <div class="file-navigation js-zeroclipboard-container">
   
@@ -436,7 +436,7 @@
     title=""
     type="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
     <i>Tree:</i>
-    <span class="js-select-button css-truncate-target">550fe47f05</span>
+    <span class="js-select-button css-truncate-target">c7759957df</span>
   </button>
 
   <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax aria-hidden="true">
@@ -469,7 +469,7 @@
 
 
             <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/6170-fa16/final-proj-Squad-js/blob/master/cloop/seeds/courses2.json"
+               href="/6170-fa16/final-proj-Squad-js/blob/master/cloop/seeds/courses.json"
                data-name="master"
                data-skip-pjax="true"
                rel="nofollow">
@@ -480,15 +480,15 @@
             </a>
         </div>
 
-          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/6170-fa16/final-proj-Squad-js/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="7JbQqD461GmVIh4djSD6qoX8Ru44Sp+8pEPV8H3NwR/Y6xAQ8hlC2Cvk3MDTwhcRYrbXxlJJv1HrgtH8KqNLYA==" /></div>
+          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/6170-fa16/final-proj-Squad-js/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" data-form-nonce="c79aa11f2eef28a8167f7a2ea83ae01c6c2d9cf6" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="16ovPTeX5LWouMkchTXgf0zXxhDRWRhxwn8sd2xvp8wPi9m5f1PMm1QpBL/GTfdmil+HDtjffYsi+NC8pjdJpg==" /></div>
             <span class="octicon octicon-git-branch select-menu-item-icon"></span>
             <div class="select-menu-item-text">
               <span class="select-menu-item-heading">Create branch: <span class="js-new-item-name"></span></span>
-              <span class="description">from ‘550fe47’</span>
+              <span class="description">from ‘c775995’</span>
             </div>
             <input type="hidden" name="name" id="name" class="js-new-item-value">
-            <input type="hidden" name="branch" id="branch" value="550fe47f0588325d04ae9220ff5867faee794fbc">
-            <input type="hidden" name="path" id="path" value="cloop/seeds/courses2.json">
+            <input type="hidden" name="branch" id="branch" value="c7759957dfd78bfe25ef882232d1411d324580e0">
+            <input type="hidden" name="path" id="path" value="cloop/seeds/courses.json">
 </form>
       </div>
 
@@ -506,7 +506,7 @@
 </div>
 
   <div class="btn-group right">
-    <a href="/6170-fa16/final-proj-Squad-js/find/550fe47f0588325d04ae9220ff5867faee794fbc"
+    <a href="/6170-fa16/final-proj-Squad-js/find/c7759957dfd78bfe25ef882232d1411d324580e0"
           class="js-show-file-finder btn btn-sm"
           data-pjax
           data-hotkey="t">
@@ -515,11 +515,11 @@
     <button aria-label="Copy file path to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button">Copy path</button>
   </div>
   <div class="breadcrumb js-zeroclipboard-target">
-    <span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/6170-fa16/final-proj-Squad-js/tree/550fe47f0588325d04ae9220ff5867faee794fbc" class="" data-branch="550fe47f0588325d04ae9220ff5867faee794fbc" data-pjax="true" itemscope="url" rel="nofollow"><span itemprop="title">final-proj-Squad-js</span></a></span></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/6170-fa16/final-proj-Squad-js/tree/550fe47f0588325d04ae9220ff5867faee794fbc/cloop" class="" data-branch="550fe47f0588325d04ae9220ff5867faee794fbc" data-pjax="true" itemscope="url" rel="nofollow"><span itemprop="title">cloop</span></a></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/6170-fa16/final-proj-Squad-js/tree/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds" class="" data-branch="550fe47f0588325d04ae9220ff5867faee794fbc" data-pjax="true" itemscope="url" rel="nofollow"><span itemprop="title">seeds</span></a></span><span class="separator">/</span><strong class="final-path">courses2.json</strong>
+    <span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/6170-fa16/final-proj-Squad-js/tree/c7759957dfd78bfe25ef882232d1411d324580e0" class="" data-branch="c7759957dfd78bfe25ef882232d1411d324580e0" data-pjax="true" itemscope="url" rel="nofollow"><span itemprop="title">final-proj-Squad-js</span></a></span></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/6170-fa16/final-proj-Squad-js/tree/c7759957dfd78bfe25ef882232d1411d324580e0/cloop" class="" data-branch="c7759957dfd78bfe25ef882232d1411d324580e0" data-pjax="true" itemscope="url" rel="nofollow"><span itemprop="title">cloop</span></a></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/6170-fa16/final-proj-Squad-js/tree/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds" class="" data-branch="c7759957dfd78bfe25ef882232d1411d324580e0" data-pjax="true" itemscope="url" rel="nofollow"><span itemprop="title">seeds</span></a></span><span class="separator">/</span><strong class="final-path">courses.json</strong>
   </div>
 </div>
 
-<include-fragment class="commit-tease" src="/6170-fa16/final-proj-Squad-js/contributors/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds/courses2.json">
+<include-fragment class="commit-tease" src="/6170-fa16/final-proj-Squad-js/contributors/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds/courses.json">
   <div>
     Fetching contributors&hellip;
   </div>
@@ -534,8 +534,8 @@
   <div class="file-actions">
 
     <div class="btn-group">
-      <a href="/6170-fa16/final-proj-Squad-js/raw/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds/courses2.json" class="btn btn-sm " id="raw-url">Raw</a>
-      <a href="/6170-fa16/final-proj-Squad-js/commits/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds/courses2.json" class="btn btn-sm " rel="nofollow">History</a>
+      <a href="/6170-fa16/final-proj-Squad-js/raw/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds/courses.json" class="btn btn-sm " id="raw-url">Raw</a>
+      <a href="/6170-fa16/final-proj-Squad-js/commits/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds/courses.json" class="btn btn-sm " rel="nofollow">History</a>
     </div>
 
         <a class="octicon-btn tooltipped tooltipped-nw"
@@ -556,12 +556,12 @@
 
   
     <div class="render-notice">
-      This file has been truncated, but you can <a href="/6170-fa16/final-proj-Squad-js/blob/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds/courses2.json?raw=true">view the full file</a>.
+      This file has been truncated, but you can <a href="/6170-fa16/final-proj-Squad-js/blob/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds/courses.json?raw=true">view the full file</a>.
     </div>
 
   <div class="blob-wrapper data type-text">
       <div class="image">
-          <a href="/6170-fa16/final-proj-Squad-js/blob/550fe47f0588325d04ae9220ff5867faee794fbc/cloop/seeds/courses2.json?raw=true">View Raw</a>
+          <a href="/6170-fa16/final-proj-Squad-js/blob/c7759957dfd78bfe25ef882232d1411d324580e0/cloop/seeds/courses.json?raw=true">View Raw</a>
             <p>(Sorry about that, but we can’t show files that are this big right now.)</p>
       </div>
   </div>
@@ -599,7 +599,7 @@
       <span class="mega-octicon octicon-mark-github" title="GitHub Enterprise Version 2.5.17"></span>
 </a>
     <ul class="site-footer-links">
-      <li>&copy; 2016 <span title="0.07290s from localhost">GitHub</span>, Inc.</li>
+      <li>&copy; 2016 <span title="0.07175s from localhost">GitHub</span>, Inc.</li>
         <li><a href="https://help.github.com/enterprise/2.5">Help</a></li>
         <li><a href="mailto:helpdesk@mit.edu">Support</a></li>
     </ul>
