@@ -10,8 +10,10 @@
 
 	<div class="class_body">
 		<div id='new-post'>
-			<form action='/post/{{classId}}/post' method="post">
-				<textarea type="text" name="postText" class='post-box'></textarea><br><input type="submit" id="post-button" value = "Post">
+			<form action='/post/{{classId}}/post' method="post" enctype="multipart/form-data">
+				<textarea type="text" name="postText" class='post-box'></textarea><br>
+				<input type='file' placeholder='Resource' name='resource'>
+				<input type="submit" id="post-button" value = "Post">
 			</form>
 		</div>
 	
@@ -28,6 +30,12 @@
 			<div class="post_body">
 				<p>{{text}}</p>
 			</div>
+
+			{{#if resourceUrl}}
+				<div>
+					<a href={{resourceUrl}}>Resource here</a>
+				</div>
+			{{/if}}
 		
 			<div class="post_footer">
 				{{#each comments}}
