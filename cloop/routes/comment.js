@@ -101,15 +101,10 @@ router.post('/flag', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.userFlag(commentId, userId, requestCallback(res));
-});
-
-//unflag comment
-router.post('/unflag', function(req, res, next) {
-	var commentId = req.body.commentId;
-	var userId = req.user.id;
-	
-	Comment.userUnflag(commentId, userId, requestCallback(res));
+	Comment.userToggleFlag(commentId, userId, function(err, result) {
+		if (result == null || err)	res.send(err);
+		else						res.send(result);
+	});
 });
 
 module.exports = router;

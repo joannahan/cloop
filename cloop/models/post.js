@@ -145,6 +145,31 @@ PostSchema.virtual('upvoteCount').get(function() {
     return this.upvoteUsers.length;    
 })
 
+PostSchema.statics.userToggleFlag = function(postId, userId, callback) {
+    Post.findOne({"_id": postId}, function(err, post) {
+        if (post == null || err)
+            callback(err)
+        else {
+            if (post.flagUsers.indexOf(userId) >= 0)
+                Post.update({"_id": postId}, {$pull: {"flagUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.flagCount = post.flagCount - 1
+                        callback(err, result)
+                    }
+                })
+            else
+                Post.update({"_id": postId}, {$addToSet: {"flagUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.flagCount = post.flagCount + 1
+                        callback(err, result)
+                    }
+                })
+        }
+    })
+}
+
 /**
  * Add a user to a post's set of users who have flagged the post
  * 

@@ -119,13 +119,34 @@ CommentSchema.statics.userUnupvote = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$pull: {"upvoteUsers": userId}}, callback)   
 }
 
-CommentSchema.virtual('isUpvoteUser').get(function(userId) {
-    return this.upvoteUsers.indexOf(userId) >= 0
-})
-
 CommentSchema.virtual('upvoteCount').get(function() {
     return this.upvoteUsers.length;    
 })
+
+CommentSchema.statics.userToggleFlag = function(commentId, userId, callback) {
+    Comment.findOne({"_id": commentId}, function(err, comment) {
+        if (comment == null || err)
+            callback(err)
+        else {
+            if (comment.flagUsers.indexOf(userId) >= 0)
+                Comment.update({"_id": commentId}, {$pull: {"flagUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.flagCount = comment.flagCount - 1
+                        callback(err, result)
+                    }
+                })
+            else
+                Comment.update({"_id": commentId}, {$addToSet: {"flagUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.flagCount = comment.flagCount + 1
+                        callback(err, result)
+                    }
+                })
+        }
+    })
+}
 
 /**
  * Add a user to a comments's set of users who have flagged the comment
@@ -148,10 +169,6 @@ CommentSchema.statics.userFlag = function(commentId, userId, callback) {
 CommentSchema.statics.userUnflag = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$pull: {"flagUsers": userId}}, callback)
 }
-
-CommentSchema.virtual('isFlagUser').get(function(userId) {
-    return this.flagUsers.indexOf(userId) >= 0
-})
 
 CommentSchema.virtual('flagCount').get(function() {
     return this.flagUsers.length;    

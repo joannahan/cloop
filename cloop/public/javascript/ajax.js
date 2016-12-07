@@ -34,6 +34,39 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(".flg").click(function() {
+		var textObject = $(this).parent().parent().parent();
+		var flagCountSpan = textObject.find(".flagCount").first()
+		var isPostFlag = textObject.hasClass("post");
+		var textId = textObject.attr("id")
+
+		if (isPostFlag) {
+			$.ajax({
+				url: '/post/flag',
+				data: {postId: textId},
+				type: 'POST',
+				success: function(data) {
+					flagCountSpan.text(data.flagCount)
+				},
+				error: function(xhr, status, error) {
+					console.log("A problem occurred" + error);
+				}
+			});
+		} else /* isCommentFlag */ {
+			$.ajax({
+				url: '/comment/flag',
+				data: {commentId: textId},
+				type: 'POST',
+				success: function(data) {
+					flagCountSpan.text(data.flagCount)
+				},
+				error: function(xhr, status, error) {
+					console.log("A problem occurred" + error);
+				}
+			})
+		}
+	});
+
 	$('.delete_post').click(function(){
 		var $postId = $(this).closest('.post');
 		var $id = $postId.attr('id');

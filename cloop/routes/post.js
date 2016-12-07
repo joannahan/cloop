@@ -182,15 +182,10 @@ router.post('/flag', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.userFlag(postId, userId, requestCallback(res));
-});
-
-//unflag post
-router.post('/unflag', function(req, res, next) {
-	var postId = req.body.postId;
-	var userId = req.user.id;
-	
-	Post.userUnflag(postId, userId, requestCallback(res));
+	Post.userToggleFlag(postId, userId, function(err, result) {
+		if (result == null || err)	res.send(err);
+		else						res.send(result);
+	});
 });
 
 module.exports = router;
