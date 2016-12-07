@@ -56,7 +56,7 @@ ClassSchema.statics.getClassById = function(id, callback) {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClassByPostId = function(postId, callback) {
-    Class.findOne({posts: {$in: postId}}, callback);
+    Class.findOne({posts: postId}, callback);
 }
 
 /**
@@ -237,6 +237,9 @@ ClassSchema.statics.createClass = function(name, callback) {
     Class.create({"name": name}, callback);
 }
 
+ClassSchema.statics.removePost = function(postId, callback) {
+    Class.update({posts: postId}, {$pull: {posts: postId}}, callback)
+}
 
 var Class = mongoose.model("Class", ClassSchema);
 module.exports = Class;

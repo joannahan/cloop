@@ -4,6 +4,7 @@ var router = express.Router();
 
 var User = require('../models/user');
 var Post = require('../models/post');
+var Comment = require('../models/comment')
 var Class = require('../models/class');
 
 var secret = require('../secret/secret');
@@ -125,17 +126,23 @@ router.delete('/:_id', function(req, res, next) {
 	var userId = req.user.id;
 
 	Post.getPost(postId, function(err, post) {
-		if (err) {
-			res.send(err);
-		} else {
-			if (post.author === userId) {
-				Post.removePost(postId, function(err, result) {
-					if (err) 	res.send(err);
-					else 		res.send({remove:true});
-				});
-			} else {
+		if (err)	res.send(err);
+		else {
+			if (post.author == userId)
+				Comment.removeAllComments(post.comments, function(err, result) {
+					if (err)			res.send(err);
+					else
+						Post.removePost(postId, function(err, result) {
+							if (err) 	res.send(err);
+							else
+								Class.removePost(postId, function(err, result) {
+									if (err)	res.send(err)
+									else		res.send({remove: true})
+								});
+						});
+				})
+			else
 				res.send("Wrong user!");
-			}
 		}
 	});
 });
@@ -150,7 +157,7 @@ router.put('/edit/:_id', function(req, res, next) {
 		if (err) {
 			res.send(err);
 		} else {
-			if (result.author === userId) {
+			if (result.author == userId) {
 				Post.editPost(postId, newText, requestCallback(res));
 			} else {
 				res.send("Wrong user!");

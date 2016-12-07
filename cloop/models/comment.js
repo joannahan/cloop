@@ -1,4 +1,4 @@
-// Lead author: Danny
+// Lead author: Manuel
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -60,12 +60,16 @@ CommentSchema.statics.removeComment = function(commentId, callback) {
     Comment.findOne({"_id": commentId}, function(err, result) {
         if (err)    callback(err);
         else {
-            Post.update({},{$pull: {comments: commentId}}, function(err, result) {
+            Post.update({comments: commentId}, {$pull: {comments: commentId}}, function(err) {
                 if (err)    callback(err)
                 else        Comment.remove({"_id": commentId}, callback)
             })
         }
     });
+}
+
+CommentSchema.statics.removeAllComments = function(commentIds, callback) {
+    Comment.remove({"_id": {$in : commentIds}}, callback)
 }
 
 /**
