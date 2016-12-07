@@ -90,15 +90,10 @@ router.post('/upvote', function(req, res, next) {
 	var commentId = req.body.commentId;
 	var userId = req.user.id;
 	
-	Comment.userUpvote(commentId, userId, requestCallback(res));
-});
-
-//unupvote comment
-router.post('/unupvote', function(req, res, next) {
-	var commentId = req.body.commentId;
-	var userId = req.user.id;
-	
-	Comment.userUnupvote(commentId, userId, requestCallback(res));
+	Comment.userToggleUpvote(commentId, userId, function(err, result) {
+		if (result == null || err)	res.send(err);
+		else						res.send(result);
+	});
 });
 
 //flag comment

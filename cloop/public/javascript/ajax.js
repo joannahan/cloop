@@ -1,54 +1,37 @@
 // Lead author: Danny/Joanna
 $(document).ready(function() { 
 
-	$(".upvote.post").click(function() {
-		var postId = $(this).parent().parent().parent().attr("id");
-		var upvoteSpan = $(this).parent();
-		var numCurrentUpvotes = upvoteSpan.text();
-		numCurrentUpvotes = parseInt(numCurrentUpvotes) + 1;
+	$(".upv").click(function() {
+		var textObject = $(this).parent().parent().parent();
+		var upvoteCountSpan = textObject.find(".upvoteCount").first()
+		var isPostUpvote = textObject.hasClass("post");
+		var textId = textObject.attr("id")
 
-		$.ajax({
-			url: '/post/upvote',
-			data: {
-				postId: postId
-			},
-			type: 'POST',
-			success: function(data){
-				if (data === "Success!") {
-					upvoteSpan.text(numCurrentUpvotes.toString());
-				} else {
-					console.log(data);
+		if (isPostUpvote) {
+			$.ajax({
+				url: '/post/upvote',
+				data: {postId: textId},
+				type: 'POST',
+				success: function(data) {
+					upvoteCountSpan.text(data.upvoteCount)
+				},
+				error: function(xhr, status, error) {
+					console.log("A problem occurred" + error);
 				}
-			},
-			error: function(xhr, status, error) {
-				console.log("A problem occurred" + error);
-			}
-		});
-	});
-
-	$(".upvote.comment").click(function() {
-		var commentId = $(this).parent().parent().parent().attr("id");
-		var upvoteSpan = $(this).parent();
-		var numCurrentUpvotes = upvoteSpan.text();
-		numCurrentUpvotes = parseInt(numCurrentUpvotes) + 1;
-
-		$.ajax({
-			url: '/comment/upvote',
-			data: {
-				commentId: commentId
-			},
-			type: 'POST',
-			success: function(data){
-				if (data === "Success!") {
-					upvoteSpan.text(numCurrentUpvotes.toString());
-				} else {
-					console.log(data);
+			});
+		} else /* isCommentUpvote */ {
+			$.ajax({
+				url: '/comment/upvote',
+				data: {commentId: textId},
+				type: 'POST',
+				success: function(data) {
+					upvoteCountSpan.text(data.upvoteCount)
+				},
+				error: function(xhr, status, error) {
+					console.log("A problem occurred" + error);
 				}
-			},
-			error: function(xhr, status, error) {
-				console.log("A problem occurred" + error);
-			}
-		});
+			})
+		}
 	});
 	
 	$('.delete_post').click(function(){

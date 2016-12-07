@@ -171,15 +171,10 @@ router.post('/upvote', function(req, res, next) {
 	var postId = req.body.postId;
 	var userId = req.user.id;
 	
-	Post.userUpvote(postId, userId, requestCallback(res));
-});
-
-//unupvote post
-router.post('/unupvote', function(req, res, next) {
-	var postId = req.body.postId;
-	var userId = req.user.id;
-	
-	Post.userUnupvote(postId, userId, requestCallback(res));
+	Post.userToggleUpvote(postId, userId, function(err, result) {
+		if (result == null || err)	res.send(err);
+		else						res.send(result);
+	});
 });
 
 //flag post

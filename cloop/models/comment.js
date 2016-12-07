@@ -72,6 +72,31 @@ CommentSchema.statics.removeAllComments = function(commentIds, callback) {
     Comment.remove({"_id": {$in : commentIds}}, callback)
 }
 
+CommentSchema.statics.userToggleUpvote = function(commentId, userId, callback) {
+    Comment.findOne({"_id": commentId}, function(err, comment) {
+        if (comment == null || err)
+            callback(err)
+        else {
+            if (comment.upvoteUsers.indexOf(userId) >= 0)
+                Comment.update({"_id": commentId}, {$pull: {"upvoteUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.upvoteCount = comment.upvoteCount - 1
+                        callback(err, result)
+                    }
+                })
+            else
+                Comment.update({"_id": commentId}, {$addToSet: {"upvoteUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.upvoteCount = comment.upvoteCount + 1
+                        callback(err, result)
+                    }
+                })
+        }
+    })
+}
+
 /**
  * Add a user to a comments's set of users who have upvoted the comment
  * 

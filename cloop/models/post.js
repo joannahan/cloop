@@ -94,6 +94,31 @@ PostSchema.statics.populateComments = function(postIds, callback) {
         .exec(callback);
 }
 
+PostSchema.statics.userToggleUpvote = function(postId, userId, callback) {
+    Post.findOne({"_id": postId}, function(err, post) {
+        if (post == null || err)
+            callback(err)
+        else {
+            if (post.upvoteUsers.indexOf(userId) >= 0)
+                Post.update({"_id": postId}, {$pull: {"upvoteUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.upvoteCount = post.upvoteCount - 1
+                        callback(err, result)
+                    }
+                })
+            else
+                Post.update({"_id": postId}, {$addToSet: {"upvoteUsers": userId}}, function(err, result) {
+                    if (err)    callback(err)
+                    else {
+                        result.upvoteCount = post.upvoteCount + 1
+                        callback(err, result)
+                    }
+                })
+        }
+    })
+}
+
 /**
  * Add a user to a post's set of users who have upvoted the post
  * 
@@ -113,12 +138,8 @@ PostSchema.statics.userUpvote = function(postId, userId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.userUnupvote = function(postId, userId, callback) {
-    Post.update({"_id": postId}, {$pull: {"upvoteUsers": userId}}, callback)   
+       
 }
-
-PostSchema.virtual('isUpvoteUser').get(function(userId) {
-    return this.upvoteUsers.indexOf(userId) >= 0
-})
 
 PostSchema.virtual('upvoteCount').get(function() {
     return this.upvoteUsers.length;    
@@ -145,10 +166,6 @@ PostSchema.statics.userFlag = function(postId, userId, callback) {
 PostSchema.statics.userUnflag = function(postId, userId, callback) {
     Post.update({"_id": postId}, {$pull: {"flagUsers": userId}}, callback)
 }
-
-PostSchema.virtual('isFlagUser').get(function(userId) {
-    return this.flagUsers.indexOf(userId) >= 0
-})
 
 PostSchema.virtual('flagCount').get(function() {
     return this.flagUsers.length;    
