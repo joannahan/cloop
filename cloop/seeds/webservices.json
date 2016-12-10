@@ -1,0 +1,157 @@
+{
+"webservices":[{
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=1", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=2", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=3", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=4", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=5", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=6", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=7", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=8", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=9", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=10", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=11", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=12", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=14", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=15", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=16", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=17", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=18", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=20", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=21", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=22", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=STS", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}, {
+    "url": "https://anypoint.mulesoft.com/apiplatform/proxy/https://mit-public.cloudhub.io/coursecatalog/v2/terms/2016FA/subjects?dept=MAS", 
+    "method": "GET", 
+    "headers": { 
+        "client_id": "d9788cbff7e84180b7ba51fe78cde6c3",
+        "client_secret": "6f19f6080e23484dA518BBD66B8DC569"
+    }
+}]
+}

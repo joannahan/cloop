@@ -150,5 +150,26 @@ $(document).ready(function() {
 			}
 		});
 	 });	
-
+	$('#downloadCourses').click(function(){
+		$.post('/group/admin/download_courses',  function(err, data) {
+			if (err) {
+				if (err.message !== undefined){
+					alert(err.message);
+				}
+			} else {
+				alert(data.message);
+			}
+		});
+	});
+	$('#packageCourseData').click(function(){
+		$.post('/group/admin/package_course_data',  function(err, newClass) {
+			if (err) {
+				if (err.message !== undefined){
+					alert(err.message);
+				}
+			} else {
+				alert(data.message);
+			}
+		});
+	});	
 });

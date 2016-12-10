@@ -32,10 +32,14 @@
 	<!--<form action="group/class" method="post">
 	<input type="text" name="className"><input type="submit" value="Create class">
 	</form> -->
-	
+	{{#if user.admin}}
 	<form action="group/class" method="post">
-	<input type="text" id='newClassName' name="className" class='comment-box' value=""><input type="button" id='addNewClass' value="Create class">
+	<input type="text" id='newClassName' name="className" class='comment-box' value="">
+	<input type="button" id='addNewClass' value="Create class">
+	<input type="button" id='downloadCourses' value="Download All Courses">
+	<input type="button" id='packageCourseData' value="Package Courses">
 	</form>	
+	{{/if}}	
 	<br>
 	
 

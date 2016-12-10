@@ -11,12 +11,13 @@ var UserSchema = mongoose.Schema({
   hashed:     {type:Boolean, default:false, required:true},
   name:       {type:String,  required:true},
   email:      {type:String,  required:true, unique: true},
+  admin:	  {type:Boolean, default:false},
   
   classesTaken:     [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}], 
   classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}],
 
   verificationString: {type:String},
-  verifiedEmail: {type:Boolean, default:false}
+  verifiedEmail: {type:Boolean, default:true}
 });
 
 UserSchema.pre('save', function(next) {

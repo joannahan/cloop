@@ -7,6 +7,7 @@ var User = require('../models/user');
 var Class = require('../models/class');
 var Post = require('../models/post');
 var Comment = require('../models/comment');
+var CoursePersist= require('../public/javascript/coursePersist');
 
 var requestCallback = function(res) {
 	return function(err, result) {
@@ -267,8 +268,12 @@ router.post('/user/enroll_class_by_name', function(req, res, next) {
 			console.log(err);
 			return err;
 		}else{
-			var isEnrolled=(req.user.classesEnrolled.indexOf(_class._Id)>-1);//Warning:will return null if there is a null in the array
-			var isTaken=(req.user.classesTaken.indexOf(_class._Id)>-1);
+			var isEnrolled=false;
+			var isTaken=false;
+			if (_class){
+				isEnrolled=(req.user.classesEnrolled.indexOf(_class._Id)>-1);//Warning:will return null if there is a null in the array			
+				isTaken=(req.user.classesTaken.indexOf(_class._Id)>-1);
+			}
 			if (!isEnrolled && !isTaken){
 				Class.addEnrolledStudent(_class._id, req.user.id,function(err, user){
 					if (err) {
@@ -286,7 +291,7 @@ router.post('/user/enroll_class_by_name', function(req, res, next) {
 					}
 				});
 			}else{
-				return done(res, null, true, 'You are already enroll/have taken this class.');
+				return done(res, null, true, 'You are already enrolled/have taken this class.');
 			}
 		}
 	});
@@ -303,6 +308,34 @@ router.post('/user/remove', function(req, res, next) {
 		} else {
 			var classId = result._id;
 			Class.removeStudent(classId, userId, requestCallback(res));
+		}
+	});
+});
+
+//download mit course data from web services
+router.post('/admin/download_courses', function(req, res, next) {
+	console.log("downloading MIT courses....");	
+	CoursePersist.download(function(err, data) {
+		if (err) {
+			console.log('download:failed');
+			done(res,err,false,null);
+		}else{
+			console.log('download:success');
+			done(res,null, true, "Courses download complete.");
+		}
+	});
+});
+
+//package course data for mongoimport utility
+router.post('/admin/package_course_data', function(req, res, next) {
+	console.log("packaging course data...");	
+	CoursePersist.transfer(function(err, data) {
+		if (err) {
+			console.log('transfer:failed');
+			done(res,null,false,null);
+		}else{
+			console.log('transfer:success');
+			done(res, null, true, "Packaging courses data complete.");
 		}
 	});
 });
