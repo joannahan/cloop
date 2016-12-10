@@ -110,7 +110,7 @@ cp /Users/Joanna/Desktop/6.170/FinalProject/cloop/seeds/courses_data.json .
 7) Import the courses_data file as a collection into the existing cloop database by running:
 
 
-/mongoimport --db cloop --collection classes < ./courses_data.json
+./mongoimport --db cloop --collection classes < ./courses_data.json
 
 
 Now you should see a collection called 'classes' in the cloop database with all the classes from 2016FA in it. If you refresh your localhost, you can see a list of all the classes appear on the group page.
