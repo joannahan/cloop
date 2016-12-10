@@ -78,9 +78,9 @@ For the final product, we will:
 
 Only admins of the cloop webapp can import courses to the platform. Admins have access to the Create Class, Download Courses, and Package Courses buttons on the group page. To make a registered user an admin, run:
 
-
+```
 db.users.update({"name":"a"},{$set:{"admin":"true"}})
-
+```
 
 
 If you want to import classes from the API by yourself....
@@ -99,19 +99,23 @@ Steps for importing classes from the MIT coursesv2 API onto the platform:
 4) run ./mongodump 
 This will generate a dump of the state of all your current databases so you won't lose your database information. 
 
-5) mv dump newFileNameForTheDumpIfYouWant (Optional renaming)
+5) Run this command for renaming the dump file (optional):
 
+```
+mv dump newFileNameForTheDump
+```
 
 6) Make a copy of the courses_data.json file in the bin folder as well by running:
 
+```
 cp /Users/Joanna/Desktop/6.170/FinalProject/cloop/seeds/courses_data.json .
-
+```
 
 7) Import the courses_data file as a collection into the existing cloop database by running:
 
-
+```
 ./mongoimport --db cloop --collection classes < ./courses_data.json
-
+```
 
 Now you should see a collection called 'classes' in the cloop database with all the classes from 2016FA in it. If you refresh your localhost, you can see a list of all the classes appear on the group page.
 
