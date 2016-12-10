@@ -7,10 +7,28 @@ var Post = require("./post");
 
 var ClassSchema = mongoose.Schema({
       name:         {type:String, index:true, required:true, unique: true},
+      termCode:		{type:String},
+      title:	    {type:String},      
       students:     [{type: ObjectId, ref: 'User'}],
       posts:        [{type: ObjectId, ref: 'Post'}]
 });
-
+/*
+var ClassSchema = mongoose.Schema({
+    name:         {type:String, index:true, required:true, unique: true},
+    students:     [{type: ObjectId, ref: 'User'}],
+    posts:        [{type: ObjectId, ref: 'Post'}],
+    termCode:		{type:String},
+    title:	    	{type:String},
+    academicYear:	{type:String},
+    title:			{type:String},
+    cluster:		{type:String},
+    prerequisites:	{type:String},
+    units:			{type:String},
+    optional:		{type:String},
+    description:	{type:String},
+    instructors:	{type:String}
+});
+*/
 ClassSchema.virtual('studentListing').get(function() {
     var students = populate('students').map(function(s) {return s.name + " (" + s.username + ")"});
     return students.join(", ");
@@ -23,7 +41,8 @@ ClassSchema.virtual('studentListing').get(function() {
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClass = function(name, callback) {
-    Class.findOne({"name": name}, callback);
+	var regex = new RegExp(["^", name, "$"].join(""), "i");
+    Class.findOne({"name": regex}, callback);
 }
 
 ClassSchema.statics.getClasses = function(classIds, callback) {
