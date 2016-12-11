@@ -344,15 +344,17 @@ router.post('/admin/download_courses', function(req, res, next) {
 //package course data for mongoimport utility
 router.post('/admin/package_course_data', function(req, res, next) {
 	console.log("packaging course data...");	
-	CoursePersist.transfer(function(err, data) {
+	CoursePersist.transfer(function(err) {
+		console.log("err"+err);
 		if (err) {
 			console.log('transfer:failed');
 			done(res,null,false,null);
 		}else{
 			console.log('transfer:success');
-			done(res, null, true, "Packaging courses data complete.");
+			done(res, null, true, "courses data import complete.");
 		}
 	});
+	console.log("sync complete");
 });
 
 //update classesTaken list based on whether taken or not

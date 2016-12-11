@@ -29,7 +29,7 @@ var CoursePersist = function(targetFileName) {
 	  var i=0;
 	  fs.readFile(DEFAULT_FILENAME,  function(err, data) {
 	  	if (err) {
-	    	  throw err;
+	    	  callback(err);
 	      } else {	 
 	      	var webservices=JSON.parse(data.toString()).webservices;
 	      	webservices.forEach(function(ws){
@@ -59,6 +59,7 @@ var CoursePersist = function(targetFileName) {
 	  			    });
 	        });
 	      }
+	  	callback();
 	  });
   };
 
@@ -67,35 +68,45 @@ var CoursePersist = function(targetFileName) {
 	  var fileName;
 	  var fileMask = "courses"; //fs.createWriteStream("./seeds/courses.json");
 	  var regex = new RegExp("},{", "g");
+	  var fileNames=[];
+	  
 	  for (var i=1; i<23; i++){
 		  fileName="./seeds/"+fileMask+"_"+i.toString()+".json"
-		  fileNameOut="./seeds/"+fileMask+"_out_"+i.toString()+".json"
 		  console.log("transfer file name:"+fileName);
-		  var content=JSON.parse(fs.readFileSync(fileName,'utf8'));
+		  fileNames.push(fileName);
+	  }
+	  
+	  fileNames.forEach(function(item, i){
+		  var content=JSON.parse(fs.readFileSync(item,'utf8'));
 	      var courses=content.items.map(function(course){
 		    	 return {name:course.subjectId,posts:[],students:[],termCode:course.termcode,title:course.title}; 
 		      });
+	      var total=0;
 	      if (i > 1){
 	    	  //if-exists-update, else-insert logic
 	    	  courses.forEach(function(item){
 	    		  Class.getClass(item.name, function(err, course){
 	    			  if(err){
-	    				  throw err;
+	    				  callback(err);
 	    			  }else{
 	    				  if (!course){ 
 	    					  Class.insertCourse(item, function(err, course){
-	    						 if (err)
-	    							 throw err;
-	    						 else
+	    						 if (err){
+	    							 callback(err);
+	    						 }
+	    						 else{
 	    							 console.log("insert one course");
+	    						 }
 	    					  });
 	    				  }else{
 	    					  if (item.termCode === course.termCode && item.title !== course.title) // course title change
 	    						  Class.updateCourse(item, function(err, course){
-	    							 if (err)
-	    								 throw err;
-	    							 else
-	    								 console.log("update one course");
+	    							 if (err){
+	    								 callback(err);
+	    							 }
+	    							 else{
+	    								 console.log("update one course title");
+	    							 }
 	    						  });
 	    				  }
 	    			  }
@@ -120,22 +131,26 @@ var CoursePersist = function(targetFileName) {
 	    	  courses.forEach(function(item){
 	    		  Class.getClass(item.name, function(err, course){
 	    			  if(err){
-	    				  throw err;
+	    				  callback(err);
 	    			  }else{
 	    				  if (!course){ 
 	    					  Class.insertCourse(item, function(err, course){
-	    						 if (err)
-	    							 throw err;
-	    						 else
+	    						 if (err){
+	    							 callback(err);
+	    						 }
+	    						 else{
 	    							 console.log("insert one course");
+	    						 }
 	    					  });
 	    				  }else{
 	    					  if (item.termCode === course.termCode && item.title !== course.title) // course title change
 	    						  Class.updateCourse(item, function(err, course){
-	    							 if (err)
-	    								 throw err;
-	    							 else
-	    								 console.log("update one course");
+	    							 if (err){
+	    								 callback(err);
+	    							 }
+	    							 else{
+	    								 console.log("update one course title");
+	    							 }
 	    						  });
 	    				  }
 	    			  }
@@ -156,7 +171,8 @@ var CoursePersist = function(targetFileName) {
 		    	  }
 		      });
 	      }
-	  }
+	  });
+	  callback();
   };
   /**
    * Read the file and parse the result as a JavaScript object.

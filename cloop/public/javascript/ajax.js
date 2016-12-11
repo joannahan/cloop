@@ -158,7 +158,6 @@ $(document).ready(function() {
 		});
 	 });	
 	$('#downloadCourses').click(function(){
-		$(this).hide();
 		$.post('/group/admin/download_courses',  function(err, data) {
 			if (err) {
 				if (err.message !== undefined){
@@ -171,8 +170,7 @@ $(document).ready(function() {
 		});
 	});
 	$('#packageCourseData').click(function(){
-		$(this).hide();
-		$.post('/group/admin/package_course_data',  function(err, newClass) {
+		$.post('/group/admin/package_course_data',  function(err, data) {
 			if (err) {
 				if (err.message !== undefined){
 					alert(err.message);

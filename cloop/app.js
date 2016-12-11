@@ -25,7 +25,7 @@ var coursePersist = require('./public/javascript/coursePersist.js');
 //Database setup
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/cloop');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/cloop');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
