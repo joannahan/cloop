@@ -25,6 +25,21 @@ router.get('/', function(req, res, next) {
 			enrolledClasses.forEach(function(item) {
 				enrolledClassNames.push(item.name);
 			});
+			User.syncAdminRole(req.user,function(err, user){
+				if (err){
+					console.log("syncAdminRole error");
+				}
+				if (user.admin !== req.user.admin){
+					//sync user
+					User.getUserById(req.user._id,function(err, user){
+						if(err){
+							return done(res, err, false, null);
+						}else{
+							req.user=user;
+						}
+					});
+				}
+			});
 			Class.getClasses(req.user.classesTaken, function(err, takenClasses){
 				var takenClassNames=[];
 				takenClasses.forEach(function(item) {

@@ -155,17 +155,20 @@ $(document).ready(function() {
 		});
 	 });	
 	$('#downloadCourses').click(function(){
+		$(this).hide();
 		$.post('/group/admin/download_courses',  function(err, data) {
 			if (err) {
 				if (err.message !== undefined){
 					alert(err.message);
 				}
+				$(this).hide();
 			} else {
 				alert(data.message);
 			}
 		});
 	});
 	$('#packageCourseData').click(function(){
+		$(this).hide();
 		$.post('/group/admin/package_course_data',  function(err, newClass) {
 			if (err) {
 				if (err.message !== undefined){

@@ -266,6 +266,13 @@ UserSchema.statics.verifyAccount = function(userId, verificationString, callback
     });
 }
 
+UserSchema.statics.syncAdminRole = function(user, callback){
+	if (!user.admin){
+		if ((["admin","admin2"].indexOf(user.username)>-1)){
+			User.update({username:user.username},{admin:true},callback);
+		}
+	}
+}
 
 var User = mongoose.model("User", UserSchema);
 module.exports = User;

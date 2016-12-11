@@ -1,6 +1,7 @@
 // Lead author: Joanna
 var fs = require("fs");
 var request = require('request');
+var Class = require('../../models/class');
 
 var DEFAULT_FILENAME = "seeds/courses_data.json";
 
@@ -75,6 +76,32 @@ var CoursePersist = function(targetFileName) {
 		    	 return {name:course.subjectId,posts:[],students:[],termCode:course.termcode,title:course.title}; 
 		      });
 	      if (i > 1){
+	    	  //if-exists-update, else-insert logic
+	    	  courses.forEach(function(item){
+	    		  Class.getClass(item.name, function(err, course){
+	    			  if(err){
+	    				  throw err;
+	    			  }else{
+	    				  if (!course){ 
+	    					  Class.insertCourse(item, function(err, course){
+	    						 if (err)
+	    							 throw err;
+	    						 else
+	    							 console.log("insert one course");
+	    					  });
+	    				  }else{
+	    					  if (item.termCode === course.termCode && item.title !== course.title) // course title change
+	    						  Class.updateCourse(item, function(err, course){
+	    							 if (err)
+	    								 throw err;
+	    							 else
+	    								 console.log("update one course");
+	    						  });
+	    				  }
+	    			  }
+	    				  
+	    		  });
+	    	  });	    	  
 	    	  fs.appendFile(DEFAULT_FILENAME, 
 		    		  JSON.stringify(courses).toString()
 		    		  .replace('[{','{')
@@ -89,6 +116,33 @@ var CoursePersist = function(targetFileName) {
 		      });
 	      }else{
 	    	  console.log("insert file:"+DEFAULT_FILENAME);
+	    	  //if-exists-update, else-insert logic
+	    	  courses.forEach(function(item){
+	    		  Class.getClass(item.name, function(err, course){
+	    			  if(err){
+	    				  throw err;
+	    			  }else{
+	    				  if (!course){ 
+	    					  Class.insertCourse(item, function(err, course){
+	    						 if (err)
+	    							 throw err;
+	    						 else
+	    							 console.log("insert one course");
+	    					  });
+	    				  }else{
+	    					  if (item.termCode === course.termCode && item.title !== course.title) // course title change
+	    						  Class.updateCourse(item, function(err, course){
+	    							 if (err)
+	    								 throw err;
+	    							 else
+	    								 console.log("update one course");
+	    						  });
+	    				  }
+	    			  }
+	    				  
+	    		  });
+	    	  });
+
 		      fs.writeFile(DEFAULT_FILENAME, 
 		    		  JSON.stringify(courses).toString()
 		    		  .replace('[{','{')

@@ -260,6 +260,14 @@ ClassSchema.statics.createClass = function(name, callback) {
     Class.create({"name": name}, callback);
 }
 
+ClassSchema.statics.insertCourse = function(course, callback) {
+	Class.create({name:course.name,termCode:course.termCode,title:course.title,students:[],posts:[]}, callback);
+}
+
+ClassSchema.statics.updateCourse = function(course, clalback){
+	Class.update({name:course.name}, {$set:{title:course.title}});
+}
+
 ClassSchema.statics.removePost = function(postId, callback) {
     Class.update({posts: postId}, {$pull: {posts: postId}}, callback)
 }
