@@ -5,8 +5,8 @@
 :root {
 	--background-color: white;
 	--text-color: black;
-	--post-backg: #d5dbe5;
-	--post-border: #a5acb7;
+	--post-backg: #bedbce;
+	--post-border: #4c846b;
 	--input-backg: white;
 	--btn-hover: #e6e6e6;
 }
@@ -178,7 +178,6 @@ div #one, #two, #three {
 .comment-box {
 	height: 27px;
 	width: 50%;
-	margin-top: 10px;
 	margin-bottom: 10px;
 }
 

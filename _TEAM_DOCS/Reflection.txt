@@ -1,0 +1,14 @@
+Evaluation (Evaluation of project from team planning perspective):
+Looking back on our project progress, we definitely wish we had been better with planning and workload. More specifically, we would have benefitted from being more realistic and forgiving towards bugs/certain features taking longer than expected to implement. In addition, we would like to have divided larger features into smaller, more concrete tasks and to have frontloaded in terms of code and implementation. If you look at our github commits, they peak around deadlines, and it would be good practice in the future to be constantly working on the project rather than doing huge spikes of work at one time. In line with this, due to how our workload panned out we ended up implementing many features at the last minute, leaving us very strapped for time when we faced bugs or setbacks, leading to less than optimal solutions that created more work for the final rather than having a solid foundation in the MVP. If we had been more steady, we would also have been able to see how realistic our expectations for features were and adjust our work accordingly.
+
+
+Lessons learned (Summary of key lessons learned):
+-Start working earlier and more consistently
+-Meet frequently beforehand to discuss coding framework (this will increase consistency between everyone’s code and will make it easier to integrate things later on).
+-Try and solidify schemas early on so it becomes easier to code other parts later.
+-Better know each other’s schedules (maybe fill out a when2meet)
+-More communication between team members while coding for better understanding of each other’s implementations
+
+
+Things that went well:
+Despite some problems with our overall project management, we had good teamwork and progress during meetings. We worked well together to stabilize the code and each tackle smaller issues, splitting up tasks well individually for overall progress, especially during meetings. In addition, there were no huge discrepancies in our coding styles, and we all had good coding practices (commenting, indentation, formatting) that made it easy to read others’ code, and led to minimal problems with Github - we did well in keeping our Github master code functional at all times, avoiding merge issues or large problems with pushing or pulling.
