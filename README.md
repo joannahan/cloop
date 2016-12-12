@@ -1,5 +1,7 @@
 # Cloop
 
+http://squadjs-cloop.herokuapp.com/
+
 Cloop is a web app that enables MIT students to find and communicate with other students in their classes. It features separate pages for each class, as well as a post and comment system that allows for quick, easy discussion.
 
 ## Usage
