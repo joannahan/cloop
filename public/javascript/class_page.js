@@ -18,7 +18,10 @@ $(document).ready(function() {
 
 	// upvote click handler
 	$(".upv").click(function() {
-		var textObject = $(this).parent().parent().parent();
+		var upvBtn = $(this);
+		var thumb = upvBtn.children();
+
+		var textObject = upvBtn.parent().parent().parent();
 		var upvoteCountSpan = textObject.find(".upvoteCount").first()
 		var isPostUpvote = textObject.hasClass("post");
 		var textId = textObject.attr("id")
@@ -30,7 +33,13 @@ $(document).ready(function() {
 				type: 'POST',
 				success: function(data) {
 					upvoteCountSpan.text(data.upvoteCount)
-
+					if (data.upvotedState) {
+						upvBtn.css("background-color", "#BDF5BD");
+						thumb.css("color", "green");
+					} else {
+						upvBtn.removeAttr("style");
+						thumb.removeAttr("style");
+					}
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);

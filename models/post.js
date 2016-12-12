@@ -110,7 +110,8 @@ PostSchema.statics.userToggleUpvote = function(postId, userId, callback) {
                 Post.update({"_id": postId}, {$pull: {"upvoteUsers": userId}}, function(err, result) {
                     if (err)    callback(err)
                     else {
-                        result.upvoteCount = post.upvoteCount - 1
+                        result.upvoteCount = post.upvoteCount - 1;
+                        result.upvotedState = false;
                         callback(err, result)
                     }
                 })
@@ -118,7 +119,8 @@ PostSchema.statics.userToggleUpvote = function(postId, userId, callback) {
                 Post.update({"_id": postId}, {$addToSet: {"upvoteUsers": userId}}, function(err, result) {
                     if (err)    callback(err)
                     else {
-                        result.upvoteCount = post.upvoteCount + 1
+                        result.upvoteCount = post.upvoteCount + 1;
+                        result.upvotedState = true;
                         callback(err, result)
                     }
                 })
