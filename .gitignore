@@ -28,7 +28,7 @@ coverage
 build/Release
 
 # Dependency directories
-cloop/node_modules
+node_modules
 jspm_packages
 
 # Optional npm cache directory
@@ -46,4 +46,4 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-/cloop/seeds
+/seeds
