@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res) {
-  res.render('index', { title: 'Cloop - Homepage' });
+  res.render('user_page');
 });
 
 /**

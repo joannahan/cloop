@@ -145,13 +145,22 @@ div #two {
 	padding: 1px 1px 1px 1px;
 }
 
-.editBtn {
-	background-color: var(--background-color);
+.sideBtn {
 	border-radius: 5px;
 	border:none;
 	line-height: 15px;
 	font-size: 15px;
 	padding: 1px 6px 1px 6px;
+}
+
+.delBtn {
+	background-color: #AA3939;
+}
+
+.editBtn {
+	background-color: #538CC6;
+	margin-top: 1px;
+	float: right;
 }
 
 /*Class styling*/
@@ -238,7 +247,6 @@ div #two {
 
 .delete_btn {
 	float:right;
-	line-height: 12px;
 }
 
 /*Comment styling*/
