@@ -122,7 +122,8 @@ router.get('/:name', function(req, res, next) {
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Class Page";
 	if (req.user === undefined) {
-		throw new Error("Please login first.");
+		//throw new Error("Please login first.");
+		res.redirect('/');
 	} 	
 	Class.getClass(className, function(err, _class) {
 		if (err) {
