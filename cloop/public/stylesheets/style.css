@@ -87,6 +87,15 @@ button:focus {
 
 }
 
+#allClasses {
+	background-color: var(--post-backg);
+	border-radius: 5px;
+	margin: 10px;
+	width: 150px;
+	height: 200px;
+	overflow: scroll;
+}
+
 /*The button*/
 .upv, .flg {
 	background-color: var(--background-color);

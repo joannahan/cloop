@@ -56,16 +56,17 @@
 		{{/each}}
 	</ul> -->
 	
-	<h4> CHECK OUT THIS FULL LIST OF CLASSES HERE</h4>
-	
-	<ul id="untakenClassesList">
-		{{#each untakenClasses}}
-			<li> 
-				<input type='text' class="class_listing" name='className' value = '{{this.name}}' readonly>	
-				<!--<input type='button' id='untakenClass_{{this._id}}' class='untakenClass' data-classid={{this._id}} value='Join class'>-->
-			</li>
-		{{/each}}
-	</ul>
+	<h4>All Classes:</h4>
+
+	<div id="allClasses">
+		<ul id="untakenClassesList">
+			{{#each untakenClasses}}
+				<li> 
+					{{this.name}}
+				</li>
+			{{/each}}
+		</ul>
+	</div>
 
 <!--	<form action="group/class" method="post">
 		<input type="text" name="className"><input type="submit" value="Create class">
