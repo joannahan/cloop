@@ -124,7 +124,10 @@ router.get('/:name', function(req, res, next) {
 	if (req.user === undefined) {
 		//throw new Error("Please login first.");
 		res.redirect('/');
-	} 	
+	}
+
+	handlebarsObject.userId = req.user._id
+
 	Class.getClass(className, function(err, _class) {
 		if (err || !_class) {
 			res.render('error', {message: "There was an error.", error: err});
