@@ -54,68 +54,73 @@ router.post('/:classId/post', upload.single("resource"), function(req, res, next
 	var classId = req.params.classId;
 	var resourceUrl = null;
 
-	if (req.file) {
-		var resourceName = req.file.originalname;
-		var resourceBuffer = req.file.buffer;
-		var resourcePath = '/' + authorId + '/' + resourceName;
+	if (!postText) {
+		req.flash('error_msg', 'Your post must contain text.');
+		res.redirect('back');
+	} else {
+		if (req.file) {
+			var resourceName = req.file.originalname;
+			var resourceBuffer = req.file.buffer;
+			var resourcePath = '/' + authorId + '/' + resourceName;
 
-		var resourcePathLength = resourcePath.length;
-		var pdfValidation = ".pdf";
-		var pdfValidationLength = pdfValidation.length;
+			var resourcePathLength = resourcePath.length;
+			var pdfValidation = ".pdf";
+			var pdfValidationLength = pdfValidation.length;
 
-		if (!(resourcePath.slice(resourcePathLength - pdfValidationLength) === pdfValidation)) {
-			res.send("Not a valid pdf");
-		} else {
-			dbx.filesUpload({path: resourcePath, contents: resourceBuffer, autorename: true})
-				.then(function(response) {
-					resourcePath = response.path_display;
-
-					dbx.sharingCreateSharedLink({path: resourcePath, short_url: true})
+			if (!(resourcePath.slice(resourcePathLength - pdfValidationLength) === pdfValidation)) {
+				res.send("Not a valid pdf");
+			} else {
+				dbx.filesUpload({path: resourcePath, contents: resourceBuffer, autorename: true})
 					.then(function(response) {
-				  		resourceUrl = response.url;
+						resourcePath = response.path_display;
 
-				  		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
-							if (err) {
-								res.send(err);
-							} else {
-								var postId = post._id;
-								Class.addPost(classId, postId, function(err, result){
-									if (err){
-										if (debug===1) console.log("classId.err"+err);
-										res.send(err);
-									} else {
-										Class.getClassById(classId, requestCallback2(res));
-									}
-								});
-							}
-						});
+						dbx.sharingCreateSharedLink({path: resourcePath, short_url: true})
+						.then(function(response) {
+					  		resourceUrl = response.url;
+
+					  		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
+								if (err) {
+									res.send(err);
+								} else {
+									var postId = post._id;
+									Class.addPost(classId, postId, function(err, result){
+										if (err){
+											if (debug===1) console.log("classId.err"+err);
+											res.send(err);
+										} else {
+											Class.getClassById(classId, requestCallback2(res));
+										}
+									});
+								}
+							});
+
+						})
+					  	.catch(function(error) {
+					  		res.send(error);
+					  	});
 
 					})
-				  	.catch(function(error) {
-				  		res.send(error);
-				  	});
-
-				})
-				.catch(function(error) {
-				  	res.send(error);
-				});
-		}
-	} else {
-		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
-			if (err) {
-				res.send(err);
-			} else {
-				var postId = post._id;
-				Class.addPost(classId, postId, function(err, result){
-					if (err){
-						if (debug===1) console.log("classId.err"+err);
-						res.send(err);
-					} else {
-						Class.getClassById(classId, requestCallback2(res));
-					}
-				});
+					.catch(function(error) {
+					  	res.send(error);
+					});
 			}
-		});
+		} else {
+			Post.createPost(authorId, postText, resourceUrl, function(err, post) {
+				if (err) {
+					res.send(err);
+				} else {
+					var postId = post._id;
+					Class.addPost(classId, postId, function(err, result){
+						if (err){
+							if (debug===1) console.log("classId.err"+err);
+							res.send(err);
+						} else {
+							Class.getClassById(classId, requestCallback2(res));
+						}
+					});
+				}
+			});
+		}
 	}
 });
 

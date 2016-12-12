@@ -70,39 +70,43 @@ $(document).ready(function() {
 	});
 
 	$('.delete_post').click(function(){
-		var $postId = $(this).closest('.post');
-		var $id = $postId.attr('id');
-		$.ajax({
-			context:this,
-			type:'DELETE',
-			url:'/post/'+ $id,
-			success:function(result){	
-				if (result.remove)	$postId.remove();
-				else 				alert(result.message);
-			},
-			error:function(){
-				alert(status.message);
-			}
-			
-		});
+		if (confirm('Are you sure you want to delete this post? You will not be able to bring it back.')) {
+			var $postId = $(this).closest('.post');
+			var $id = $postId.attr('id');
+			$.ajax({
+				context:this,
+				type:'DELETE',
+				url:'/post/'+ $id,
+				success:function(result){	
+					if (result.remove)	$postId.remove();
+					else 				alert(result.message);
+				},
+				error:function(){
+					alert(status.message);
+				}
+				
+			});
+		} 
 	 });
 	
 	$('.delete_comment').click(function(){
-		var $commentId = $(this).closest('.comment');
-		var $id = $commentId.attr('id');
-		$.ajax({
-			context:this,
-			type:'DELETE',
-			url:'/comment/'+ $id,
-			success: function(result) {
-				if (result.remove)	$commentId.remove();
-				else				alert(result.message);
-			},
-			error: function() {
-				alert(status.message);
-			}
-			
-		});
+		if (confirm('Are you sure you want to delete this comment? You will not be able to bring it back.')) {
+			var $commentId = $(this).closest('.comment');
+			var $id = $commentId.attr('id');
+			$.ajax({
+				context:this,
+				type:'DELETE',
+				url:'/comment/'+ $id,
+				success: function(result) {
+					if (result.remove)	$commentId.remove();
+					else				alert(result.message);
+				},
+				error: function() {
+					alert(status.message);
+				}
+				
+			});
+		}
 	 });
 	
 	$('#addNewClass').click(function(){

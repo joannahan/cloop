@@ -14,7 +14,7 @@
 			<form action='/post/{{classId}}/post' method="post" enctype="multipart/form-data">
 				<textarea type="text" name="postText" class='post-box'></textarea><br>
 
-				<span id="file-load"><input type='file' name='resource'></span>
+				<span id="file-load"><input type='file' name='resource' placeholder'Upload a pdf resource!'></span>
 				<span id="submit-post"><input type="submit" id="post-button" value="Post"></span>
 			</form>
 		</div>
@@ -41,6 +41,9 @@
 				<p>{{text}}</p>
 				{{#if resourceUrl}}
 				<a href={{resourceUrl}}>Attached Resource</a>
+			<!-- 	<object data='{{resourceUrl}}' type='application/pdf'>
+					Your browser does not support pdfs, <a href={{resourceUrl}}>click here to view instead.</a>
+				</object> -->
 				{{/if}}
 			</div>
 		

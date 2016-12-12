@@ -43,10 +43,15 @@ router.post('/:postId/comment', function(req, res, next) {
 	var authorId = req.user.id;
 	var postId = req.params.postId;
 
-	Comment.createComment(authorId, postId, commentText, function(err, _class) {
-		if (err)	console.log(err);
-		else		Class.getClassByPostId(postId, requestCallback2(res));
-	});
+	if (!commentText) {
+		req.flash('error_msg', 'Your comment must contain text.');
+		res.redirect('back');
+	} else {
+		Comment.createComment(authorId, postId, commentText, function(err, _class) {
+			if (err)	console.log(err);
+			else		Class.getClassByPostId(postId, requestCallback2(res));
+		});
+	}
 });
 
 //delete comment
