@@ -130,6 +130,7 @@ router.get('/:name', function(req, res, next) {
 		} else {
 			var classId = _class._id;
 			handlebarsObject.classId = classId;
+			handlebarsObject.studentListing = _class.studentListing;
 
 			Class.getPosts(classId, function(err, posts) {
 				if (err) {

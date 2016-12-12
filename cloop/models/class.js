@@ -30,8 +30,8 @@ var ClassSchema = mongoose.Schema({
 });
 */
 ClassSchema.virtual('studentListing').get(function() {
-    var students = populate('students').map(function(s) {return s.name + " (" + s.username + ")"});
-    return students.join(", ");
+    // Make sure students is populated
+    return this.students.map(s => s.name + " (" + s.username + ")").join(", ")
 })
 
 /**
@@ -42,7 +42,7 @@ ClassSchema.virtual('studentListing').get(function() {
  */
 ClassSchema.statics.getClass = function(name, callback) {
 	var regex = new RegExp(["^", name, "$"].join(""), "i");
-    Class.findOne({"name": regex}, callback);
+    Class.findOne({"name": regex}, callback).populate('students');
 }
 
 /**
