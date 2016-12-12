@@ -41,8 +41,16 @@ handlebars.registerHelper('ifEquals', function(lvalue, rvalue, options) {
 	if (arguments.length < 3)
 		throw new Error("Handlerbars Helper 'ifEquals': Requires 2 compare values (parameters)");
 
-	if (lvalue.equals(rvalue))	return options.fn(this);
-	else						return options.inverse(this);
+	if (lvalue.equals(rvalue))   return options.fn(this);
+	else						             return options.inverse(this);
+});
+
+handlebars.registerHelper('ifIncludedIn', function(element, collection, options) {
+  if (arguments.length < 3)
+    throw new Error("Handlerbars Helper 'ifIncludedIn': Requires 2 compare values (parameters)");
+
+  if (collection.indexOf(element) >= 0)   return options.fn(this);
+  else                                    return options.inverse(this);
 });
 
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout:'layout'}));

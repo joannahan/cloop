@@ -24,8 +24,13 @@
 		{{#each post}}
 		<div class="post" id={{_id}}>
 			<div class="post_header">
-				<span class="upvotes">
+				<span class="upvotes">	
+					{{#ifIncludedIn ../userId upvoteUsers}}
+					<button class="upv" type="submit" style="background-color: #BDF5BD;"><i class="fa fa-thumbs-up" aria-hidden="true" style="color: green;"></i></button>
+					{{else}}
 					<button class="upv" type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+					{{/ifIncludedIn}}
+
 					<span class="upvoteCount">{{upvoteCount}}</span>
 				</span>
 				<span class="flags">
@@ -73,7 +78,11 @@
 					<div class="comment" id={{_id}}>
 						<div class="comment_header">
 							<span class="upvotes"> 
+								{{#ifIncludedIn ../../userId upvoteUsers}}
+								<button class="upv" type="submit" style="background-color: #BDF5BD;"><i class="fa fa-thumbs-up" aria-hidden="true" style="color: green;"></i></button>
+								{{else}}
 								<button class="upv" type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+								{{/ifIncludedIn}}
 								<span class="upvoteCount">{{upvoteCount}}</span>
 							</span>
 							<span class="flags"> 
