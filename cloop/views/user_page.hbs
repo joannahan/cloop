@@ -6,71 +6,60 @@
 		<script type="text/javascript" src="/javascript/trie_main.js"></script>	
 	<h1>Welcome, {{user.name}}</h1>
 	<p> Email: {{user.email}} </p>
-	<h4> Enrolled Classes: </h4>
-	<ul>
-		{{#each enrolledClasses}}
-			<li id='{{this.name}}'>
-				<form action='group/{{this.name}}' method='get'><p class="class_listing"> {{this.name}} </p><input type="submit" value="Go to class page"></form>
-				<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Mark as Taken"> 
-				<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
-				<!-- <form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form> -->
-				<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
-			</li>
-		{{/each}}
-	</ul>
-	
-	<h4> Taken Classes: </h4>
-	<ul id="takenClassesList">
-		{{#each takenClasses}}
-			<li>
-				<p class="class_listing"> {{this.name}} </p>
-				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
-			</li>
-		{{/each}}
-	</ul>
+	<section>
+		<div id="one">
+			<h4> Enrolled Classes: </h4>
+			<ul>
+				{{#each enrolledClasses}}
+					<li id='{{this.name}}'>
+						<form action='group/{{this.name}}' method='get'><p class="class_listing"> {{this.name}} </p><input type="submit" value="Go to class page"></form>
+						<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Mark as Taken"> 
+						<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
+						<!-- <form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form> -->
+						<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
+					</li>
+				{{/each}}
+			</ul>
+			
+			<h4> Taken Classes: </h4>
+			<ul id="takenClassesList">
+				{{#each takenClasses}}
+					<li>
+						<p class="class_listing"> {{this.name}} </p>
+						<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Go to archived class page"></form>
+					</li>
+				{{/each}}
+			</ul>
 
-	<!--<form action="group/class" method="post">
-	<input type="text" name="className"><input type="submit" value="Create class">
-	</form> -->
-	{{#if user.admin}}
-	<form action="group/class" method="post">
-	<input type="text" id='newClassName' name="className" class='comment-box' value="">
-	<input type="button" id='addNewClass' value="Create class">
-	<input type="button" id='downloadCourses' value="Download All Courses">
-	<input type="button" id='packageCourseData' value="Import/Update Courses">
-	</form>	
-	{{/if}}	
-	<br>
-	
+			{{#if user.admin}}
+			<form action="group/class" method="post">
+			<input type="text" id='newClassName' name="className" class='comment-box' value="">
+			<input type="button" id='addNewClass' value="Create class">
+			<input type="button" id='downloadCourses' value="Download All Courses">
+			<input type="button" id='packageCourseData' value="Import/Update Courses">
+			</form>	
+			{{/if}}	
+			<br>
+			
 
-	<input id="search-input" type="text" class='comment-box' placeholder="Search for classes">
-	<ul id="results-list"></ul>
+			<input id="search-input" type="text" class='comment-box' placeholder="Search for classes">
+			<ul id="results-list"></ul>
 
+		</div>
 
+		<div id="two">
+			<h4>All Classes:</h4>
 
-<!-- 	<ul>
-		{{#each allclass}}
-			<li> 
-				<form action='group/user/add' method='post'><input type='text' name='className' value = '{{this}}' readonly><input type='submit' value='Join class'></form>
-			</li>
-		{{/each}}
-	</ul> -->
-	
-	<h4>All Classes:</h4>
-
-	<div id="allClasses">
-		<ul id="untakenClassesList">
-			{{#each untakenClasses}}
-				<li> 
-					{{this.name}}
-				</li>
-			{{/each}}
-		</ul>
-	</div>
-
-<!--	<form action="group/class" method="post">
-		<input type="text" name="className"><input type="submit" value="Create class">
-	</form>
--->
+			<div id="classScroll">
+				<ul id="untakenClassesList">
+					{{#each untakenClasses}}
+						<li> 
+							{{this.name}}
+						</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</section>
 
 </div>

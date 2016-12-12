@@ -87,9 +87,27 @@ button:focus {
 
 }
 
-#allClasses {
-	background-color: var(--post-backg);
+/*Formatting for user-page*/
+section {
+	width: 95%;
+	margin: auto;
+}
+
+div #one {
+	width: 55%;
+	float: left;
+	height: 300px;
+}
+
+div #two {
+	margin-left: 45%;
+	height: 300px;
+}
+
+#classScroll {
+	background-color: white;
 	border-radius: 5px;
+	border: 1px solid var(--post-border);
 	margin: 10px;
 	width: 150px;
 	height: 200px;
