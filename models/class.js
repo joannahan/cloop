@@ -149,7 +149,7 @@ ClassSchema.statics.getPosts = function(classId, callback) {
 ClassSchema.statics.getAllPosts=function(callback){
 	Class
 		.find(callback)
-		.sort({dateCreated: 'desc' })
+		.sort({timeCreated: 'desc' })
 		.populate('posts');
 }
 
