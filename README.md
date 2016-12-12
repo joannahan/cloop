@@ -6,48 +6,59 @@ Cloop is a web app that enables MIT students to find and communicate with other 
 
 ## Usage
 
-After you register an account, you may join classes and post or comment.
+After you register for an account with your @mit.edu email address, you may join classes and post or comment. Users cannot register without an @mit.edu email address. Users also need to verify their account, and will receive an email with a confirmation code upon registration. Once logged in, users are led to the /group page which is their main user page. Here, users are able to see which classes they are currently enrolled in, which classes they have taken, and other classes that they are not currently taking or have taken. Users are also able to search for classes from the "Other Classes" list and can add classes to their "Enrolled Classes" list. Once done with a class, users can move their classes from the "Enrolled Classes" list to the "Taken Classes" list. Users can also delete classes they are currently taking. 
+
+Users can visit a class page that they are currently taking. On the class page, they can post text as well as PDFs. Users are able to write posts and comment on their own or others' posts. Users can view PDF attachments within the post itself(embedded) or in an external dropbox link. Users can edit their own posts and comments, as well as delete their own posts and comments. Users can also upvote their own posts as well as flag their own posts if they enjoy self-deprecating humor. Other users can upvote other users' posts as well as flag them. The number of flags on posts/comments are not publicly displayed, but the number of upvotes are publicly displayed. The class page also displays the current students enrolled in the class. 
+
 
 ## Lead Authors
 
 - app.js: Joanna
 
-Models:
-- class.js: Danny/Joanna
+models:
+- class.js: Joanna
 - comment.js: Manuel
 - post.js: Manuel
 - user.js: Joanna
 
-Public/Javascript:
+public/javascript:
 - user_page.js: Joanna
 - class_page.js: Manuel
 - trie_controller.js: Ming
 - trie_main.js: Ming
 - trie.js: Ming
-- coursePersist.js: Joanna
 
-Public/Stylesheets:
+public/stylesheets:
 - style.css: Ming
 
-Routes:
+routes:
 - comment.js: Danny
-- group.js: Danny/Joanna
+- group.js: Joanna
 - index.js: Joanna
-- Post.js: Danny
-- Users.js: Joanna
+- post.js: Danny
+- users.js: Joanna
 
-Views:
+secret:
+- secret.js: Danny
+
+tests:
+- test.js: Ming
+
+util:
+- coursePersist.js: Joanna
+
+views:
 - layouts/layout.hbs: Joanna
+- 404.hbs: Danny
+- archived_class_page.hbs: Joanna
 - class_page.hbs: Ming
+- error.hbs: Danny
 - login.hbs: Joanna
 - register.hbs: Joanna
-- user_page.hbs: Ming
-- archived_class_page.hbs: Joanna
-- verification.hbs: Ming
 - upload.hbs: Danny
+- user_page.hbs: Ming
+- verification.hbs: Danny
 
-Secret:
-- secret.js: Danny
 
 ## MVP Features:
 
@@ -74,9 +85,9 @@ For the final product, we will:
 - Incorporate other feedback from our MVP
 
 
-## Backup/Restore and Importing Classes from the API (UPDATED NEW VERSION)
+##Importing Classes from the MIT coursesv2 API
 
-1) Login with admin credentials.
+1) Register with admin credentials (2 usernames with admin capabilities: admin, admin2) . Login with admin credentials.
 
 
 2) Click the Download Courses button on the group page. This will import all the json files for the 2016FA semester into the seeds directory.
@@ -88,56 +99,3 @@ For the final product, we will:
 4) Refresh the page to see the full list of imported classes on the group page.
 
 
-
-## Backup/Restore and Importing Classes from the API (OLD VERSION)
-(To provide backup of all the collections, we will be utilizing mongodump and mongorestore if necessary.)
-
-
-Only admins of the cloop webapp can import courses to the platform. Admins have access to the Create Class, Download Courses, and Package Courses buttons on the group page. To make a registered user an admin, run:
-
-```
-db.users.update({"name":"a"},{$set:{"admin":"true"}})
-```
-
-
-If you want to import classes from the API by yourself....
-Steps for importing classes from the MIT coursesv2 API onto the platform:
-
-
-1) Click the Download Courses button on the group page. This will import all the json files for the 2016FA semester into the seeds directory.
-
-
-2) Click the Package Courses button on the group page. This will consolidate all the downloaded json files into one compact json file of Mongoose objects.
-
-
-3) cd to the /bin folder of where you have mongo installed. (eg. mine is /Users/Joanna/Downloads/mongodb-osx-x86_64-3.2.11/bin)
-
-
-4) run ./mongodump 
-This will generate a dump of the state of all your current databases so you won't lose your database information. 
-
-5) Run this command for renaming the dump file (optional):
-
-```
-mv dump newFileNameForTheDump
-```
-
-6) Make a copy of the courses_data.json file in the bin folder as well by running:
-
-```
-cp /Users/Joanna/Desktop/6.170/FinalProject/cloop/seeds/courses_data.json .
-```
-
-7) Import the courses_data file as a collection into the existing cloop database by running:
-
-```
-./mongoimport --db cloop --collection classes < ./courses_data.json
-```
-
-Now you should see a collection called 'classes' in the cloop database with all the classes from 2016FA in it. If you refresh your localhost, you can see a list of all the classes appear on the group page.
-
-
-Alternatively, you can just copy the courses_data.json file I pushed into your bin folder (step 6) and then follow the steps afterwards to import it into the platform. 
-
-
-If you want to try out the whole process, pls don't push all the seeds/courses_*.json files that are generated since you really only need the courses_data.json file.

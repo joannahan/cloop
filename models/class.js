@@ -1,4 +1,4 @@
-// Lead author: Danny/Joanna
+// Lead author: Joanna
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -14,7 +14,6 @@ var ClassSchema = mongoose.Schema({
 });
 
 ClassSchema.virtual('studentListing').get(function() {
-    // Make sure students is populated
     return this.students.map(s => s.name + " (" + s.username + ")").join(", ")
 })
 
