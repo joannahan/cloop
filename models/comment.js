@@ -7,7 +7,7 @@ var Post = require("./post");
 var CommentSchema = mongoose.Schema({
     text:           {type: String, required: true},
     author:         {type: ObjectId, ref:"User", required: true},
-    timeCreated:    {type: Date, default: Date.now()},
+    timeCreated:    Date,
     timeEdited:     {type: Date, default: null},
     
     upvoteUsers:    [{type: ObjectId, ref: "User"}],
@@ -23,7 +23,7 @@ var CommentSchema = mongoose.Schema({
  * @param callback {function} - callback function
  */
 CommentSchema.statics.createComment = function(authorId, postId, text, callback) {
-    Comment.create({"author": authorId, "text": text}, function(err, comment) {
+    Comment.create({"author": authorId, "text": text, "timeCreated": Date.now()}, function(err, comment) {
         if (err)    callback(err);
         else        Post.addComment(postId, comment._id, callback);
     });

@@ -9,7 +9,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var PostSchema = mongoose.Schema({
     text:           {type: String,                required: true},
     author:         {type: ObjectId, ref: "User", required: true},
-    timeCreated:    {type: Date, default: Date.now()},
+    timeCreated:    Date,
     timeEdited:     {type: Date, default: null},
     
     comments:       [{type: ObjectId, ref:"Comment"}],
@@ -28,7 +28,7 @@ var PostSchema = mongoose.Schema({
  * @param callback {function} - callback function
  */
 PostSchema.statics.createPost = function(authorId, text, resourceUrl, callback) {
-    Post.create({"author": authorId, "text": text, "resourceUrl": resourceUrl}, callback);
+    Post.create({"author": authorId, "text": text, "resourceUrl": resourceUrl, "timeCreated": Date.now()}, callback);
 }
 
 /**
