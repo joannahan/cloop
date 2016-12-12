@@ -70,7 +70,7 @@ var CoursePersist = function(targetFileName) {
 	  var regex = new RegExp("},{", "g");
 	  var fileNames=[];
 	  
-	  for (var i=1; i<24; i++){
+	  for (var i=1; i<34; i++){
 		  fileName="./seeds/"+fileMask+"_"+i.toString()+".json"
 		  console.log("transfer file name:"+fileName);
 		  fileNames.push(fileName);

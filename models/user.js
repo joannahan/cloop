@@ -252,29 +252,29 @@ UserSchema.statics.removeClass = function(userId, classId, callback) {
   User.update({"_id": userId}, {$pull: {"classesEnrolled": classId}}, callback);
 }
 
-/**
- * Checks if user has taken a class
- * 
- * @param user {Object} - logged in user object
- * @param classId {ObjectId} - class id
- * @return true or false
- */
-UserSchema.statics.hasTakenAlready = function (user, classId) {
-    var index = user.classesTaken.indexOf(classId);
-    return index > -1;
-}
-
-/**
- * Checks if user is currently enrolled in a class
- * 
- * @param user {Object} - logged in user object
- * @param classId {ObjectId} - class id
- * @return true or false
- */
-UserSchema.statics.isEnrolledIn = function (user, classId) {
-    var index = user.classesEnrolled.indexOf(classId);
-    return index > -1;
-}
+///**
+// * Checks if user has taken a class
+// * 
+// * @param user {Object} - logged in user object
+// * @param classId {ObjectId} - class id
+// * @return true or false
+// */
+//UserSchema.statics.hasTakenAlready = function (user, classId) {
+//    var index = user.classesTaken.indexOf(classId);
+//    return index > -1;
+//}
+//
+///**
+// * Checks if user is currently enrolled in a class
+// * 
+// * @param user {Object} - logged in user object
+// * @param classId {ObjectId} - class id
+// * @return true or false
+// */
+//UserSchema.statics.isEnrolledIn = function (user, classId) {
+//    var index = user.classesEnrolled.indexOf(classId);
+//    return index > -1;
+//}
 
 /**
  * Verifies a user's account, if the correct string for the user is given

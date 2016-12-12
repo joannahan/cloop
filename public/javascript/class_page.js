@@ -15,6 +15,7 @@ $(document).ready(function() {
 				type: 'POST',
 				success: function(data) {
 					upvoteCountSpan.text(data.upvoteCount)
+
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);
@@ -34,6 +35,7 @@ $(document).ready(function() {
 			})
 		}
 	});
+
 	// flag click handler
 	$(".flg").click(function() {
 		var textObject = $(this).parent().parent().parent();
