@@ -34,12 +34,12 @@
 				</span>
 				<span class="post_author">{{author.name}}</span>
 				<span class="post_time">{{timeCreated}}</span>
-				{{#compare ../userId author._id operator="equals"}}
+				{{#ifEquals ../userId author._id}}
 				<span class="delete_btn delete_post"> 
 					<button class="sideBtn delBtn" type="submit"><i class="fa fa-times" style="color: #e6e6e6" aria-hidden="true"></i></button>
 				</span>
 				<button class="sideBtn editBtn" type="submit"><i class="fa fa-pencil" style="color: #e6e6e6" aria-hidden="true"></i></button>
-				{{/compare}}
+				{{/ifEquals}}
 			</div>
 		
 			<div class="post_body">
@@ -82,12 +82,12 @@
 							</span>
 							<span class="comment_author">{{author.name}}</span>
 							<span class="comment_time">{{timeCreated}}</span>
-							{{#compare ../../userId author._id operator="equals"}}
+							{{#ifEquals ../../userId author._id operator="equals"}}
 							<span class="delete_btn delete_comment"> 
 								<button class="sideBtn delBtn" type="submit"><i class="fa fa-times" style="color: #e6e6e6" aria-hidden="true"></i></button>
 							</span>
 							<button class="sideBtn editBtn" type="submit"><i class="fa fa-pencil" style="color: #e6e6e6" aria-hidden="true"></i></button>
-							{{/compare}}
+							{{/ifEquals}}
 						</div>
 
 						<div class="comment_body">

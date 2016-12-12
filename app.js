@@ -37,33 +37,12 @@ app.use(logger('dev'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
+handlebars.registerHelper('ifEquals', function(lvalue, rvalue, options) {
 	if (arguments.length < 3)
-		throw new Error("Handlerbars Helper 'compare': Requires 2 compare values (parameters)");
-		
-	var operator = options.hash.operator || "==";	
-			
-	var operators = {
-		'==':		function(l,r) { return l == r; },
-		'===':		function(l,r) { return l === r; },
-		'!=':		function(l,r) { return l != r; },
-		'<':		function(l,r) { return l < r; },
-		'>':		function(l,r) { return l > r; },
-		'<=':		function(l,r) { return l <= r; },
-		'>=':		function(l,r) { return l >= r; },
-		'typeof':	function(l,r) { return typeof l == r; },
-		'equals': 	function(l,r) {return l.equals(r)} 
-	}
+		throw new Error("Handlerbars Helper 'ifEquals': Requires 2 compare values (parameters)");
 
-	if (!operators[operator])
-		throw new Error("Handlerbars Helper 'compare': Illegal operator "+operator);
-
-	console.log(JSON.stringify(lvalue));
-	console.log(JSON.stringify(rvalue));
-
-	var result = operators[operator](lvalue,rvalue);
-	if (result)	return options.fn(this);
-	else		return options.inverse(this);
+	if (lvalue.equals(rvalue))	return options.fn(this);
+	else						return options.inverse(this);
 });
 
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout:'layout'}));
