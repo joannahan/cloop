@@ -7,7 +7,7 @@ var User = require('../models/user');
 var Class = require('../models/class');
 var Post = require('../models/post');
 var Comment = require('../models/comment');
-var CoursePersist= require('../public/javascript/coursePersist');
+var CoursePersist= require('../util/coursePersist');
 
 var requestCallback = function(res) {
 	return function(err, result) {
@@ -16,7 +16,7 @@ var requestCallback = function(res) {
 	}
 }
 
-/* GET user page. */
+// get group page
 router.get('/', function(req, res, next) {
 	//check to see if the user is verified
 	if (req.user.verifiedEmail) {
@@ -24,6 +24,21 @@ router.get('/', function(req, res, next) {
 			var enrolledClassNames=[];
 			enrolledClasses.forEach(function(item) {
 				enrolledClassNames.push(item.name);
+			});
+			User.syncAdminRole(req.user,function(err, user){
+				if (err){
+					console.log("syncAdminRole error");
+				}
+				if (user.admin !== req.user.admin){
+					//sync user
+					User.getUserById(req.user._id,function(err, user){
+						if(err){
+							return done(res, err, false, null);
+						}else{
+							req.user=user;
+						}
+					});
+				}
 			});
 			Class.getClasses(req.user.classesTaken, function(err, takenClasses){
 				var takenClassNames=[];
@@ -57,8 +72,7 @@ router.get('/', function(req, res, next) {
 	}
 });
 
-//gets all class names the user isn't in
-//error handled in class function
+//gets all class names the user isn't currently enrolled in and hasn't taken
 router.get('/nonuserclasses', function(req,res, next) {
 	User.getClassesEnrolledByStudent(req.user, function(classIds){
 		Class.getClasses(req.user.classesEnrolled, function(err, enrolledClasses){
@@ -87,8 +101,6 @@ router.get('/nonuserclasses', function(req,res, next) {
 
 //get all posts
 router.get('/getall', function(req, res, next) {
-	//TODO get all posts from each specific class
-	//var className = req.params.name;
 	Class.getAllPosts(function(err, posts){
 		if (err) {
 			return done(res, err, false, null);				
@@ -110,7 +122,6 @@ router.get('/:name', function(req, res, next) {
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Class Page";
 	if (req.user === undefined) {
-		//return {end:"end"};
 		throw new Error("Please login first.");
 	} 	
 	Class.getClass(className, function(err, _class) {
@@ -131,9 +142,7 @@ router.get('/:name', function(req, res, next) {
 						if (err) {
 							console.log(err);
 						} else {
-							//console.log("getPosts:" + posts);
 							handlebarsObject.post = posts.reverse();
-							//for each author in results, replace it with name
 							res.render('class_page', handlebarsObject);
 						}
 					});
@@ -150,7 +159,6 @@ router.get('/archives/:name', function(req, res, next) {
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Class Page";
 	if (req.user === undefined) {
-		//return {end:"end"};
 		throw new Error("Please login first.");
 	} 	
 	Class.getClass(className, function(err, _class) {
@@ -171,9 +179,7 @@ router.get('/archives/:name', function(req, res, next) {
 						if (err) {
 							console.log(err);
 						} else {
-							//console.log("getPosts:" + posts);
 							handlebarsObject.post = posts.reverse();
-							//for each author in results, replace it with name
 							res.render('archived_class_page', handlebarsObject);
 						}
 					});
@@ -189,34 +195,13 @@ router.get('/search/:_name', function(req, res, next) {
 	Class.getClass(className, function() {});
 });
 
-//parse JSON file
-function readTextFile(file, callback) {
-	var rawFile = new XMLHttpRequest();
-	rawFile.overrideMimeType("application/json");
-	rawFile.open("GET", file, true);
-	rawFile.onreadystatechange = function() {
-		if (rawFile.readyState === 4 && rawFile.status == "200") {
-			callback(rawFile.responseText);
-		}
-	}
-	rawFile.send(null);
-}
-
 //create new class page
 router.post('/class', function(req, res, next) {
 	var className = req.body.className;
-//	readTextFile("./seeds/courses.json", function(text) {
-//		var data = JSON.parse(text);
-//		console.log("CRAPPPPP " + data);
-//	});
-//	data.forEach(function(obj) {
-//		console.log("WHATTTTT" + obj.subjectId);
-//	});
 	Class.getClass(className, function(err, _class){
 		if (err){
 			return done(res, err, false, null);
 		}else{
-			//console.log("create new class:"+_class);
 			if (_class){
 				return done(res, null, true, 'There already exists a class with that name.');
 			}else{
@@ -236,6 +221,7 @@ router.post('/class', function(req, res, next) {
 	});
 });
 
+//enroll a user in a class
 router.post('/user/enroll_class', function(req, res, next) {
 	var userId = req.user.id;
 	var classId = req.body.classId;
@@ -262,6 +248,7 @@ router.post('/user/enroll_class', function(req, res, next) {
 	}
 });
 
+//enroll a user in a class by class name
 router.post('/user/enroll_class_by_name', function(req, res, next) {
 	Class.getClass(req.body.className, function(err, _class){
 		if(err){
@@ -297,7 +284,7 @@ router.post('/user/enroll_class_by_name', function(req, res, next) {
 	});
 });
 
-//remove student from a class
+//remove a student from a class
 router.post('/user/remove', function(req, res, next) {
 	var userId = req.user.id;
 	var className = req.body.className;
@@ -326,18 +313,20 @@ router.post('/admin/download_courses', function(req, res, next) {
 	});
 });
 
-//package course data for mongoimport utility
+//import/update course data for mongoimport utility
 router.post('/admin/package_course_data', function(req, res, next) {
 	console.log("packaging course data...");	
-	CoursePersist.transfer(function(err, data) {
+	CoursePersist.transfer(function(err) {
+		console.log("err"+err);
 		if (err) {
 			console.log('transfer:failed');
 			done(res,null,false,null);
 		}else{
 			console.log('transfer:success');
-			done(res, null, true, "Packaging courses data complete.");
+			done(res, null, true, "courses data import complete.");
 		}
 	});
+	console.log("sync complete");
 });
 
 //update classesTaken list based on whether taken or not
@@ -380,7 +369,6 @@ var done = function(res, err, success, customMessage) {
 			message: err.message
 		});
 	} else if (err === null && success === false) {
-		// console.log(customMessage);
 		res.json({
 			success: false, 
 			message: customMessage	

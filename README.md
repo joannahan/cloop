@@ -11,7 +11,7 @@ After you register an account, you may join classes and post or comment.
 - app.js: Joanna
 
 Models:
-- class.js: Danny
+- class.js: Danny/Joanna
 - comment.js: Manuel
 - post.js: Manuel
 - user.js: Joanna
@@ -72,7 +72,22 @@ For the final product, we will:
 - Incorporate other feedback from our MVP
 
 
-## Backup/Restore and Importing Classes from the API
+## Backup/Restore and Importing Classes from the API (UPDATED NEW VERSION)
+
+1) Login with admin credentials.
+
+
+2) Click the Download Courses button on the group page. This will import all the json files for the 2016FA semester into the seeds directory.
+
+
+3) Click the Import/Update Courses button on the group page. This will consolidate all the downloaded json files into one compact json file of Mongoose objects. It will also automatically import the classes into the platform. 
+
+
+4) Refresh the page to see the full list of imported classes on the group page.
+
+
+
+## Backup/Restore and Importing Classes from the API (OLD VERSION)
 (To provide backup of all the collections, we will be utilizing mongodump and mongorestore if necessary.)
 
 

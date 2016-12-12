@@ -375,8 +375,13 @@ describe("Cloop", function() {
                   },
                   function(err4, data4){
                     Comment.findOne({text: "hello"}, function(err5, data5){
-                      Post.addComment(data3._id, data5_id, function(){
-                        assert.equal(data3["comments"][0], data5_id);
+                      Post.addComment(data3._id, data5._id, function(){
+                        Comment.userToggleUpvote(data5._id, data1._id, function(){
+                          assert.equal(data5.upvoteUsers.length, 1);
+                          Comment.userToggleUpvote(data5._id, data1._id, function(){
+                            assert.equal(data5.upvoteUsers.length, 0);
+                          });
+                        });
                       });
                     });
                   });
@@ -406,8 +411,13 @@ describe("Cloop", function() {
                   },
                   function(err4, data4){
                     Comment.findOne({text: "hello"}, function(err5, data5){
-                      Post.addComment(data3._id, data5_id, function(){
-                        assert.equal(data3["comments"][0], data5_id);
+                      Post.addComment(data3._id, data5._id, function(){
+                        Comment.userToggleFlag(data5._id, data1._id, function(){
+                          assert.equal(data5.flagUsers.length, 1);
+                          Comment.userToggleFlag(data5._id, data1._id, function(){
+                            assert.equal(data5.flagUsers.length, 0);
+                          });
+                        });
                       });
                     });
                   });

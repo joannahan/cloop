@@ -11,20 +11,8 @@ var transporter = secret.transporter;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  //res.send('This is the user page lmao');
   res.render('user_listing', { title: 'list of users in class' });
 });
-
-//Search users by name
-router.get('/search/:name', function(req, res, next) {
-	
-});
-
-//get all users
-router.get('/getall', function(req, res, next) {
-	
-});
-
 
 //Register
 router.get('/register', function(req,res){
@@ -80,6 +68,7 @@ router.post('/register', function(req,res) {
 	}
 });
 
+//verify user using verification code
 router.post('/verify', function(req, res) {
 	var userId = req.user.id;
 	var verificationString = req.body.verificationString;
@@ -127,7 +116,6 @@ passport.use(new LocalStrategy(
 			  if (err) 
 			  	throw err;
 			  if (isMatch) {
-				  //insert user object to a session here later
 				  return done(null, user)
 			  } else {
 				  return done(null, false, {message:'Invalid password'});

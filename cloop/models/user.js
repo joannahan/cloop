@@ -131,6 +131,7 @@ UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback
     callback(classIds);
   });
 }
+
 /**
  * Get classes student is currently enrolled in
  * 
@@ -169,6 +170,13 @@ UserSchema.statics.moveFromEnrolledClassToTakenClass= function (userId, classId,
 	});  
 }
 
+/**
+ * Add a class to classesEnrolled array
+ * 
+ * @param userId {ObjectId} - user id
+ * @param classId {ObjectId} - class id
+ * @param callback {function} - callback function
+ */
 UserSchema.statics.addEnrolledClass = function(userId, classId, callback) {
     User.update(
         {"_id": userId},
@@ -176,6 +184,13 @@ UserSchema.statics.addEnrolledClass = function(userId, classId, callback) {
         callback);
 }
 
+/**
+ * Remove a class from classesEnrolled array
+ * 
+ * @param userId {ObjectId} - user id
+ * @param classId {ObjectId} - class id
+ * @param callback {function} - callback function
+ */
 UserSchema.statics.removeEnrolledClass = function(userId, classId, callback) {
 	var classIds=[];
 	classIds.push(classId);
@@ -185,6 +200,13 @@ UserSchema.statics.removeEnrolledClass = function(userId, classId, callback) {
         callback);
 }
 
+/**
+ * Add a class to classesTaken array
+ * 
+ * @param userId {ObjectId} - user id
+ * @param classId {ObjectId} - class id
+ * @param callback {function} - callback function
+ */
 UserSchema.statics.addTakenClass = function(userId, classId, callback) {
 	User.update(
         {"_id": userId},
@@ -192,6 +214,13 @@ UserSchema.statics.addTakenClass = function(userId, classId, callback) {
         callback);
 }
 
+/**
+ * Remove a class from classesTaken array
+ * 
+ * @param userId {ObjectId} - user id
+ * @param classId {ObjectId} - class id
+ * @param callback {function} - callback function
+ */
 UserSchema.statics.removeTakenClass = function(userId, classId, callback) {
 	var classIds=[];
 	classIds.push(classId);
@@ -201,14 +230,21 @@ UserSchema.statics.removeTakenClass = function(userId, classId, callback) {
         callback);
 }
 
-UserSchema.statics.getAllClass = function(userId, classId, callback) {
-	var classIds=[];
-	classIds.push(classId);
-	User.update(
-        {"_id": userId},
-        {$pullAll: {"classesTaken": classIds}},
-        callback);
-}
+///**
+// * Get all classes 
+// * 
+// * @param userId {ObjectId} - user id
+// * @param classId {ObjectId} - class id
+// * @param callback {function} - callback function
+// */
+//UserSchema.statics.getAllClass = function(userId, classId, callback) {
+//	var classIds=[];
+//	classIds.push(classId);
+//	User.update(
+//        {"_id": userId},
+//        {$pullAll: {"classesTaken": classIds}},
+//        callback);
+//}
 
 /**
  * Removes a class from a user's enrolled classes 
@@ -266,6 +302,19 @@ UserSchema.statics.verifyAccount = function(userId, verificationString, callback
     });
 }
 
+/**
+ * Checks if user is an admin
+ * 
+ * @param user {Object} - the user object
+ * @param callback {function} - a callback function
+ */
+UserSchema.statics.syncAdminRole = function(user, callback){
+	if (!user.admin){
+		if ((["admin","admin2"].indexOf(user.username)>-1)){
+			User.update({username:user.username},{admin:true},callback);
+		}
+	}
+}
 
 var User = mongoose.model("User", UserSchema);
 module.exports = User;

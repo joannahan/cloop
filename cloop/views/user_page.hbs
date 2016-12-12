@@ -13,7 +13,7 @@
 				<form action='group/{{this.name}}' method='get'><p class="class_listing"> {{this.name}} </p><input type="submit" value="Go to class page"></form>
 				<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Mark as Taken"> 
 				<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
-				<form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form>
+				<!-- <form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form> -->
 				<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
 			</li>
 		{{/each}}
@@ -37,7 +37,7 @@
 	<input type="text" id='newClassName' name="className" class='comment-box' value="">
 	<input type="button" id='addNewClass' value="Create class">
 	<input type="button" id='downloadCourses' value="Download All Courses">
-	<input type="button" id='packageCourseData' value="Package Courses">
+	<input type="button" id='packageCourseData' value="Import/Update Courses">
 	</form>	
 	{{/if}}	
 	<br>

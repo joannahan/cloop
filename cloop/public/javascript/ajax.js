@@ -1,6 +1,6 @@
 // Lead author: Danny/Joanna
 $(document).ready(function() { 
-
+	// upvote click handler
 	$(".upv").click(function() {
 		var textObject = $(this).parent().parent().parent();
 		var upvoteCountSpan = textObject.find(".upvoteCount").first()
@@ -33,7 +33,7 @@ $(document).ready(function() {
 			})
 		}
 	});
-	
+	// flag click handler
 	$(".flg").click(function() {
 		var textObject = $(this).parent().parent().parent();
 		var flagCountSpan = textObject.find(".flagCount").first()
@@ -68,7 +68,7 @@ $(document).ready(function() {
 			})
 		}
 	});
-
+	// delete post click handler
 	$('.delete_post').click(function(){
 		if (confirm('Are you sure you want to delete this post? You will not be able to bring it back.')) {
 			var $postId = $(this).closest('.post');
@@ -88,7 +88,7 @@ $(document).ready(function() {
 			});
 		} 
 	 });
-	
+	// delete comment click handler
 	$('.delete_comment').click(function(){
 		if (confirm('Are you sure you want to delete this comment? You will not be able to bring it back.')) {
 			var $commentId = $(this).closest('.comment');
@@ -108,7 +108,7 @@ $(document).ready(function() {
 			});
 		}
 	 });
-	
+	// add new class click handler (admin can create custom classes)
 	$('#addNewClass').click(function(){
 		var $newClassName=$('#newClassName');
 		if ($newClassName.val()===''){
@@ -126,20 +126,25 @@ $(document).ready(function() {
 			}
 		});
 	}); 
-	
+	// move enrolled class to taken class click handler
 	$('#moveEnrolledClass*').click(function(){
-		var $id = $(this).data('taken');
-		$.post('/group/user/move_enrolled_class', {classId:$id}, function(err, _class) {
-			if(err){
-				if (err.message !== undefined){
-					alert(err.message);
+		if (confirm('Are you sure you want to mark this class as taken? You will not be able to undo this action.')) {
+			var $id = $(this).data('taken');
+			$.post('/group/user/move_enrolled_class', {classId:$id}, function(err, _class) {
+				if(err){
+					if (err.message !== undefined){
+						alert(err.message);
+					}
+					location.reload();
+				} else {
+					location.reload();
 				}
-				location.reload();
-			} else {
-				location.reload();
-			}
-		});
+			});
+		}
+
 	 });
+	
+	// add untaken class to enrolled class click handler
 	$('#untakenClassesList').delegate('.untakenClass','click', function(){
 
 		var $id = $(this).data('classid');
@@ -154,19 +159,24 @@ $(document).ready(function() {
 			}
 		});
 	 });	
+	
+	// download courses from MIT coursesv2 API click handler
 	$('#downloadCourses').click(function(){
 		$.post('/group/admin/download_courses',  function(err, data) {
 			if (err) {
 				if (err.message !== undefined){
 					alert(err.message);
 				}
+				$(this).hide();
 			} else {
 				alert(data.message);
 			}
 		});
 	});
+	
+	// import and update (package) course data from local json files click handler
 	$('#packageCourseData').click(function(){
-		$.post('/group/admin/package_course_data',  function(err, newClass) {
+		$.post('/group/admin/package_course_data',  function(err, data) {
 			if (err) {
 				if (err.message !== undefined){
 					alert(err.message);

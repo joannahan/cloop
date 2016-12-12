@@ -41,11 +41,6 @@ router.get('/', function(req,res){
 	res.render('posts');
 });
 
-////get all posts - json stringified
-//router.get('/getall', function(req, res, next) {
-//	
-//});
-
 var debug = 1;
 //create new post
 router.post('/:classId/post', upload.single("resource"), function(req, res, next) {
