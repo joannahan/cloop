@@ -19,8 +19,8 @@ Models:
 - user.js: Joanna
 
 Public/Javascript:
-- ajax.js: Danny/Joanna
-- index.js: Joanna
+- user_page.js: Joanna
+- class_page.js: Manuel
 - trie_controller.js: Ming
 - trie_main.js: Ming
 - trie.js: Ming
