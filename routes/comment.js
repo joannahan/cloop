@@ -73,16 +73,19 @@ router.delete('/:_id', function(req, res, next) {
 });
 
 //edit comment
-router.put('/edit/:_id', function(req, res, next) {
+router.post('/edit/:_id', function(req, res, next) {
 	var commentId = req.params._id;
-	var newText = req.body.newText;
+	var newText = req.body.content;
 	var userId = req.user.id;
 	
 	Comment.getComment(commentId, function(err, result) {
 		if (err)		res.render('error', {message: "There was an error.", error: err});
 		else {
 			if (result.author == userId)
-				Comment.editComment(commentId, newText, requestCallback(res));
+				Comment.editComment(commentId, newText, function(err, result) {
+					if (err)	res.render('error', {message: "There was an error.", error: err});
+					else		res.redirect('back');
+				});
 			else
 				res.send("Wrong user!");
 		}

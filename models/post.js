@@ -9,7 +9,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var PostSchema = mongoose.Schema({
     text:           {type: String,                required: true},
     author:         {type: ObjectId, ref: "User", required: true},
-    timeCreated:    {type: Date, default: Date.now},
+    timeCreated:    {type: Date, default: Date.now()},
     timeEdited:     {type: Date, default: null},
     
     comments:       [{type: ObjectId, ref:"Comment"}],
@@ -49,7 +49,7 @@ PostSchema.statics.getPost = function(postId, callback) {
  * @param callback {function} - callback function
  */
 PostSchema.statics.editPost = function(postId, text, callback) {
-    Post.update({"_id": postId}, {$set: {"text": text, "timeEdited": Date.now}}, callback);
+    Post.update({"_id": postId}, {$set: {"text": text, "timeEdited": Date.now()}}, callback);
 }
 
 /**

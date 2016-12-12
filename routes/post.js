@@ -150,9 +150,9 @@ router.delete('/:_id', function(req, res, next) {
 });
 
 //edit post
-router.put('/edit/:_id', function(req, res, next) {
+router.post('/edit/:_id', function(req, res, next) {
 	var postId = req.params._id;
-	var newText = req.body.newText;
+	var newText = req.body.content;
 	var userId = req.user.id;
 	
 	Post.getPost(postId, function(err, result) {
@@ -160,7 +160,10 @@ router.put('/edit/:_id', function(req, res, next) {
 			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			if (result.author == userId) {
-				Post.editPost(postId, newText, requestCallback(res));
+				Post.editPost(postId, newText, function(err, result) {
+					if (err)	res.render('error', {message: "There was an error.", error: err});
+					else		res.redirect('back');
+				});
 			} else {
 				res.send("Wrong user!");
 			}

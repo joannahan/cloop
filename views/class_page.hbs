@@ -43,7 +43,7 @@
 			</div>
 		
 			<div class="post_body">
-				<div> <p>{{text}}</p> </div>
+				<div> <p class="text-body">{{text}}</p> </div>
 				{{#if resourceUrl}}
 
 				<div class='resource_container'>
@@ -91,7 +91,7 @@
 						</div>
 
 						<div class="comment_body">
-							<p>{{text}}</p>
+							<p class="text-body">{{text}}</p>
 						</div>
 					</div>
 					
@@ -107,3 +107,25 @@
 	</div>
 	<div class="class_body">
 </div>
+
+<!-- "EDIT" MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-header">
+			<button type="button" class="delBtn sideBtn" data-dismiss="modal">
+				<i class="fa fa-times" style="color: #e6e6e6" aria-hidden="true"></i>
+				<span class="sr-only">Close</span>
+			</button>
+			<h3 class="modal-title" id="editModalLabel"></h3>
+		</div>
+
+		<div class="modal-body">
+			<form id="editText" method="post">
+				<input id="contentInput" type="text" name="content" required autofocus>
+				<input type="submit" class="btn btn-primary" value="Save" method="post">
+			</form>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+</div>
+<!-- -->

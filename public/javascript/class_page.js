@@ -1,6 +1,21 @@
 // Lead author: Manuel
 // class_page javascript
-$(document).ready(function() { 
+$(document).ready(function() {
+	
+	$(".editBtn").click(function() {
+		var textObject = $(this).parent().parent();
+		var textId = textObject.attr('id');
+		var isPost = textObject.hasClass("post");
+
+		var title = "Edit " + (isPost ? "Post" : "Comment")
+		var action = (isPost ? "/post" : "/comment") + "/edit/" + textId
+
+		$("#editModalLabel").text(title)
+		$("#contentInput").attr("value", textObject.find(".text-body").first().text())
+		$("#editText").attr("action", action)
+		$("#editModal").modal("show")
+	})
+
 	// upvote click handler
 	$(".upv").click(function() {
 		var textObject = $(this).parent().parent().parent();
