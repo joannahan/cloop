@@ -73,7 +73,6 @@ $(document).ready(function() {
 		var flag = $(this).children();
 
 		var textObject = flgBtn.parent().parent().parent();
-		var flagCountSpan = textObject.find(".flagCount").first()
 		var isPostFlag = textObject.hasClass("post");
 		var textId = textObject.attr("id")
 
@@ -83,7 +82,6 @@ $(document).ready(function() {
 				data: {postId: textId},
 				type: 'POST',
 				success: function(data) {
-					flagCountSpan.text(data.flagCount);
 					if (data.flagCount >= 10) textObject.remove()
 
 					if (data.flagState) {
@@ -104,7 +102,6 @@ $(document).ready(function() {
 				data: {commentId: textId},
 				type: 'POST',
 				success: function(data) {
-					flagCountSpan.text(data.flagCount);
 					if (data.flagCount >= 10) textObject.remove();
 
 					if (data.flagState) {

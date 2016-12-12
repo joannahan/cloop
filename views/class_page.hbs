@@ -22,6 +22,7 @@
 	
 	<div id="posts-table">
 		{{#each post}}
+		{{#ifLessThan flagCount 10}}
 		<div class="post" id={{_id}}>
 			<div class="post_header">
 				<span class="upvotes">	
@@ -39,9 +40,8 @@
 					{{else}}
 					<button class="flg" type="submit"><i class="fa fa-flag" aria-hidden="true"></i></button>
 					{{/ifIncludedIn}}
-					<span class="flagCount">{{flagCount}}</span>
 				</span>
-				<span class="post_author">{{author.name}}</span>
+				<span class="post_author"><b>{{author.name}}</b></span>
 				<span class="post_time">{{timeCreated}}</span>
 
 				{{#if timeEdited}}
@@ -83,6 +83,7 @@
 		
 			<div class="post_footer">
 				{{#each comments}}
+				{{#ifLessThan flagCount 10}}
 					<!-- render the comment handlebar template -->
 					<div class="comment" id={{_id}}>
 						<div class="comment_header">
@@ -100,9 +101,8 @@
 								{{else}}
 								<button class="flg" type="submit"><i class="fa fa-flag" aria-hidden="true"></i></button>
 								{{/ifIncludedIn}}
-								<span class="flagCount">{{flagCount}}</span>
 							</span>
-							<span class="comment_author">{{author.name}}</span>
+							<span class="comment_author"><b>{{author.name}}</b></span>
 							<span class="comment_time">{{timeCreated}}</span>
 
 							{{#if timeEdited}}
@@ -121,7 +121,7 @@
 							<p class="text-body">{{text}}</p>
 						</div>
 					</div>
-					
+				{{/ifLessThan}}
 				{{/each}}
 				<!-- add a text input for adding a comment, action tag -->
 				<form action='/comment/{{_id}}/comment' method='post'>
@@ -129,7 +129,7 @@
 				</form>
 			</div>
 		</div>
-
+		{{/ifLessThan}}
 		{{/each}}
 	</div>
 	<div class="class_body">

@@ -53,6 +53,14 @@ handlebars.registerHelper('ifIncludedIn', function(element, collection, options)
   else                                    return options.inverse(this);
 });
 
+handlebars.registerHelper('ifLessThan', function(leftValue, rightValue, options) {
+  if (arguments.length < 3)
+    throw new Error("Handlerbars Helper 'ifLessThan': Requires 2 compare values (parameters)");
+
+  if (leftValue < rightValue)   return options.fn(this);
+  else                          return options.inverse(this);
+});
+
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout:'layout'}));
 
 //BodyParser middleware
