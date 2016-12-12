@@ -111,25 +111,6 @@ describe("Cloop", function() {
   //User testing
   describe("User", function() {
 
-    // it("should only allow for each username to be used once", function(done) {
-    //   User.create({ username: "apple",
-    //                 name: "appel",
-    //                 email: "appel@mit.edu",
-    //                 password: "password" },
-    //       function(err, data) {
-    //         User.create({ username: "apple",
-    //                       name: "appel",
-    //                       email: "appel@mit.edu",
-    //                       password: "password" },
-    //           function(err, data) {
-    //             assert.throws(function() {
-    //               assert.ifError(err);
-    //             });
-    //         });
-    //         done();
-    //       });
-    // });
-
     it("should require username field to be filled out", function(done) {
       User.create({ username: "",
                     name: "appel",
@@ -251,7 +232,7 @@ describe("Cloop", function() {
 
   describe("Post", function() {
 
-    it("should require text field to be filled out", function(done) {
+    it("should require text field to be filled out", function() {
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -267,7 +248,6 @@ describe("Cloop", function() {
                 assert.ifError(err);
               });
             });
-            done();
             });
           });
     });
@@ -311,15 +291,17 @@ describe("Cloop", function() {
                   function(err4, data4){
                     Comment.findOne({text: "hello"}, function(err5, data5){
                       Post.addComment(data3._id, data5._id, function(){
-                        assert.equal(data3["comments"][0], data5_id);
+                        var commlist = data3.comments;
+                        var iseq = commlist[0].equals(data5._id);
+                        assert.equal(iseq, true);
                       });
                     });
                   });
                 });
               });
             });
-            done();
           });
+      done();
     });
 
     it("should update upvotes and only allow one upvote per user", function() {
