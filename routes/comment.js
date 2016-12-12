@@ -9,7 +9,7 @@ var Class = require('../models/class');
 var requestCallback = function(res) {
 	return function(err, result) {
 		if (err) {
-			res.send(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			res.redirect('/group');
 		}
@@ -19,7 +19,7 @@ var requestCallback = function(res) {
 var requestCallback2 = function(res) {
 	return function(err, result) {
 		if (err) {
-			res.send(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			res.redirect('/group/' + result.name);
 		}
@@ -47,7 +47,7 @@ router.post('/:postId/comment', function(req, res, next) {
 		res.redirect('back');
 	} else {
 		Comment.createComment(authorId, postId, commentText, function(err, _class) {
-			if (err)	console.log(err);
+			if (err)	res.render('error', {message: "There was an error.", error: err});
 			else		Class.getClassByPostId(postId, requestCallback2(res));
 		});
 	}
@@ -59,11 +59,11 @@ router.delete('/:_id', function(req, res, next) {
 	var userId = req.user.id;
 
 	Comment.getComment(commentId, function(err, result) {
-		if (err)				res.send(err);
+		if (err)				res.render('error', {message: "There was an error.", error: err});
 		else {
 			if (result.author == userId) {
 				Comment.removeComment(commentId, function(err, result) {
-					if (err) 	res.send(err);
+					if (err) 	res.render('error', {message: "There was an error.", error: err});
 					else 		res.send({remove:true});
 				});
 			} else
@@ -79,7 +79,7 @@ router.put('/edit/:_id', function(req, res, next) {
 	var userId = req.user.id;
 	
 	Comment.getComment(commentId, function(err, result) {
-		if (err)		res.send(err);
+		if (err)		res.render('error', {message: "There was an error.", error: err});
 		else {
 			if (result.author == userId)
 				Comment.editComment(commentId, newText, requestCallback(res));
@@ -110,7 +110,7 @@ router.post('/flag', function(req, res, next) {
 		else {
 			if (finalResult.flagCount >= 10) {
 				Comment.removeComment(commentId, function(err, result) {
-					if (err) 	res.send(err);
+					if (err) 	res.render('error', {message: "There was an error.", error: err});
 					else 		res.send(finalResult);
 				});
 			} else

@@ -87,9 +87,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 //Express Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
@@ -137,10 +134,29 @@ app.use('/post', post);
 app.use('/comment', comment);
 
 //catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
+
+app.use(function(req, res, next){
+  res.status(404);
+
+  // respond with html page
+  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
+
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
 });
 
 //development error handler

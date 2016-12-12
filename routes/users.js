@@ -78,7 +78,7 @@ router.post('/verify', function(req, res) {
 			req.flash("error_msg", "The verification code you have entered is not valid. Please double check and try again.");
 			res.redirect('/group');
 		} else if (err) {
-			console.log(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			res.redirect('/group');
 		}
@@ -140,7 +140,7 @@ passport.deserializeUser(function(id, done) {
 //common helper function for callback
 var done = function(res, err, success, customMessage) {
 	if (err) {
-		console.log(err);
+		res.render('error', {message: "There was an error.", error: err});
 			res.json({
 			success: false, 
 			message: err.message

@@ -65,8 +65,9 @@ describe("Cloop", function() {
               email: "appel@mit.edu",
               password: "password" },
               function(err2, data2){
-                User.findOne({ name: "apple"}, function(err3, data3){
-                      data1.addStudent(data1._id, data3._id, function(){
+                //deleted function(err3, data3)
+                User.findOne({ name: "apple"}, function(data3){
+                      Class.addStudent(data1._id, data3._id, function(){
                         Class.getStudents(data1._id, function(students){
                         assert.equal(students.length, 1);
                         assert.equal(students[0].name, "apple");
@@ -110,24 +111,24 @@ describe("Cloop", function() {
   //User testing
   describe("User", function() {
 
-    it("should only allow for each username to be used once", function(done) {
-      User.create({ username: "apple",
-                    name: "appel",
-                    email: "appel@mit.edu",
-                    password: "password" },
-          function(err, data) {
-            User.create({ "username": "apple",
-                          "appel",
-                          "appel@mit.edu",
-                          "password": "password" },
-              function(err, data) {
-                assert.throws(function() {
-                  assert.ifError(err);
-                });
-            });
-            done();
-          });
-    });
+    // it("should only allow for each username to be used once", function(done) {
+    //   User.create({ username: "apple",
+    //                 name: "appel",
+    //                 email: "appel@mit.edu",
+    //                 password: "password" },
+    //       function(err, data) {
+    //         User.create({ username: "apple",
+    //                       name: "appel",
+    //                       email: "appel@mit.edu",
+    //                       password: "password" },
+    //           function(err, data) {
+    //             assert.throws(function() {
+    //               assert.ifError(err);
+    //             });
+    //         });
+    //         done();
+    //       });
+    // });
 
     it("should require username field to be filled out", function(done) {
       User.create({ username: "",
@@ -214,7 +215,7 @@ describe("Cloop", function() {
           });
     });
 
-    it("should update classes enrolled", function(done) {
+    it("should update classes enrolled", function() {
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -225,16 +226,16 @@ describe("Cloop", function() {
               Class.create({ name: "6.170"}, function(err1, data1){
                 User.addEnrolledClass(uid, data1._id, function(){
                   User.getClassesEnrolledByStudentId(uid, function(classlist){
-                    assert.equal(data1.name, classlist[0].name);
+                    var contains = classlist.includes(String(data1._id));
+                    assert.equal(contains, true);
                   });
                 });
               });
             });
-            done();
           });
     });
 
-    it("should keep track of account verification", function(done) {
+    it("should keep track of account verification", function() {
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -243,26 +244,33 @@ describe("Cloop", function() {
             User.findOne({ name: "apple" }, function(err, data) {
               assert.equal(data['verifiedEmail'], false);
             });
-            done();
           });
     });
+
   });
 
   describe("Post", function() {
 
     it("should require text field to be filled out", function(done) {
       User.create({ username: "person",
-                    name: "a",
+                    name: "apple",
                     email: "appel@mit.edu",
                     password: "password" },
           function(err, data) {
-            assert.throws(function() {
-              assert.ifError(err);
+            User.findOne({name: "apple"}, function(err1, data1){
+              Post.create({
+                text: "",
+                author: data1._id
+              },
+            function(err, data) {
+              assert.throws(function() {
+                assert.ifError(err);
+              });
             });
             done();
-          })
+          });
     });
-
+});
     it("should add, get, remove comments", function(done) {
       User.create({ username: "person",
                     name: "apple",
@@ -282,7 +290,7 @@ describe("Cloop", function() {
                   },
                   function(err4, data4){
                     Comment.findOne({text: "hello"}, function(err5, data5){
-                      Post.addComment(data3._id, data5_id, function(){
+                      Post.addComment(data3._id, data5._id, function(){
                         assert.equal(data3["comments"][0], data5_id);
                       });
                     });
@@ -294,7 +302,7 @@ describe("Cloop", function() {
           });
     });
 
-    it("should update upvotes and only allow one upvote per user", function(done) {
+    it("should update upvotes and only allow one upvote per user", function() {
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -316,11 +324,10 @@ describe("Cloop", function() {
                 });
               });
             });
-            done();
           });
     });
 
-    it("should only allow one flag per user", function(done) {
+    it("should only allow one flag per user", function() {
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -345,18 +352,14 @@ describe("Cloop", function() {
                 });
               });
             });
-            done();
           });
     });
-
-    // it("should allow for editing", function(done) {
-    // });
 
   });
 
   describe("Comment", function() {
     //partially tested in Post
-    it("should allow one upvote per user", function(done){
+    it("should allow one upvote per user", function(){
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -388,11 +391,10 @@ describe("Cloop", function() {
                 });
               });
             });
-            done();
           });
     });
 
-    it("should only allow one flag per user", function(done){
+    it("should only allow one flag per user", function(){
       User.create({ username: "person",
                     name: "apple",
                     email: "appel@mit.edu",
@@ -424,12 +426,7 @@ describe("Cloop", function() {
                 });
               });
             });
-            done();
           });
-    });
-
-    it("should allow for editing", function(done) {
-
     });
   });
    
