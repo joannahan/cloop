@@ -17,7 +17,7 @@ var UserSchema = mongoose.Schema({
   classesEnrolled:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}],
 
   verificationString: {type:String},
-  verifiedEmail: {type:Boolean, default:true}
+  verifiedEmail: {type:Boolean, default:false}
 });
 
 UserSchema.pre('save', function(next) {
