@@ -8,6 +8,7 @@
 		<span class="class_students"><b>Students Enrolled</b>: {{studentListing}}</span>
 		</span>
 	</div>
+	<br>
 
 	<div class="class_body">
 		<div id='new-post'>
@@ -31,10 +32,12 @@
 					<button class="flg" type="submit"><i class="fa fa-flag" aria-hidden="true"></i></button>
 					<span class="flagCount">{{flagCount}}</span>
 				</span>
-				<button class="editBtn" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 				<span class="post_author">{{author.name}}</span>
 				<span class="post_time">{{timeCreated}}</span>
-				<span class="delete_btn delete_post"> <input type="submit" value="Delete"> </span>
+				<span class="delete_btn delete_post"> 
+					<button class="sideBtn delBtn" type="submit"><i class="fa fa-times" style="color: #e6e6e6" aria-hidden="true"></i></button>
+				</span>
+				<button class="sideBtn editBtn" type="submit"><i class="fa fa-pencil" style="color: #e6e6e6" aria-hidden="true"></i></button>
 			</div>
 		
 			<div class="post_body">
@@ -75,10 +78,12 @@
 								<button class="flg" type="submit"><i class="fa fa-flag" aria-hidden="true"></i></button>
 								<span class="flagCount">{{flagCount}}</span>
 							</span>
-							<button class="editBtn" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 							<span class="comment_author">{{author.name}}</span>
 							<span class="comment_time">{{timeCreated}}</span>
-							<span class="delete_btn delete_comment"> <input type="submit" value="Delete"> </span>
+							<span class="delete_btn delete_comment"> 
+								<button class="sideBtn delBtn" type="submit"><i class="fa fa-times" style="color: #e6e6e6" aria-hidden="true"></i></button>
+							</span>
+							<button class="sideBtn editBtn" type="submit"><i class="fa fa-pencil" style="color: #e6e6e6" aria-hidden="true"></i></button>
 						</div>
 
 						<div class="comment_body">
