@@ -27,3 +27,9 @@ Feedback:
 -Integrate backend and frontend for displaying all users in the class
 
 Progress since Demo:
+-Added confirmations for important actions
+-Made UI a bit better
+-Added embedded resources/previews of resources
+-Made API form course catalog work
+-Displaying users in class works
+-

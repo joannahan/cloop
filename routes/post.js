@@ -18,7 +18,7 @@ var upload = multer();
 var requestCallback = function(res) {
 	return function(err, result) {
 		if (err) {
-			res.send(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			res.redirect('/group');
 		}
@@ -28,7 +28,7 @@ var requestCallback = function(res) {
 var requestCallback2 = function(res) {
 	return function(err, result) {
 		if (err) {
-			res.send(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			res.redirect('/group/' + result.name);
 		}
@@ -77,7 +77,7 @@ router.post('/:classId/post', upload.single("resource"), function(req, res, next
 
 					  		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
 								if (err) {
-									res.send(err);
+									res.render('error', {message: "There was an error.", error: err});
 								} else {
 									var postId = post._id;
 									Class.addPost(classId, postId, function(err, result){
@@ -104,7 +104,7 @@ router.post('/:classId/post', upload.single("resource"), function(req, res, next
 		} else {
 			Post.createPost(authorId, postText, resourceUrl, function(err, post) {
 				if (err) {
-					res.send(err);
+					res.render('error', {message: "There was an error.", error: err});
 				} else {
 					var postId = post._id;
 					Class.addPost(classId, postId, function(err, result){
@@ -128,17 +128,17 @@ router.delete('/:_id', function(req, res, next) {
 	var userId = req.user.id;
 
 	Post.getPost(postId, function(err, post) {
-		if (err)	res.send(err);
+		if (err)	res.render('error', {message: "There was an error.", error: err});
 		else {
 			if (post.author == userId)
 				Comment.removeAllComments(post.comments, function(err, result) {
-					if (err)			res.send(err);
+					if (err)			res.render('error', {message: "There was an error.", error: err});
 					else
 						Post.removePost(postId, function(err, result) {
-							if (err) 	res.send(err);
+							if (err) 	res.render('error', {message: "There was an error.", error: err});
 							else
 								Class.removePost(postId, function(err, result) {
-									if (err)	res.send(err)
+									if (err)	res.render('error', {message: "There was an error.", error: err})
 									else		res.send({remove: true})
 								});
 						});
@@ -157,7 +157,7 @@ router.put('/edit/:_id', function(req, res, next) {
 	
 	Post.getPost(postId, function(err, result) {
 		if (err) {
-			res.send(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			if (result.author == userId) {
 				Post.editPost(postId, newText, requestCallback(res));
@@ -189,17 +189,17 @@ router.post('/flag', function(req, res, next) {
 		else {
 			if (finalResult.flagCount >= 10) {
 				Post.getPost(postId, function(err, post) {
-					if (err)	res.send(err);
+					if (err)	res.render('error', {message: "There was an error.", error: err});
 					else {
 						Comment.removeAllComments(post.comments, function(err, result) {
-							if (err)			res.send(err);
+							if (err)			res.render('error', {message: "There was an error.", error: err});
 							else
 								Post.removePost(postId, function(err, result) {
-									if (err) 	res.send(err);
+									if (err) 	res.render('error', {message: "There was an error.", error: err});
 									else
 										Class.removePost(postId, function(err, result) {
-											if (err)	res.send(err)
-											else		res.send(finalResult)
+											if (err)	res.render('error', {message: "There was an error.", error: err});
+											else		res.send(finalResult);
 										});
 								});
 						})

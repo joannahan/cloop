@@ -11,7 +11,7 @@ var CoursePersist= require('../util/coursePersist');
 
 var requestCallback = function(res) {
 	return function(err, result) {
-		if (err)	res.send(err);
+		if (err)	res.render('error', {message: 'There was an error.', error: err});
 		else		res.redirect('/group');
 	}
 }
@@ -125,8 +125,8 @@ router.get('/:name', function(req, res, next) {
 		throw new Error("Please login first.");
 	} 	
 	Class.getClass(className, function(err, _class) {
-		if (err) {
-			console.log(err);
+		if (err || !_class) {
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			var classId = _class._id;
 			handlebarsObject.classId = classId;
@@ -134,14 +134,14 @@ router.get('/:name', function(req, res, next) {
 
 			Class.getPosts(classId, function(err, posts) {
 				if (err) {
-					console.log(err);
+					res.render('error', {message: "There was an error.", error: err});
 				} else {
 					var classPosts = posts.posts;
 					var postIds = classPosts.map(function(a) {return a._id});
 
 					Post.populateComments(postIds, function(err, posts) {
 						if (err) {
-							console.log(err);
+							res.render('error', {message: "There was an error.", error: err});
 						} else {
 							handlebarsObject.post = posts.reverse();
 							res.render('class_page', handlebarsObject);
@@ -163,22 +163,22 @@ router.get('/archives/:name', function(req, res, next) {
 		throw new Error("Please login first.");
 	} 	
 	Class.getClass(className, function(err, _class) {
-		if (err) {
-			console.log(err);
+		if (err || !_class) {
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			var classId = _class._id;
 			handlebarsObject.classId = classId;
 
 			Class.getPosts(classId, function(err, posts) {
 				if (err) {
-					console.log(err);
+					res.render('error', {message: "There was an error.", error: err});
 				} else {
 					var classPosts = posts.posts;
 					var postIds = classPosts.map(function(a) {return a._id});
 
 					Post.populateComments(postIds, function(err, posts) {
 						if (err) {
-							console.log(err);
+							res.render('error', {message: "There was an error.", error: err});
 						} else {
 							handlebarsObject.post = posts.reverse();
 							res.render('archived_class_page', handlebarsObject);
@@ -253,7 +253,7 @@ router.post('/user/enroll_class', function(req, res, next) {
 router.post('/user/enroll_class_by_name', function(req, res, next) {
 	Class.getClass(req.body.className, function(err, _class){
 		if(err){
-			console.log(err);
+			res.render('error', {message: "There was an error.", error: err});
 			return err;
 		}else{
 			var isEnrolled=false;
@@ -292,7 +292,7 @@ router.post('/user/remove', function(req, res, next) {
 
 	Class.getClass(className, function(err, result) {
 		if (err) {
-			console.log(err);
+			res.render('error', {message: "There was an error.", error: err});
 		} else {
 			var classId = result._id;
 			Class.removeStudent(classId, userId, requestCallback(res));
@@ -364,7 +364,7 @@ router.post('/user/move_enrolled_class', function(req, res, next) {
 //common helper function for callback
 var done = function(res, err, success, customMessage) {
 	if (err) {
-		console.log(err);
+		res.render('error', {message: "There was an error.", error: err});
 		res.json({
 			success: false, 
 			message: err.message
