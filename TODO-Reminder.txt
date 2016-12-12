@@ -1,4 +1,0 @@
-TODO-Reminder:
-	- Fix bug with case sensitive class names in creating and searching classes
-	- Connect edit UI with edit action (feature implemented, but connection currently difficult - requires user and post objects together in views)
-	- Fix bug with student listing
