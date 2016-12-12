@@ -95,6 +95,7 @@ CommentSchema.statics.userToggleUpvote = function(commentId, userId, callback) {
                     if (err)    callback(err)
                     else {
                         result.upvoteCount = comment.upvoteCount - 1
+                        result.upvotedState = false;
                         callback(err, result)
                     }
                 })
@@ -103,6 +104,7 @@ CommentSchema.statics.userToggleUpvote = function(commentId, userId, callback) {
                     if (err)    callback(err)
                     else {
                         result.upvoteCount = comment.upvoteCount + 1
+                        result.upvotedState = true;
                         callback(err, result)
                     }
                 })

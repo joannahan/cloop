@@ -52,6 +52,13 @@ $(document).ready(function() {
 				type: 'POST',
 				success: function(data) {
 					upvoteCountSpan.text(data.upvoteCount)
+					if (data.upvotedState) {
+						upvBtn.css("background-color", "#BDF5BD");
+						thumb.css("color", "green");
+					} else {
+						upvBtn.removeAttr("style");
+						thumb.removeAttr("style");
+					}
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);
