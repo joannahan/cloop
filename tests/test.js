@@ -268,9 +268,29 @@ describe("Cloop", function() {
               });
             });
             done();
+            });
           });
     });
-});
+    
+    it("should not be affected by script injections", function(done) {
+        User.create({ username: "person",
+                      name: "apple",
+                      email: "appel@mit.edu",
+                      password: "password" },
+            function(err, data) {
+              User.findOne({name: "apple"}, function(err1, data1){
+                Post.create({
+                  text: "test<script>alert('Injected!');</script>",
+                  author: data1._id
+                },
+              function(err, data) {
+                assert.equal(data1["posts"][0], "test<script>alert('Injected!');</script>");
+              });
+              done();
+              });
+            });
+      });
+    
     it("should add, get, remove comments", function(done) {
       User.create({ username: "person",
                     name: "apple",
