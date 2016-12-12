@@ -142,11 +142,6 @@ UserSchema.statics.getClassesEnrolledByStudent = function(studentToFind,callback
 UserSchema.statics.getClassesEnrolledByStudentId = function(studentId,callback) {
   User.findOne({_id: studentId}, function(err, studentFound){
 	  callback(studentFound.classesEnrolled);
-//    var classIds = [];
-//    for (var i = 0; i < studentFound.classesEnrolled.length; i++){
-//      classIds.push(studentFound.classesEnrolled[i]);
-//    }
-//    callback(classIds);
   });
 }
 

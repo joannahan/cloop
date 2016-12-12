@@ -18,16 +18,43 @@
 		<div class="post" id={{_id}}>
 		
 			<div class="post_header">
-				<span class="upvotes"> {{numUpvotes}} upvotes </span>
+				<span class="upvotes">
+					<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+					<span class="upvoteCount">{{upvoteCount}}</span>
+				</span>
+				<span class="flags">
+					<i class="fa fa-flag" aria-hidden="true"></i>
+					<span class="flagCount">{{flagCount}}</span>
+				</span>
 				<span class="post_author">{{author.name}}</span>
 				<span class="post_time">{{timeCreated}}</span>
 			</div>
 		
 			<div class="post_body">
-				<p>{{text}}</p>
-				<!-- icon to represent resource? -->
-				<p> Attached resource: {{resource}} </p>
-			</div>
+				<div> <p>{{text}}</p> </div>
+				{{#if resourceUrl}}
+
+				<div>The author of this post has included the following pdf attachment:</div>
+
+				<a href={{resourceUrl}}>Resource Link</a>
+
+				<div class="resource_container">
+
+					<div class="resource_button">Show Preview</div>
+
+					<div class="resource_object">
+						<object data={{resourceUrl}} type="application/pdf" width="100%" height="800px">
+							<iframe src={{resourceUrl}} width="100%" height="100%" style="border: none;">
+								This browser does not support PDFs. Please use the link above instead.
+							</iframe>
+						</object>
+					</div>
+
+				</div>
+
+				{{/if}}
+			</div> 
+		
 		
 			<div class="post_footer">
 				{{#each comments}}
