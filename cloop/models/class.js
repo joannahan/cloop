@@ -237,6 +237,7 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
         callback);
 }
 
+
 /**
  * Removes a student from a class
  * 
@@ -315,3 +316,4 @@ ClassSchema.statics.removePost = function(postId, callback) {
 
 var Class = mongoose.model("Class", ClassSchema);
 module.exports = Class;
+
