@@ -123,7 +123,10 @@ router.get('/:name', function(req, res, next) {
 	handlebarsObject.description = "Class Page";
 	if (req.user === undefined) {
 		throw new Error("Please login first.");
-	} 	
+	}
+
+	handlebarsObject.userId = req.user._id
+
 	Class.getClass(className, function(err, _class) {
 		if (err) {
 			console.log(err);
