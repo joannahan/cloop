@@ -17,7 +17,7 @@
 						<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Mark as Taken"> 
 						<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
 						<!-- <form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form> -->
-						<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x'></form>
+						<form action='group/user/remove' method='post'><input type='text' name='className' value='{{this.name}}' hidden><input type='submit' value='x' class="sideBtn delBtn" style="color: #e6e6e6; padding-bottom: 3px;"></form>
 					</li>
 				{{/each}}
 			</ul>
