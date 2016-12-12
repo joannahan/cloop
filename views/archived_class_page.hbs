@@ -1,0 +1,55 @@
+<!-- Lead author: Joanna -->
+<div class="class" id={{classId}}>
+
+	<div class="class_header">
+		<span class="class_information">
+			<span class="class_title">Archived: {{title}}</span>
+<!-- 			<span class="class_description">{{description}}</span> -->
+		</span
+	<div class="class_header">
+
+	<div class="class_body">
+	
+	<div id="posts-table">
+		{{#each post}}
+		<!-- helper to only display if removed is false, and checks the number of flags-->
+		<!-- register a helper function to evaluate the number of flags and change removed? -->
+		
+		<div class="post" id={{_id}}>
+		
+			<div class="post_header">
+				<span class="upvotes"> {{numUpvotes}} upvotes </span>
+				<span class="post_author">{{author.name}}</span>
+				<span class="post_time">{{timeCreated}}</span>
+			</div>
+		
+			<div class="post_body">
+				<p>{{text}}</p>
+				<!-- icon to represent resource? -->
+				<p> Attached resource: {{resource}} </p>
+			</div>
+		
+			<div class="post_footer">
+				{{#each comments}}
+					<!-- render the comment handlebar template -->
+					<div class="comment" id={{_id}}>
+						<div class="comment_header">
+							<span class="upvotes"> {{numUpvotes}} upvotes </span>
+							<span class="comment_author">{{author.name}}</span>
+							<span class="comment_time">{{timeCreated}}</span>
+						</div>
+
+						<div class="comment_body">
+							<p>{{text}}</p>
+						</div>
+					</div>			
+				{{/each}}
+			</div>
+		</div>
+
+		{{/each}}
+	</div>
+	<div class="class_body">
+
+
+</div>
