@@ -68,15 +68,17 @@ router.post('/:classId/post', upload.single("resource"), function(req, res, next
 			var pdfValidationLength = pdfValidation.length;
 
 			if (!(resourcePath.slice(resourcePathLength - pdfValidationLength) === pdfValidation)) {
-				res.send("Not a valid pdf");
+				req.flash('error_msg', 'Your resource must be a pdf file.');
+				res.redirect('back');
 			} else {
 				dbx.filesUpload({path: resourcePath, contents: resourceBuffer, autorename: true})
 					.then(function(response) {
 						resourcePath = response.path_display;
 
-						dbx.sharingCreateSharedLink({path: resourcePath, short_url: true})
+						dbx.sharingCreateSharedLink({path: resourcePath})
 						.then(function(response) {
 					  		resourceUrl = response.url;
+					  		resourceUrl = resourceUrl.slice(0, -4) + 'raw=1';
 
 					  		Post.createPost(authorId, postText, resourceUrl, function(err, post) {
 								if (err) {
