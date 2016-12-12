@@ -124,8 +124,11 @@ div #two {
 	border: 1px solid var(--post-border);
 	margin: 10px;
 	width: 150px;
+	max-width: 400px;
+	max-height: 500px;
 	height: 200px;
 	overflow: scroll;
+	resize: both;
 }
 
 /*The button*/
