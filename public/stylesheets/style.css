@@ -1,6 +1,6 @@
 /*Lead author: Ming*/
 @import url('https://fonts.googleapis.com/css?family=Reem+Kufi');
-
+@import url('https://fonts.googleapis.com/css?family=Lato');
 /* color variables */
 :root {
 	--background-color: white;
@@ -16,7 +16,7 @@ body {
 
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: 'Arial';
+  font-family: 'Lato', sans-serif;
   font: 15px;
 }
 
