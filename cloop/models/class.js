@@ -221,14 +221,14 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
         callback);
 }
 
-ClassSchema.statics.removeStudent = function(classId,userId, callback) {
-	var studentIds=[];
-	studentIds.push(userId);
-    Class.update(
-        {"_id": classId},
-        {$pullAll: {"students": studentIds}},
-        callback);
-}
+// ClassSchema.statics.removeStudent = function(classId,userId, callback) {
+// 	var studentIds=[];
+// 	studentIds.push(userId);
+//     Class.update(
+//         {"_id": classId},
+//         {$pullAll: {"students": studentIds}},
+//         callback);
+// }
 
 /**
  * Remove a student from a class
@@ -266,3 +266,4 @@ ClassSchema.statics.removePost = function(postId, callback) {
 
 var Class = mongoose.model("Class", ClassSchema);
 module.exports = Class;
+
