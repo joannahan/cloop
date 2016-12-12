@@ -1,4 +1,4 @@
-// Lead author: Danny/Joanna
+// Lead author: Joanna
 var express = require('express');
 var mongoose = require("mongoose");
 var router = express.Router();
@@ -50,8 +50,7 @@ router.get('/', function(req, res, next) {
 					var untakenClassNames = classNames.filter(function(el){return enrolledClassNames.indexOf(el) < 0});
 					untakenClassNames = untakenClassNames.filter(function(el){return takenClassNames.indexOf(el) < 0});
 					
-					Class.getClassesByNames(untakenClassNames, function(err, untakenClasses){
-						console.log("************group refresh page*************");					
+					Class.getClassesByNames(untakenClassNames, function(err, untakenClasses){			
 						var data = {
 							user: req.user,
 							untakenClasses: untakenClasses,
@@ -122,7 +121,6 @@ router.get('/:name', function(req, res, next) {
 	handlebarsObject.title = className;
 	handlebarsObject.description = "Class Page";
 	if (req.user === undefined) {
-		//throw new Error("Please login first.");
 		res.redirect('/');
 	}
 
@@ -309,10 +307,8 @@ router.post('/admin/download_courses', function(req, res, next) {
 	console.log("downloading MIT courses....");	
 	CoursePersist.download(function(err, data) {
 		if (err) {
-			console.log('download:failed');
 			done(res,err,false,null);
 		}else{
-			console.log('download:success');
 			done(res,null, true, "Courses download complete.");
 		}
 	});
@@ -322,13 +318,10 @@ router.post('/admin/download_courses', function(req, res, next) {
 router.post('/admin/package_course_data', function(req, res, next) {
 	console.log("packaging course data...");	
 	CoursePersist.transfer(function(err) {
-		console.log("err"+err);
 		if (err) {
-			console.log('transfer:failed');
 			done(res,null,false,null);
 		}else{
-			console.log('transfer:success');
-			done(res, null, true, "courses data import complete.");
+			done(res, null, true, "Courses data import complete.");
 		}
 	});
 	console.log("sync complete");
