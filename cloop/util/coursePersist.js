@@ -1,13 +1,12 @@
 // Lead author: Joanna
 var fs = require("fs");
 var request = require('request');
-var Class = require('../../models/class');
+var Class = require('../models/class');
 
 var DEFAULT_FILENAME = "seeds/courses_data.json";
 
 var CoursePersist = function(targetFileName) {
   var that = Object.create(CoursePersist.prototype);
-  //var content;
 
   /**
    * Write the given JavaScript object to a file.
@@ -19,7 +18,7 @@ var CoursePersist = function(targetFileName) {
   that.persist = function(object, callback) {
     fs.writeFile(targetFileName, JSON.stringify(object), callback);
   };
-  
+  // download MIT coursesv2 API 
   that.download = function(callback){
 	  //API request
 	  var file;
@@ -63,6 +62,7 @@ var CoursePersist = function(targetFileName) {
 	  });
   };
 
+  // import data to database from MIT coursesv2 API and create courses_data.json file
   that.transfer = function(callback){
 	  var file;
 	  var fileName;
@@ -70,7 +70,7 @@ var CoursePersist = function(targetFileName) {
 	  var regex = new RegExp("},{", "g");
 	  var fileNames=[];
 	  
-	  for (var i=1; i<23; i++){
+	  for (var i=1; i<24; i++){
 		  fileName="./seeds/"+fileMask+"_"+i.toString()+".json"
 		  console.log("transfer file name:"+fileName);
 		  fileNames.push(fileName);
@@ -173,55 +173,6 @@ var CoursePersist = function(targetFileName) {
 	      }
 	  });
 	  callback();
-  };
-  /**
-   * Read the file and parse the result as a JavaScript object.
-   * @param {Function} callback - The function to execute after the object
-   *  has been read. It is executed as callback(err, object), where 
-   *  err is the error object, null if there is no error, object
-   *  is the object read from the file. Undefined if err is not null.
-   */
-  var append=false;
-  that.transform = function(fileName, callback) {
-      fs.readFile(fileName,  function(err, data) {
- 	      if (err) {
-	    	  callback(err.message);
-	      } else {	 
-	    	  //console.log(data);
-	    	  var content=JSON.parse(data.toString());
-		      var courses=content.items.map(function(course){
-		    	 return {name:course.subjectId,posts:[],students:[],termCode:course.termcode,title:course.title}; 
-		      });
-		      var append=false;
-		      if ((append)){
-			      fs.appendFile(targetFileName, 
-			    		  JSON.stringify(courses).toString()
-			    		  .replace('[{','{')
-			    		  .replace('}]','}')
-			    		  .replace(regex,'}{'), function(err){
-			    	  if(err){
-			    		  callback(err);
-			    	  }else{
-			    		  console.log("Data append to file complete");
-			    	  }
-			      });
-		      }else{
-		    	  var regex = new RegExp("},{", "g");
-			      fs.writeFile(fileName+'.json', 
-			    		  JSON.stringify(courses).toString()
-			    		  .replace('[{','{')
-			    		  .replace('}]','}')
-			    		  .replace(regex,'}{'), function(err){
-			    	  if(err){
-			    		  callback(err);
-			    	  }else{
-			    		  console.log("Data insert to file complete.");
-			    	  }
-			    	  append=true;
-			      });
-		      }
-	      }
-    });
   };
   
   Object.freeze(that);

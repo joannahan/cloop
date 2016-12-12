@@ -28,7 +28,6 @@ var requestCallback2 = function(res) {
 
 //Get all comments
 router.get('/', function(req,res){
-	//res.send('commentcommentcommentcomment');
 	res.render('comments');
 });
 

@@ -19,8 +19,6 @@ var users = require('./routes/users');
 var group = require('./routes/group');
 var post = require('./routes/post');
 var comment = require('./routes/comment');
-var coursePersist = require('./public/javascript/coursePersist.js');
-
 
 //Database setup
 var mongoose = require('mongoose');

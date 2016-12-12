@@ -60,7 +60,7 @@ PostSchema.statics.editPost = function(postId, text, callback) {
  */
 PostSchema.statics.removePost = function(postId, callback) {
     Post.remove({"_id": postId}, callback)
-}
+};
 
 /**
  * Adds a comment to a post
@@ -94,6 +94,13 @@ PostSchema.statics.populateComments = function(postIds, callback) {
         .exec(callback);
 }
 
+/**
+ * Toggle a user's upvote
+ * 
+ * @param postId {ObjectId} - The id of the post
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.userToggleUpvote = function(postId, userId, callback) {
     Post.findOne({"_id": postId}, function(err, post) {
         if (post == null || err)
@@ -117,7 +124,7 @@ PostSchema.statics.userToggleUpvote = function(postId, userId, callback) {
                 })
         }
     })
-}
+};
 
 /**
  * Add a user to a post's set of users who have upvoted the post
@@ -128,7 +135,7 @@ PostSchema.statics.userToggleUpvote = function(postId, userId, callback) {
  */
 PostSchema.statics.userUpvote = function(postId, userId, callback) {
     Post.update({"_id": postId}, {$addToSet: {"upvoteUsers": userId}}, callback)
-}
+};
 
 /**
  * Remove a user from a post's set of users who have upvoted the post
@@ -145,6 +152,13 @@ PostSchema.virtual('upvoteCount').get(function() {
     return this.upvoteUsers.length;    
 })
 
+/**
+ * Toggle a user's flag
+ * 
+ * @param postId {ObjectId} - The id of the post
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
 PostSchema.statics.userToggleFlag = function(postId, userId, callback) {
     Post.findOne({"_id": postId}, function(err, post) {
         if (post == null || err)
@@ -168,7 +182,7 @@ PostSchema.statics.userToggleFlag = function(postId, userId, callback) {
                 })
         }
     })
-}
+};
 
 /**
  * Add a user to a post's set of users who have flagged the post
@@ -179,7 +193,7 @@ PostSchema.statics.userToggleFlag = function(postId, userId, callback) {
  */
 PostSchema.statics.userFlag = function(postId, userId, callback) {
     Post.update({"_id": postId}, {$addToSet: {"flagUsers": userId}}, callback)
-}
+};
 
 /**
  * Remove a user from a post's set of users who have flagged the post
@@ -190,11 +204,11 @@ PostSchema.statics.userFlag = function(postId, userId, callback) {
  */
 PostSchema.statics.userUnflag = function(postId, userId, callback) {
     Post.update({"_id": postId}, {$pull: {"flagUsers": userId}}, callback)
-}
+};
 
 PostSchema.virtual('flagCount').get(function() {
     return this.flagUsers.length;    
-})
+});
 
 var Post = mongoose.model("Post", PostSchema);
 module.exports = Post;
