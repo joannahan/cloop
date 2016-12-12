@@ -69,7 +69,10 @@ $(document).ready(function() {
 
 	// flag click handler
 	$(".flg").click(function() {
-		var textObject = $(this).parent().parent().parent();
+		var flgBtn = $(this);
+		var flag = $(this).children();
+
+		var textObject = flgBtn.parent().parent().parent();
 		var flagCountSpan = textObject.find(".flagCount").first()
 		var isPostFlag = textObject.hasClass("post");
 		var textId = textObject.attr("id")
@@ -82,6 +85,14 @@ $(document).ready(function() {
 				success: function(data) {
 					flagCountSpan.text(data.flagCount);
 					if (data.flagCount >= 10) textObject.remove()
+
+					if (data.flagState) {
+						flgBtn.css("background-color", "#F5BDBD");
+						flag.css("color", "darkred");
+					} else {
+						flgBtn.removeAttr("style");
+						flag.removeAttr("style");
+					}
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);
@@ -95,6 +106,14 @@ $(document).ready(function() {
 				success: function(data) {
 					flagCountSpan.text(data.flagCount);
 					if (data.flagCount >= 10) textObject.remove();
+
+					if (data.flagState) {
+						flgBtn.css("background-color", "#F5BDBD");
+						flag.css("color", "darkred");
+					} else {
+						flgBtn.removeAttr("style");
+						flag.removeAttr("style");
+					}
 				},
 				error: function(xhr, status, error) {
 					console.log("A problem occurred" + error);

@@ -34,7 +34,11 @@
 					<span class="upvoteCount">{{upvoteCount}}</span>
 				</span>
 				<span class="flags">
+					{{#ifIncludedIn ../userId flagUsers}}
+					<button class="flg" type="submit" style="background-color: #F5BDBD;"><i class="fa fa-flag" aria-hidden="true" style="color: darkred;"></i></button>
+					{{else}}
 					<button class="flg" type="submit"><i class="fa fa-flag" aria-hidden="true"></i></button>
+					{{/ifIncludedIn}}
 					<span class="flagCount">{{flagCount}}</span>
 				</span>
 				<span class="post_author">{{author.name}}</span>
@@ -86,7 +90,11 @@
 								<span class="upvoteCount">{{upvoteCount}}</span>
 							</span>
 							<span class="flags"> 
+								{{#ifIncludedIn ../../userId flagUsers}}
+								<button class="flg" type="submit" style="background-color: #F5BDBD;"><i class="fa fa-flag" aria-hidden="true" style="color: darkred;"></i></button>
+								{{else}}
 								<button class="flg" type="submit"><i class="fa fa-flag" aria-hidden="true"></i></button>
+								{{/ifIncludedIn}}
 								<span class="flagCount">{{flagCount}}</span>
 							</span>
 							<span class="comment_author">{{author.name}}</span>

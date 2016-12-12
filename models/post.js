@@ -171,6 +171,7 @@ PostSchema.statics.userToggleFlag = function(postId, userId, callback) {
                     if (err)    callback(err)
                     else {
                         result.flagCount = post.flagCount - 1
+                        result.flagState = false;
                         callback(err, result)
                     }
                 })
@@ -179,6 +180,7 @@ PostSchema.statics.userToggleFlag = function(postId, userId, callback) {
                     if (err)    callback(err)
                     else {
                         result.flagCount = post.flagCount + 1
+                        result.flagState = true;
                         callback(err, result)
                     }
                 })
