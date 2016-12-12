@@ -89,19 +89,14 @@ button:focus {
 
 /*Formatting for user-page*/
 section {
-	width: 95%;
-	margin: auto;
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+	border-spacing: 10px;
 }
 
-div #one {
-	width: 65%;
-	float: left;
-	height: 300px;
-}
-
-div #two {
-	margin-left: 35%;
-	height: 300px;
+div #one, #two, #three {
+	display: table-cell;
 }
 
 #classScroll {
