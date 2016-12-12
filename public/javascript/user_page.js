@@ -19,6 +19,7 @@ $(document).ready(function() {
 			}
 		});
 	}); 
+	
 	// move enrolled class to taken class click handler
 	$('#moveEnrolledClass*').click(function(){
 		if (confirm('Are you sure you want to mark this class as taken? You will not be able to undo this action.')) {
