@@ -122,7 +122,10 @@ router.get('/:name', function(req, res, next) {
 	handlebarsObject.description = "Class Page";
 	if (req.user === undefined) {
 		res.redirect('/');
-	} 	
+	}
+
+	handlebarsObject.userId = req.user._id
+
 	Class.getClass(className, function(err, _class) {
 		if (err || !_class) {
 			res.render('error', {message: "There was an error.", error: err});

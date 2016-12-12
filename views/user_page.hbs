@@ -13,7 +13,7 @@
 			<ul>
 				{{#each enrolledClasses}}
 					<li id='{{this.name}}'>
-						<form action='group/{{this.name}}' method='get'><p class="class_listing"> {{this.name}} </p><input type="submit" value="Go to class page"></form>
+						<form action='group/{{this.name}}' method='get'><p class="class_listing"> {{this.name}} </p><input type="submit" value="Class page"></form>
 						<input type="button" id='moveEnrolledClass'+ {{this._id}} data-taken='{{this._id}}' value="Mark as Taken"> 
 						<!-- <input type="submit" id='archivedClass'+ {{this._id}} data-archived='{{this.name}}' value="Go To Archived Class Page"> -->
 						<!-- <form action='group/archives/{{this.name}}' method='get'><input type="submit" value="Archived Page"></form> -->
@@ -21,7 +21,12 @@
 					</li>
 				{{/each}}
 			</ul>
+
+			<input id="search-input" type="text" class='comment-box' placeholder="Search for classes">
+			<ul id="results-list"></ul>
+		</div>
 			
+		<div id="two">	
 			<h4> Taken Classes: </h4>
 			<ul id="takenClassesList">
 				{{#each takenClasses}}
@@ -41,14 +46,10 @@
 			</form>	
 			{{/if}}	
 			<br>
-			
-
-			<input id="search-input" type="text" class='comment-box' placeholder="Search for classes">
-			<ul id="results-list"></ul>
 
 		</div>
 
-		<div id="two">
+		<div id="three">
 			<h4>Other Classes:</h4>
 
 			<div id="classScroll">
