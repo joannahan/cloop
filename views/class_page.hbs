@@ -38,14 +38,14 @@
 			</div>
 		
 			<div class="post_body">
-				<p>{{text}}</p>
+				<div> <p>{{text}}</p> </div>
 				{{#if resourceUrl}}
 
-				<div>The author of this post has included a resource:</div>
+				<div class='resource_container'>
 
-				<a href={{resourceUrl}}>Resource Link</a>
+					<div>The author of this post has included a resource:</div>
 
-				<div class="resource_container">
+					<a href={{resourceUrl}}>Resource Link</a>
 
 					<div class="resource_button">Show Preview</div>
 
