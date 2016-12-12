@@ -128,17 +128,20 @@ $(document).ready(function() {
 	}); 
 	
 	$('#moveEnrolledClass*').click(function(){
-		var $id = $(this).data('taken');
-		$.post('/group/user/move_enrolled_class', {classId:$id}, function(err, _class) {
-			if(err){
-				if (err.message !== undefined){
-					alert(err.message);
+		if (confirm('Are you sure you want to mark this class as taken? You will not be able to undo this action.')) {
+			var $id = $(this).data('taken');
+			$.post('/group/user/move_enrolled_class', {classId:$id}, function(err, _class) {
+				if(err){
+					if (err.message !== undefined){
+						alert(err.message);
+					}
+					location.reload();
+				} else {
+					location.reload();
 				}
-				location.reload();
-			} else {
-				location.reload();
-			}
-		});
+			});
+		}
+
 	 });
 	$('#untakenClassesList').delegate('.untakenClass','click', function(){
 
