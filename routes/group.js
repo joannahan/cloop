@@ -309,7 +309,7 @@ router.post('/admin/download_courses', function(req, res, next) {
 		if (err) {
 			done(res,err,false,null);
 		}else{
-			done(res,null, true, "Courses download complete.");
+			done(res,null, true, "Courses download complete - wait at least 5 seconds before hitting import/update.");
 		}
 	});
 });
@@ -321,7 +321,7 @@ router.post('/admin/package_course_data', function(req, res, next) {
 		if (err) {
 			done(res,null,false,null);
 		}else{
-			done(res, null, true, "Courses data import complete.");
+			done(res, null, true, "Courses data import complete - wait at least 5 seconds before refreshing the page.");
 		}
 	});
 	console.log("sync complete");
