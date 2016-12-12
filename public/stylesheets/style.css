@@ -94,13 +94,13 @@ section {
 }
 
 div #one {
-	width: 55%;
+	width: 65%;
 	float: left;
 	height: 300px;
 }
 
 div #two {
-	margin-left: 45%;
+	margin-left: 35%;
 	height: 300px;
 }
 
@@ -110,8 +110,8 @@ div #two {
 	border: 1px solid var(--post-border);
 	margin: 10px;
 	width: 150px;
-	max-width: 400px;
-	max-height: 500px;
+	max-width: 300px;
+	max-height: 400px;
 	height: 200px;
 	overflow: scroll;
 	resize: both;
@@ -176,12 +176,15 @@ div #two {
 	resize: none;
 }
 
-/*#post-button {
+#search-input {
+	margin-bottom: 50%;
+}
 
-}*/
 .comment-box {
 	height: 27px;
 	width: 50%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 /*Post styling*/
