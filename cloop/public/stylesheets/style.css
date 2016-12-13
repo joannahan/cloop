@@ -183,6 +183,7 @@ button:focus {
 	padding-top: 10px;
 	padding-left: 20px;
 	padding-bottom: 10px;
+
 }
 
 .post_footer {
@@ -226,4 +227,15 @@ button:focus {
 	padding-bottom: 1px;
 }
 
+.resource_object {
+	display: none;
+}
 
+.resource_button {
+	color: #a5acb7;
+}
+
+.resource_button:hover {
+	color: #6f7682;
+	cursor: pointer;
+}
