@@ -11,7 +11,7 @@ After you register an account, you may join classes and post or comment.
 - app.js: Joanna
 
 Models:
-- class.js: Danny
+- class.js: Danny/Joanna
 - comment.js: Manuel
 - post.js: Manuel
 - user.js: Joanna

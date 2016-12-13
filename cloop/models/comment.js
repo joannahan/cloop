@@ -68,10 +68,23 @@ CommentSchema.statics.removeComment = function(commentId, callback) {
     });
 }
 
+/**
+ * Removes all comments
+ * 
+ * @param commentIds {Array[ObjectId]} - an array of ObjectIds of all comments
+ * @param callback {function} - callback function
+ */
 CommentSchema.statics.removeAllComments = function(commentIds, callback) {
     Comment.remove({"_id": {$in : commentIds}}, callback)
-}
+};
 
+/**
+ * Toggle a user's upvote
+ * 
+ * @param commentId {ObjectId} - id of a comment
+ * @param userId {ObjectId} - id of a user
+ * @param callback {function} - callback function
+ */
 CommentSchema.statics.userToggleUpvote = function(commentId, userId, callback) {
     Comment.findOne({"_id": commentId}, function(err, comment) {
         if (comment == null || err)
@@ -95,10 +108,10 @@ CommentSchema.statics.userToggleUpvote = function(commentId, userId, callback) {
                 })
         }
     })
-}
+};
 
 /**
- * Add a user to a comments's set of users who have upvoted the comment
+ * Add a user to a comments' set of users who have upvoted the comment
  * 
  * @param commentId {ObjectId} - The id of the comment
  * @param userId {ObjectId} - The id of the user
@@ -106,7 +119,7 @@ CommentSchema.statics.userToggleUpvote = function(commentId, userId, callback) {
  */
 CommentSchema.statics.userUpvote = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$addToSet: {"upvoteUsers": userId}}, callback)
-}
+};
 
 /**
  * Remove a user from a comments's set of users who have upvoted the comment
@@ -117,12 +130,19 @@ CommentSchema.statics.userUpvote = function(commentId, userId, callback) {
  */
 CommentSchema.statics.userUnupvote = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$pull: {"upvoteUsers": userId}}, callback)   
-}
+};
 
 CommentSchema.virtual('upvoteCount').get(function() {
     return this.upvoteUsers.length;    
 })
 
+/**
+ * Toggle a user's flag
+ * 
+ * @param commentId {ObjectId} - The id of the comment
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
 CommentSchema.statics.userToggleFlag = function(commentId, userId, callback) {
     Comment.findOne({"_id": commentId}, function(err, comment) {
         if (comment == null || err)
@@ -146,7 +166,7 @@ CommentSchema.statics.userToggleFlag = function(commentId, userId, callback) {
                 })
         }
     })
-}
+};
 
 /**
  * Add a user to a comments's set of users who have flagged the comment
@@ -157,7 +177,7 @@ CommentSchema.statics.userToggleFlag = function(commentId, userId, callback) {
  */
 CommentSchema.statics.userFlag = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$addToSet: {"flagUsers": userId}}, callback)
-}
+};
 
 /**
  * Remove a user from a comments's set of users who have flagged the comment
@@ -168,7 +188,7 @@ CommentSchema.statics.userFlag = function(commentId, userId, callback) {
  */
 CommentSchema.statics.userUnflag = function(commentId, userId, callback) {
     Comment.update({"_id": commentId}, {$pull: {"flagUsers": userId}}, callback)
-}
+};
 
 CommentSchema.virtual('flagCount').get(function() {
     return this.flagUsers.length;    

@@ -1,4 +1,4 @@
-// Lead author: Danny
+// Lead author: Danny/Joanna
 var mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -30,21 +30,27 @@ var ClassSchema = mongoose.Schema({
 });
 */
 ClassSchema.virtual('studentListing').get(function() {
-    var students = populate('students').map(function(s) {return s.name + " (" + s.username + ")"});
-    return students.join(", ");
+    // Make sure students is populated
+    return this.students.map(s => s.name + " (" + s.username + ")").join(", ")
 })
 
 /**
  * Gets a specific class by name
  * 
- * @param name {string} - The name of the class
+ * @param name {string} - The name of the class (case insensitive)
  * @param callback {function} - callback function
  */
 ClassSchema.statics.getClass = function(name, callback) {
 	var regex = new RegExp(["^", name, "$"].join(""), "i");
-    Class.findOne({"name": regex}, callback);
+    Class.findOne({"name": regex}, callback).populate('students');
 }
 
+/**
+ * Gets all classes, sorted by name
+ * 
+ * @param classIds {Array[ObjectId]} - array of class ObjectIds
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.getClasses = function(classIds, callback) {
 	var query={_id:{$in:classIds}}
     Class
@@ -54,14 +60,19 @@ ClassSchema.statics.getClasses = function(classIds, callback) {
 		.populate('posts');
 }
 
+/**
+ * Gets all classes, sorted by name
+ * 
+ * @param classNames {Array[String]} - array of class names
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.getClassesByNames = function(classNames, callback) {
 	var query={name:{$in:classNames}}
     Class
     	.find(query, callback)
     	.sort({name: 'asc' });
-//		.populate('students')
-//		.populate('posts');
 }
+
 /**
  * Gets a specific class's name by id
  * 
@@ -110,8 +121,6 @@ ClassSchema.statics.getClassByPostId = function(postId, callback) {
          }
      });
   }
-
-
 
 /**
  * Get all students of a class
@@ -198,7 +207,7 @@ ClassSchema.statics.addPost = function(classId, postId, callback) {
 }
 
 /**
- * Add a student to a class
+ * Add a student to an enrolled class
  * 
  * @param classId {ObjectId} - The id of the class
  * @param userId {ObjectId} - The id of the user
@@ -214,6 +223,13 @@ ClassSchema.statics.addEnrolledStudent = function(classId, userId, callback) {
 	})
 }
 
+/**
+ * Add a student to a class
+ * 
+ * @param classId {ObjectId} - The id of the class
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.addStudent = function(classId, userId, callback) {
     Class.update(
         {"_id": classId},
@@ -221,6 +237,14 @@ ClassSchema.statics.addStudent = function(classId, userId, callback) {
         callback);
 }
 
+
+/**
+ * Removes a student from a class
+ * 
+ * @param classId {ObjectId} - The id of the class
+ * @param userId {ObjectId} - The id of the user
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.removeStudent = function(classId,userId, callback) {
 	var studentIds=[];
 	studentIds.push(userId);
@@ -260,17 +284,36 @@ ClassSchema.statics.createClass = function(name, callback) {
     Class.create({"name": name}, callback);
 }
 
+/**
+ * Insert a course
+ * 
+ * @param course {Object} - course object
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.insertCourse = function(course, callback) {
 	Class.create({name:course.name,termCode:course.termCode,title:course.title,students:[],posts:[]}, callback);
 }
 
+/**
+ * Update a course's title
+ * 
+ * @param course {Object} - course object
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.updateCourse = function(course, clalback){
 	Class.update({name:course.name}, {$set:{title:course.title}});
 }
 
+/**
+ * Remove a post
+ * 
+ * @param postId {ObjectId} - Id of post
+ * @param callback {function} - callback function
+ */
 ClassSchema.statics.removePost = function(postId, callback) {
     Class.update({posts: postId}, {$pull: {posts: postId}}, callback)
 }
 
 var Class = mongoose.model("Class", ClassSchema);
 module.exports = Class;
+
